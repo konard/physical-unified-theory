@@ -1,0 +1,6 @@
+-R theories PhysicalUnifiedTheory
+
+theories/Foundations/Basic.v
+theories/QuantumMechanics/Basic.v
+theories/GeneralRelativity/Basic.v
+theories/Unification/Basic.v

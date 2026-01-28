@@ -1,0 +1,35 @@
+# Lean 4
+lean/.lake/
+lean/lake-packages/
+lean/*.olean
+lean/*.ilean
+lean/*.trace
+lean/lean-build.log
+lean/lean-test.log
+
+# Rocq/Coq
+rocq/*.vo
+rocq/*.vok
+rocq/*.vos
+rocq/*.glob
+rocq/*.aux
+rocq/.*.aux
+rocq/*.d
+rocq/*.cache
+rocq/Makefile.coq
+rocq/Makefile.coq.conf
+rocq/.Makefile.coq.d
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.log
