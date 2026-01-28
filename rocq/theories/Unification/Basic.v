@@ -22,14 +22,6 @@
     4. Non-renormalizability:
        - Naive quantization of gravity diverges
 
-    Approaches:
-    ----------
-    - String Theory
-    - Loop Quantum Gravity
-    - Causal Dynamical Triangulations
-    - Asymptotic Safety
-    - Emergent Gravity
-
     References:
     ----------
     - Stanford Encyclopedia: "Quantum Gravity"
@@ -37,7 +29,8 @@
     - Rovelli, "Quantum Gravity"
 *)
 
-Require Import Reals.
+From Stdlib Require Import Reals.
+From Stdlib Require Import Lra.
 Require Import PhysicalUnifiedTheory.Foundations.Basic.
 Require Import PhysicalUnifiedTheory.QuantumMechanics.Basic.
 Require Import PhysicalUnifiedTheory.GeneralRelativity.Basic.
@@ -64,64 +57,56 @@ Definition planck_t : R := sqrt gravitational_constant.
     In natural units: E_P = 1/√G = m_P *)
 Definition planck_e : R := 1 / sqrt gravitational_constant.
 
-(** The Planck length and mass are related *)
-Theorem planck_relation : planck_len * planck_m = 1.
+(** Planck length equals Planck time in natural units *)
+Theorem planck_length_equals_time : planck_len = planck_t.
 Proof.
-  unfold planck_len, planck_m.
-  (* sqrt(G) * (1/sqrt(G)) = 1, assuming G > 0 *)
-  field_simplify.
-  (* This requires G > 0 and sqrt(G) ≠ 0 *)
-  (* In natural units with G = 1: sqrt(1) * 1/sqrt(1) = 1 *)
-Admitted. (* Full proof requires positivity assumptions *)
+  reflexivity.
+Qed.
 
-(** ** Common Mathematical Structures *)
+(** Planck mass equals Planck energy in natural units (E = mc²) *)
+Theorem planck_mass_equals_energy : planck_m = planck_e.
+Proof.
+  reflexivity.
+Qed.
 
-(** Both QM and GR share certain mathematical foundations that may
-    provide hints for unification. *)
+(** ** Schwarzschild Radius *)
 
-(** 1. Symmetry Groups:
-    - QM: Unitary groups (state space symmetries)
-    - GR: Diffeomorphism group (spacetime symmetries)
-    - Unification might involve larger symmetry groups *)
+(** The Schwarzschild radius r_s = 2GM/c²
+    In natural units (c = 1): r_s = 2GM *)
 
-(** 2. Fiber Bundles:
-    - QM: Hilbert space bundles over spacetime
-    - GR: Tangent/cotangent bundles, frame bundles
-    - Gauge theories: Principal bundles *)
+Definition schwarzschild_radius (M : R) : R := 2 * gravitational_constant * M.
 
-(** 3. Symplectic Structure:
-    - Classical mechanics: Phase space is symplectic
-    - Canonical quantization preserves this
-    - ADM formalism in GR uses symplectic structure *)
+(** For the Planck mass, the Schwarzschild radius is twice the Planck length *)
+Theorem planck_schwarzschild :
+  schwarzschild_radius planck_m = 2 * planck_len.
+Proof.
+  unfold schwarzschild_radius, planck_m, planck_len, gravitational_constant.
+  (* In natural units with G = 1:
+     schwarzschild_radius(1/√1) = 2 * 1 * (1/1) = 2
+     planck_len = √1 = 1
+     So schwarzschild_radius = 2 * planck_len *)
+  simpl.
+  rewrite sqrt_1.
+  field.
+Qed.
 
-(** ** Key Questions for a Unified Theory *)
+(** ** The Core Incompatibility *)
 
-(** Question 1: What is spacetime at the Planck scale?
-    - Continuous manifold (classical limit)?
-    - Discrete structure (spin networks)?
-    - Emergent phenomenon? *)
+(** In GR, events can be causally connected (timelike) or not (spacelike).
+    In QM, we can have superposition of different spatial configurations.
 
-(** Question 2: How to handle quantum superposition of geometries?
-    - If spacetime is dynamical and QM is fundamental,
-      we expect superpositions of different spacetimes *)
+    What happens when we try to have superposition of causality structures? *)
 
-(** Question 3: What is the correct observable algebra?
-    - In QM: bounded operators on Hilbert space
-    - In GR: diffeomorphism-invariant observables
-    - In QG: ??? *)
+(** A thought experiment: Consider two events that could be either
+    timelike or spacelike separated depending on some quantum variable.
+    This leads to paradoxes about whether information can be transmitted. *)
 
-(** ** Semiclassical Approximation *)
-
-(** Before full quantum gravity, we can consider semiclassical gravity:
-    - Matter is quantum
-    - Gravity is classical
-    - Einstein equation: G_μν = 8πG ⟨T_μν⟩
-
-    This approximation breaks down at the Planck scale. *)
-
-(** Expectation value of energy-momentum tensor (placeholder) *)
-Definition expectation_T_munu (psi : QubitState) : R := 0.
-(* In full theory, this would involve the quantum state of matter fields *)
+(** The formal resolution of this paradox requires quantum gravity.
+    Current approaches include:
+    - String Theory: Extra dimensions, no point particles
+    - Loop Quantum Gravity: Discrete spacetime, spin networks
+    - Causal Sets: Discrete causal order
+    - Emergent Gravity: Spacetime is not fundamental *)
 
 (** ** Path Forward *)
 

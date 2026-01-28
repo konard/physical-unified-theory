@@ -15,8 +15,9 @@
     - Misner, Thorne, Wheeler, "Gravitation"
 *)
 
-Require Import Reals.
-Require Import Coquelicot.Complex.
+From Stdlib Require Import Reals.
+From Stdlib Require Import Lra.
+From Stdlib Require Import Lia.
 Require Import PhysicalUnifiedTheory.Foundations.Basic.
 Open Scope R_scope.
 
@@ -26,21 +27,20 @@ Open Scope R_scope.
 Definition spacetime_dim : nat := 4.
 
 (** A point in spacetime: (t, x, y, z) *)
-Definition Spacetime := (R * R * R * R)%type.
+Record Spacetime := mkSpacetime {
+  time_coord : R;
+  x_coord : R;
+  y_coord : R;
+  z_coord : R
+}.
 
-(** Extract time coordinate *)
-Definition time_coord (p : Spacetime) : R :=
-  match p with (t, _, _, _) => t end.
-
-(** Extract spatial coordinates *)
-Definition x_coord (p : Spacetime) : R :=
-  match p with (_, x, _, _) => x end.
-
-Definition y_coord (p : Spacetime) : R :=
-  match p with (_, _, y, _) => y end.
-
-Definition z_coord (p : Spacetime) : R :=
-  match p with (_, _, _, z) => z end.
+(** The origin of spacetime *)
+Definition origin : Spacetime := {|
+  time_coord := 0;
+  x_coord := 0;
+  y_coord := 0;
+  z_coord := 0
+|}.
 
 (** ** Minkowski Metric *)
 
@@ -64,8 +64,8 @@ Definition spacetime_interval (p q : Spacetime) : R :=
 (** The interval between an event and itself is zero *)
 Theorem interval_self : forall p : Spacetime, spacetime_interval p p = 0.
 Proof.
-  intros p. unfold spacetime_interval.
-  destruct p as [[[t x] y] z]. simpl.
+  intros p.
+  unfold spacetime_interval.
   ring.
 Qed.
 
@@ -73,66 +73,94 @@ Qed.
 Theorem interval_symmetric : forall p q : Spacetime,
   spacetime_interval p q = spacetime_interval q p.
 Proof.
-  intros p q. unfold spacetime_interval.
-  destruct p as [[[t1 x1] y1] z1].
-  destruct q as [[[t2 x2] y2] z2]. simpl.
+  intros p q.
+  unfold spacetime_interval.
   ring.
 Qed.
 
-(** ** Lorentz Transformations *)
+(** ** Causality *)
 
-(** A Lorentz boost in the x-direction with velocity v.
-    γ = 1/√(1-v²) is the Lorentz factor.
+(** Events with ds² < 0 are timelike separated (can be causally connected) *)
+Definition timelike_separated (p q : Spacetime) : Prop :=
+  spacetime_interval p q < 0.
 
-    t' = γ(t - vx)
-    x' = γ(x - vt)
-    y' = y
-    z' = z *)
+(** Events with ds² > 0 are spacelike separated (cannot be causally connected) *)
+Definition spacelike_separated (p q : Spacetime) : Prop :=
+  spacetime_interval p q > 0.
 
-(** Lorentz factor γ = 1/√(1-v²) *)
-Definition lorentz_factor (v : R) : R := 1 / sqrt (1 - v * v).
+(** Events with ds² = 0 are lightlike separated (connected by light ray) *)
+Definition lightlike_separated (p q : Spacetime) : Prop :=
+  spacetime_interval p q = 0.
 
-(** Boost in x-direction *)
-Definition lorentz_boost_x (v : R) (p : Spacetime) : Spacetime :=
-  let gamma := lorentz_factor v in
-  let t := time_coord p in
-  let x := x_coord p in
-  let y := y_coord p in
-  let z := z_coord p in
-  (gamma * (t - v * x), gamma * (x - v * t), y, z).
+(** An event is lightlike separated from itself *)
+Theorem self_is_lightlike : forall p : Spacetime, lightlike_separated p p.
+Proof.
+  intros p.
+  unfold lightlike_separated.
+  apply interval_self.
+Qed.
 
-(** The Minkowski metric is preserved under Lorentz transformations.
-    This is the defining property of Lorentz transformations. *)
+(** ** Lorentz Factor *)
 
-(** For small velocities (v << 1), γ ≈ 1 and the boost reduces to Galilean transformation *)
+(** The Lorentz factor γ = 1/√(1-v²/c²)
+    In natural units (c = 1): γ = 1/√(1-v²)
 
-(** ** Toward Curved Spacetime *)
+    This requires v < 1 (v < c) *)
 
-(** In general relativity, gravity is encoded in the curvature of spacetime.
-    The metric g_μν varies from point to point.
+Definition lorentz_factor (v : R) (Hv : v * v < 1) : R :=
+  1 / sqrt (1 - v * v).
 
-    A full formalization requires differential geometry:
-    - Smooth manifolds
-    - Tangent bundles
-    - Connections and covariant derivatives
-    - Curvature tensors
+(** For v = 0 (stationary), γ = 1 *)
+Theorem lorentz_factor_zero :
+  forall H : 0 * 0 < 1,
+  lorentz_factor 0 H = 1.
+Proof.
+  intros H.
+  unfold lorentz_factor.
+  replace (0 * 0) with 0 by ring.
+  replace (1 - 0) with 1 by ring.
+  rewrite sqrt_1.
+  field.
+Qed.
 
-    This is ongoing work. *)
+(** ** Time Dilation *)
 
-(** Placeholder for metric tensor type *)
-(* In full formalization, this would be a section of Sym²(T*M) *)
-Record MetricTensor := mkMetric {
-  g_tt : Spacetime -> R;
-  g_xx : Spacetime -> R;
-  g_yy : Spacetime -> R;
-  g_zz : Spacetime -> R
-  (* Off-diagonal components and full structure to be added *)
-}.
+(** Moving clocks tick slower by factor γ:
+    Δt' = γ Δt
 
-(** The flat (Minkowski) metric as a constant metric tensor *)
-Definition flat_metric : MetricTensor := {|
-  g_tt := fun _ => -1;
-  g_xx := fun _ => 1;
-  g_yy := fun _ => 1;
-  g_zz := fun _ => 1
-|}.
+    where Δt is proper time (measured in rest frame)
+    and Δt' is dilated time (measured by moving observer) *)
+
+Definition time_dilation (proper_time : R) (v : R) (Hv : v * v < 1) : R :=
+  lorentz_factor v Hv * proper_time.
+
+(** Time dilation is identity for stationary observer *)
+Theorem no_dilation_at_rest :
+  forall dt : R,
+  forall H : 0 * 0 < 1,
+  time_dilation dt 0 H = dt.
+Proof.
+  intros dt H.
+  unfold time_dilation.
+  rewrite lorentz_factor_zero.
+  ring.
+Qed.
+
+(** ** Proper Time *)
+
+(** Proper time is the time measured by a clock traveling along a worldline.
+    For a timelike interval, proper time Δτ² = -Δs² *)
+
+Definition proper_time_squared (p q : Spacetime) : R :=
+  - spacetime_interval p q.
+
+(** Proper time squared is non-negative for timelike separation *)
+Theorem proper_time_nonneg_timelike :
+  forall p q : Spacetime,
+  timelike_separated p q ->
+  proper_time_squared p q > 0.
+Proof.
+  intros p q H.
+  unfold proper_time_squared, timelike_separated in *.
+  lra.
+Qed.
