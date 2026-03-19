@@ -112,7 +112,7 @@ Proof.
   unfold particle_in_box_energy.
   assert (hPI : 0 < PI) by (apply PI_pos).
   assert (hINR : 0 <= INR n) by (apply pos_INR).
-  nlinarith [sq_nonneg (INR n), sq_nonneg PI].
+  nra.
 Qed.
 
 (** Ground state has less energy than first excited state. *)
@@ -121,7 +121,7 @@ Lemma ground_lt_first_excited :
 Proof.
   unfold particle_in_box_energy. simpl.
   assert (hPI : 0 < PI) by (apply PI_pos).
-  nlinarith [sq_nonneg PI].
+  nra.
 Qed.
 
 (** ** A.6.3: Geometric PDEs (Qualitative Model)
@@ -151,5 +151,5 @@ Proof.
     apply exp_increasing.
     lra. }
   assert (hpos : 0 < exp (- t)) by apply exp_pos.
-  nlinarith.
+  nra.
 Qed.

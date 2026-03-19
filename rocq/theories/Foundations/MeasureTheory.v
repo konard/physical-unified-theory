@@ -89,7 +89,7 @@ Proof.
   pose proof m.(amp0_nonneg) as h0.
   pose proof m.(amp1_nonneg) as h1.
   pose proof m.(norm_cond) as hn.
-  split; nlinarith.
+  split; nra.
 Qed.
 
 (** Born rule probabilities sum to 1. *)
@@ -157,7 +157,7 @@ Proof.
   unfold binary_entropy.
   assert (hln_p : ln p <= 0) by (apply ln_le_zero; lra).
   assert (hln_1mp : ln (1 - p) <= 0) by (apply ln_le_zero; lra).
-  nlinarith.
+  nra.
 Qed.
 
 (** ** A.5.4: Independence *)

@@ -88,7 +88,7 @@ Lemma temporal_timelike (tau : R) (h : tau <> 0) :
     is_timelike_vec {| v_t := tau; v_x := 0; v_y := 0; v_z := 0 |}.
 Proof.
   unfold is_timelike_vec, minkowski_norm_sq, minkowski_inner. simpl.
-  nlinarith [sq_nonneg tau].
+  nra.
 Qed.
 
 (** A null vector represents a photon worldline: light speed = 1. *)
@@ -103,7 +103,7 @@ Lemma spatial_spacelike (r : R) (h : r <> 0) :
     is_spacelike_vec {| v_t := 0; v_x := r; v_y := 0; v_z := 0 |}.
 Proof.
   unfold is_spacelike_vec, minkowski_norm_sq, minkowski_inner. simpl.
-  nlinarith [sq_nonneg r].
+  nra.
 Qed.
 
 (** Causal types are mutually exclusive. *)
