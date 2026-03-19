@@ -43,18 +43,18 @@ Lemma levi_civita_antisym12 (i j k : nat) :
     levi_civita i j k = - levi_civita j i k.
 Proof.
   unfold levi_civita.
-  destruct i, j, k; simpl; try lra;
-  repeat (destruct i; simpl; try lra);
-  repeat (destruct j; simpl; try lra);
-  repeat (destruct k; simpl; try lra).
+  repeat match goal with
+  | |- context [Nat.eqb ?a ?b] => destruct (Nat.eqb a b)
+  end; simpl; lra.
 Qed.
 
 (** The Levi-Civita symbol vanishes when two indices are equal. *)
 Lemma levi_civita_diag (i j : nat) : levi_civita i i j = 0.
 Proof.
   unfold levi_civita.
-  destruct i; simpl; try lra;
-  repeat (destruct i; simpl; try lra).
+  repeat match goal with
+  | |- context [Nat.eqb ?a ?b] => destruct (Nat.eqb a b)
+  end; simpl; lra.
 Qed.
 
 (** ** A.4.2: Representation Theory
