@@ -38,23 +38,23 @@ Definition levi_civita (i j k : nat) : R :=
   else if (Nat.eqb i 1 && Nat.eqb j 0 && Nat.eqb k 2)%bool then -1
   else 0.
 
+(** Helper: case split on a nat being 0, 1, 2, or ≥ 3, then compute. *)
+Ltac case_nat_012 n :=
+  destruct n as [|[|[|n]]].
+
 (** The Levi-Civita symbol is antisymmetric in the first two indices. *)
 Lemma levi_civita_antisym12 (i j k : nat) :
     levi_civita i j k = - levi_civita j i k.
 Proof.
-  unfold levi_civita.
-  repeat match goal with
-  | |- context [Nat.eqb ?a ?b] => destruct (Nat.eqb a b)
-  end; simpl; lra.
+  case_nat_012 i; case_nat_012 j; case_nat_012 k;
+  unfold levi_civita; simpl; lra.
 Qed.
 
 (** The Levi-Civita symbol vanishes when two indices are equal. *)
 Lemma levi_civita_diag (i j : nat) : levi_civita i i j = 0.
 Proof.
-  unfold levi_civita.
-  repeat match goal with
-  | |- context [Nat.eqb ?a ?b] => destruct (Nat.eqb a b)
-  end; simpl; lra.
+  case_nat_012 i; case_nat_012 j;
+  unfold levi_civita; simpl; lra.
 Qed.
 
 (** ** A.4.2: Representation Theory
