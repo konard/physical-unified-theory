@@ -64,26 +64,26 @@ Qed.
 
 (** Dimension of the spin-j representation of SU(2).
     j is given as 2j (to keep it natural number). *)
-Definition spin_rep_dim (j_twice : nat) : nat := j_twice + 1.
+Definition spin_rep_dim (j_twice : nat) : nat := (j_twice + 1)%nat.
 
 (** Spin-0 (scalar): dimension 1. *)
-Lemma spin0_dimension : spin_rep_dim 0 = 1.
+Lemma spin0_dimension : spin_rep_dim 0 = 1%nat.
 Proof. reflexivity. Qed.
 
 (** Spin-1/2 (spinor): dimension 2. Describes electrons, quarks. *)
-Lemma spin_half_dimension : spin_rep_dim 1 = 2.
+Lemma spin_half_dimension : spin_rep_dim 1 = 2%nat.
 Proof. reflexivity. Qed.
 
 (** Spin-1 (vector): dimension 3. Describes gauge bosons (W, Z, gluons). *)
-Lemma spin1_dimension : spin_rep_dim 2 = 3.
+Lemma spin1_dimension : spin_rep_dim 2 = 3%nat.
 Proof. reflexivity. Qed.
 
 (** Spin-3/2 (Rarita-Schwinger): dimension 4. Describes gravitino. *)
-Lemma spin_3half_dimension : spin_rep_dim 3 = 4.
+Lemma spin_3half_dimension : spin_rep_dim 3 = 4%nat.
 Proof. reflexivity. Qed.
 
 (** Spin-2 (graviton): dimension 5. Describes the graviton. *)
-Lemma spin2_dimension : spin_rep_dim 4 = 5.
+Lemma spin2_dimension : spin_rep_dim 4 = 5%nat.
 Proof. reflexivity. Qed.
 
 (** The Casimir operator for spin-j representation: J² = j(j+1)ℏ².
