@@ -85,7 +85,7 @@ Proof.
   unfold klein_gordon_energy, klein_gordon_dispersion.
   assert (h : 0 * 0 + m * m = m * m) by ring.
   rewrite h.
-  apply sqrt_mul_self. exact hm.
+  fold (Rsqr m). apply sqrt_Rsqr. exact hm.
 Qed.
 
 (** ** Particle in a Box (Schrödinger Equation)
