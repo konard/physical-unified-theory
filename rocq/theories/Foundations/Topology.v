@@ -101,35 +101,35 @@ Definition euler_characteristic (V E F : nat) : Z :=
 (** Euler's formula for polyhedra homeomorphic to a sphere: V - E + F = 2. *)
 (** Tetrahedron: V=4, E=6, F=4. *)
 Lemma tetrahedron_euler :
-    euler_characteristic 4 6 4 = 2.
+    euler_characteristic 4 6 4 = 2%Z.
 Proof.
   unfold euler_characteristic. lia.
 Qed.
 
 (** Cube: V=8, E=12, F=6. *)
 Lemma cube_euler :
-    euler_characteristic 8 12 6 = 2.
+    euler_characteristic 8 12 6 = 2%Z.
 Proof.
   unfold euler_characteristic. lia.
 Qed.
 
 (** For a surface of genus g: χ = 2 - 2g. *)
-Definition euler_char_genus (g : nat) : Z := 2 - 2 * Z.of_nat g.
+Definition euler_char_genus (g : nat) : Z := (2 - 2 * Z.of_nat g)%Z.
 
 (** Sphere (g=0): χ = 2. *)
-Lemma sphere_euler : euler_char_genus 0 = 2.
+Lemma sphere_euler : euler_char_genus 0 = 2%Z.
 Proof.
   unfold euler_char_genus. lia.
 Qed.
 
 (** Torus (g=1): χ = 0. *)
-Lemma torus_euler : euler_char_genus 1 = 0.
+Lemma torus_euler : euler_char_genus 1 = 0%Z.
 Proof.
   unfold euler_char_genus. lia.
 Qed.
 
 (** Double torus (g=2): χ = -2. *)
-Lemma double_torus_euler : euler_char_genus 2 = -2.
+Lemma double_torus_euler : euler_char_genus 2%nat = (-2)%Z.
 Proof.
   unfold euler_char_genus. lia.
 Qed.
