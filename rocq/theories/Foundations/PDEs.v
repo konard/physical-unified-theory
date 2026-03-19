@@ -75,7 +75,7 @@ Lemma klein_gordon_energy_nonneg (k m : R) :
     0 <= klein_gordon_energy k m.
 Proof.
   unfold klein_gordon_energy.
-  apply sqrt_nonneg.
+  apply sqrt_pos.
 Qed.
 
 (** For zero momentum, the energy equals the rest mass: E = m. *)
