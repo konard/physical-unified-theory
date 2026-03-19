@@ -128,7 +128,7 @@ Proof.
   assert (hln : ln (1/2) = - ln 2).
   { assert (hsum : ln (1/2) + ln 2 = ln (1/2 * 2)).
     { symmetry. apply ln_mult; lra. }
-    assert (hmul : 1/2 * 2 = 1) by ring.
+    assert (hmul : 1/2 * 2 = 1) by lra.
     rewrite hmul in hsum.
     rewrite ln_1 in hsum.
     lra. }
