@@ -137,7 +137,7 @@ Lemma ricci_flow_positive (u0 : R) (hu0 : 0 < u0) (t : R) :
     0 < ricci_flow_model u0 t.
 Proof.
   unfold ricci_flow_model.
-  apply Rmult_pos; [exact hu0 | apply exp_pos].
+  apply Rmult_lt_0_compat; [exact hu0 | apply exp_pos].
 Qed.
 
 (** The Ricci flow model is strictly decreasing for positive initial curvature. *)
