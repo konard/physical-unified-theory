@@ -133,5 +133,5 @@ Proof.
     rewrite ln_1 in hsum.
     lra. }
   rewrite hln.
-  ring.
+  set (x := ln 2); lra.
 Qed.
