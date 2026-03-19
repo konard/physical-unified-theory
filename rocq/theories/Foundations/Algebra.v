@@ -30,12 +30,12 @@ Require Import PhysicalUnifiedTheory.Foundations.Basic.
 (** The Levi-Civita symbol ε_{ijk} in 3D (antisymmetric).
     Returns 1 for even permutations of (0,1,2), -1 for odd, 0 otherwise. *)
 Definition levi_civita (i j k : nat) : R :=
-  if Nat.eqb i 0 && Nat.eqb j 1 && Nat.eqb k 2 then 1
-  else if Nat.eqb i 1 && Nat.eqb j 2 && Nat.eqb k 0 then 1
-  else if Nat.eqb i 2 && Nat.eqb j 0 && Nat.eqb k 1 then 1
-  else if Nat.eqb i 2 && Nat.eqb j 1 && Nat.eqb k 0 then -1
-  else if Nat.eqb i 0 && Nat.eqb j 2 && Nat.eqb k 1 then -1
-  else if Nat.eqb i 1 && Nat.eqb j 0 && Nat.eqb k 2 then -1
+  if (Nat.eqb i 0 && Nat.eqb j 1 && Nat.eqb k 2)%bool then 1
+  else if (Nat.eqb i 1 && Nat.eqb j 2 && Nat.eqb k 0)%bool then 1
+  else if (Nat.eqb i 2 && Nat.eqb j 0 && Nat.eqb k 1)%bool then 1
+  else if (Nat.eqb i 2 && Nat.eqb j 1 && Nat.eqb k 0)%bool then -1
+  else if (Nat.eqb i 0 && Nat.eqb j 2 && Nat.eqb k 1)%bool then -1
+  else if (Nat.eqb i 1 && Nat.eqb j 0 && Nat.eqb k 2)%bool then -1
   else 0.
 
 (** The Levi-Civita symbol is antisymmetric in the first two indices. *)
