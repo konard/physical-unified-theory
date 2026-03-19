@@ -119,18 +119,17 @@ Program Definition plus_measurement : TwoOutcomeMeasurement := {|
   amplitude0 := 1 / sqrt 2; amplitude1 := 1 / sqrt 2
 |}.
 Next Obligation.
-  assert (hsqrt : 0 < sqrt 2) by apply sqrt_pos.
-  assert (hsq : sqrt 2 * sqrt 2 = 2).
-  { apply sqrt_sqrt. lra. }
+  assert (hsqrt : 0 < sqrt 2) by (apply sqrt_lt_R0; lra).
+  assert (hsq : sqrt 2 * sqrt 2 = 2) by (apply sqrt_sqrt; lra).
   field_simplify.
   rewrite hsq. lra.
 Qed.
 Next Obligation.
-  assert (0 < sqrt 2) by apply sqrt_pos.
+  assert (hsqrt : 0 < sqrt 2) by (apply sqrt_lt_R0; lra).
   apply Rlt_le. apply Rdiv_lt_0_compat; lra.
 Qed.
 Next Obligation.
-  assert (0 < sqrt 2) by apply sqrt_pos.
+  assert (hsqrt : 0 < sqrt 2) by (apply sqrt_lt_R0; lra).
   apply Rlt_le. apply Rdiv_lt_0_compat; lra.
 Qed.
 
@@ -138,7 +137,7 @@ Qed.
 Lemma plus_state_equal_probs : born_prob0 plus_measurement = 1/2.
 Proof.
   unfold born_prob0, plus_measurement. simpl.
-  pose proof sqrt_pos 2 as h.
+  assert (hsqrt : 0 < sqrt 2) by (apply sqrt_lt_R0; lra).
   assert (hsq : sqrt 2 * sqrt 2 = 2) by (apply sqrt_sqrt; lra).
   field_simplify.
   rewrite hsq. lra.
