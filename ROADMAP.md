@@ -1,13 +1,17 @@
 # ROADMAP: Grand Physical Theory of Everything
 
-This roadmap outlines the path toward formalizing quantum theory and general relativity in the Lean and Rocq proof assistants, with the ultimate goal of exploring their unification.
+This roadmap outlines the path toward formalizing all of physics in the Lean and Rocq proof assistants, with the ultimate goal of exploring unification of quantum theory and general relativity.
 
 ## Vision
 
 Create a rigorous, machine-verified formalization of:
 1. **Quantum Mechanics** - From basic principles to quantum field theory
 2. **General Relativity** - From differential geometry to Einstein's field equations
-3. **Unification Exploration** - Systematic study of approaches to merge these theories
+3. **The Standard Model** - Particle physics and fundamental interactions
+4. **Thermodynamics and Statistical Mechanics** - From entropy to phase transitions
+5. **Cosmology** - From Big Bang to large-scale structure
+6. **Quantum Information** - Entanglement, computation, and information theory
+7. **Unification Exploration** - Systematic study of all known and hypothetical approaches to merge these theories
 
 ## Why Formal Verification?
 
@@ -15,6 +19,7 @@ Create a rigorous, machine-verified formalization of:
 - **Reproducibility**: Proofs can be checked and built upon by anyone
 - **Clarity**: Formal definitions expose hidden assumptions
 - **Foundation**: A solid base for exploring unification approaches
+- **Hypothesis Testing**: Formal methods can reveal inconsistencies in proposed theories before experimental tests
 
 ## Technology Stack
 
@@ -30,207 +35,163 @@ Create a rigorous, machine-verified formalization of:
 - Rich ecosystem for mathematical reasoning
 - Strong tradition in formal verification
 
-## Project Phases
+## Research Tracks Overview
+
+This project is organized into **independent research tracks** that can be pursued in parallel by different researchers. Each track has its own detailed file in the [`ROADMAP/`](ROADMAP/) directory.
+
+> **Parallel work principle**: Tracks are designed to minimize file-level conflicts. Each track works in its own subdirectory under `lean/PhysicalUnifiedTheory/` and `rocq/theories/`. Shared mathematical foundations (Track A) are the main dependency; other tracks can proceed independently once their required foundations are in place.
+
+### Track A: [Mathematical Foundations](ROADMAP/A_mathematical_foundations.md)
+Core mathematical infrastructure required by all other tracks.
+- Linear algebra, functional analysis, Hilbert spaces
+- Differential geometry, topology, fiber bundles
+- Measure theory, probability, stochastic processes
+- Algebra: groups, rings, Lie algebras, representation theory
+- Category theory and homological algebra
+
+### Track B: [Classical Physics](ROADMAP/B_classical_physics.md)
+Classical mechanics and field theory as the starting point.
+- Lagrangian and Hamiltonian mechanics
+- Classical electromagnetism (Maxwell's equations)
+- Classical thermodynamics and fluid mechanics
+- Continuum mechanics and elasticity
+
+### Track C: [Quantum Mechanics](ROADMAP/C_quantum_mechanics.md)
+Non-relativistic quantum theory.
+- Postulates and mathematical framework
+- Exactly solvable systems (harmonic oscillator, hydrogen atom)
+- Approximation methods (perturbation theory, variational)
+- Quantum information foundations
+- Open quantum systems and decoherence
+
+### Track D: [General Relativity](ROADMAP/D_general_relativity.md)
+Einstein's theory of gravity.
+- Special relativity and Minkowski spacetime
+- Curved spacetime and Einstein field equations
+- Exact solutions (Schwarzschild, Kerr, FLRW, gravitational waves)
+- Singularity theorems and causal structure
+- Numerical relativity foundations
+
+### Track E: [Quantum Field Theory](ROADMAP/E_quantum_field_theory.md)
+Relativistic quantum theory and the Standard Model.
+- Free and interacting field theories
+- Gauge theories and Yang-Mills
+- Quantum electrodynamics (QED)
+- Quantum chromodynamics (QCD)
+- Electroweak theory and Higgs mechanism
+- Anomalies and topological aspects
+
+### Track F: [Statistical Mechanics and Thermodynamics](ROADMAP/F_statistical_mechanics.md)
+Thermal physics and phase transitions.
+- Equilibrium statistical mechanics (classical and quantum)
+- Thermodynamic laws and potentials
+- Phase transitions and critical phenomena
+- Non-equilibrium statistical mechanics
+- Entropy in information theory and black hole physics
+
+### Track G: [Cosmology and Astrophysics](ROADMAP/G_cosmology.md)
+Large-scale physics of the universe.
+- Big Bang cosmology and inflation
+- Dark matter and dark energy
+- Cosmic microwave background
+- Structure formation and galaxy evolution
+- Black hole thermodynamics and information paradox
+
+### Track H: [Quantum Information and Computation](ROADMAP/H_quantum_information.md)
+Quantum computing, communication, and foundations.
+- Quantum circuits and algorithms
+- Quantum error correction
+- Quantum cryptography
+- Entanglement theory
+- Quantum complexity theory
+
+### Track I: [Condensed Matter and Many-Body Physics](ROADMAP/I_condensed_matter.md)
+Quantum many-body systems and emergent phenomena.
+- Second quantization and many-body techniques
+- Superconductivity (BCS theory)
+- Topological phases of matter
+- Quantum Hall effects
+- Tensor networks and entanglement in many-body systems
+
+### Track J: [Particle Physics Phenomenology](ROADMAP/J_particle_physics.md)
+Beyond-Standard-Model physics and experimental connections.
+- Neutrino masses and oscillations
+- CP violation and matter-antimatter asymmetry
+- Grand Unified Theories (GUTs)
+- Supersymmetry (SUSY)
+- Dark matter candidates
+
+### Track K: [Approaches to Quantum Gravity](ROADMAP/K_quantum_gravity.md)
+All known approaches to unifying QM and GR.
+- Loop quantum gravity
+- String theory and M-theory
+- Causal dynamical triangulations
+- Asymptotic safety
+- Causal set theory
+- Non-commutative geometry (Connes)
+- Twistor theory
+- Emergent gravity and entropic gravity
+- Group field theory
+- Tensor models
+
+### Track L: [Mathematical Physics and Structural Approaches](ROADMAP/L_mathematical_physics.md)
+Advanced mathematical frameworks for physics.
+- Algebraic quantum field theory (AQFT / Haag-Kastler)
+- Topological quantum field theory (TQFT)
+- Category-theoretic physics (functorial QFT)
+- Non-commutative geometry
+- Higher gauge theory and higher categories
+- Homotopy type theory connections
+
+### Track M: [Hypotheses and Speculative Directions](ROADMAP/M_hypotheses.md)
+Exploratory research directions and testable hypotheses.
+- Novel unification proposals
+- Discrete vs. continuous spacetime
+- Information-theoretic foundations of physics
+- Multiverse and landscape hypotheses
+- Simulation hypothesis and computational physics
+- Consciousness and quantum mechanics
+
+### Track N: [Experimental Connections and Predictions](ROADMAP/N_experimental.md)
+Linking formal theory to observation.
+- Formalized dimensional analysis and unit systems
+- Known experimental results as formal theorems
+- Predictions from each unification approach
+- Quantum gravity phenomenology
+- Precision tests of fundamental physics
+
+### Track O: [Foundations and Philosophy of Physics](ROADMAP/O_foundations.md)
+Interpretational and foundational questions.
+- Quantum measurement problem and interpretations
+- Determinism vs. indeterminism
+- Nature of spacetime (substantivalism vs. relationalism)
+- The arrow of time
+- Operational and information-theoretic reconstructions of QM
 
 ---
 
-### Phase 1: Mathematical Foundations
-**Status**: Planning
-**Goal**: Establish required mathematical infrastructure
+## Dependency Graph
 
-#### 1.1 Linear Algebra and Functional Analysis
-- [ ] Complex vector spaces and inner products
-- [ ] Hilbert spaces (finite and infinite dimensional)
-- [ ] Bounded and unbounded operators
-- [ ] Spectral theory fundamentals
-- [ ] Tensor products of vector spaces
+```
+Track A (Mathematical Foundations)
+  ├── Track B (Classical Physics)
+  │     ├── Track F (Statistical Mechanics)
+  │     └── Track D (General Relativity)
+  │           ├── Track G (Cosmology)
+  │           └── Track K (Quantum Gravity) ←─── Track E
+  ├── Track C (Quantum Mechanics)
+  │     ├── Track H (Quantum Information)
+  │     ├── Track I (Condensed Matter)
+  │     └── Track E (Quantum Field Theory)
+  │           ├── Track J (Particle Physics)
+  │           └── Track K (Quantum Gravity)
+  ├── Track L (Mathematical Physics) ←── Tracks C, D, E
+  ├── Track M (Hypotheses) ←── all tracks
+  ├── Track N (Experimental) ←── all tracks
+  └── Track O (Foundations) ←── Tracks C, D
+```
 
-#### 1.2 Differential Geometry
-- [ ] Smooth manifolds and charts
-- [ ] Tangent and cotangent bundles
-- [ ] Tensor fields and differential forms
-- [ ] Connections and covariant derivatives
-- [ ] Curvature tensors (Riemann, Ricci, scalar)
-- [ ] Pseudo-Riemannian geometry
-- [ ] Lorentzian manifolds
-
-#### 1.3 Measure Theory and Integration
-- [ ] Lebesgue integration on manifolds
-- [ ] Functional integration (path integrals)
-- [ ] Probability measures for quantum mechanics
-
-**Resources**:
-- Mathlib already has extensive coverage of many foundational topics
-- [Elements of Differential Geometry in Lean](https://arxiv.org/abs/2108.00484)
-
----
-
-### Phase 2: Classical Mechanics and Field Theory
-**Status**: Not Started
-**Goal**: Formalize classical physics as preparation for quantum and relativistic theories
-
-#### 2.1 Classical Mechanics
-- [ ] Lagrangian mechanics
-- [ ] Hamiltonian mechanics
-- [ ] Symplectic geometry
-- [ ] Poisson brackets
-- [ ] Canonical transformations
-
-#### 2.2 Classical Field Theory
-- [ ] Field equations from variational principles
-- [ ] Noether's theorem and conservation laws
-- [ ] Maxwell's equations (classical electromagnetism)
-- [ ] Energy-momentum tensors
-
----
-
-### Phase 3: Quantum Mechanics
-**Status**: Not Started
-**Goal**: Complete formalization of non-relativistic quantum mechanics
-
-#### 3.1 Fundamental Postulates
-- [ ] State spaces (Hilbert spaces)
-- [ ] Observables as self-adjoint operators
-- [ ] Measurement postulate and Born rule
-- [ ] Time evolution (Schrödinger equation)
-- [ ] Uncertainty principles
-
-#### 3.2 Quantum Systems
-- [ ] Harmonic oscillator (creation/annihilation operators)
-- [ ] Angular momentum and spin
-- [ ] Hydrogen atom
-- [ ] Composite systems and tensor products
-- [ ] Entanglement and Bell inequalities
-
-#### 3.3 Advanced Topics
-- [ ] Density matrices and mixed states
-- [ ] Quantum channels and operations
-- [ ] Decoherence
-- [ ] Measurement theory (POVM)
-
-**Resources**:
-- [Lean-QuantumInfo Library](https://github.com/duckki/lean-quantum)
-- [PhysLean Quantum Mechanics](https://physlean.com/)
-- [Formalization of Quantum Stein's Lemma](https://arxiv.org/html/2510.08672v1)
-
----
-
-### Phase 4: General Relativity
-**Status**: Not Started
-**Goal**: Complete formalization of Einstein's general relativity
-
-#### 4.1 Special Relativity
-- [ ] Minkowski spacetime
-- [ ] Lorentz transformations
-- [ ] Four-vectors and tensors
-- [ ] Relativistic mechanics
-- [ ] Twin paradox formalization
-
-#### 4.2 Differential Geometry for GR
-- [ ] Pseudo-Riemannian manifolds
-- [ ] Levi-Civita connection
-- [ ] Geodesics and geodesic deviation
-- [ ] Killing vectors and symmetries
-
-#### 4.3 Einstein's Theory
-- [ ] Einstein field equations
-- [ ] Energy-momentum tensor
-- [ ] Schwarzschild solution
-- [ ] Kerr solution (rotating black holes)
-- [ ] Cosmological solutions (FLRW)
-- [ ] Gravitational waves
-
-#### 4.4 Theoretical Aspects
-- [ ] Singularity theorems (Penrose, Hawking)
-- [ ] Causal structure
-- [ ] ADM formalism
-- [ ] Initial value formulation
-
-**Resources**:
-- Mathlib's differential geometry framework
-- [Formalization of physics index notation in Lean 4](https://arxiv.org/abs/2411.07667)
-
----
-
-### Phase 5: Quantum Field Theory
-**Status**: Not Started
-**Goal**: Formalize relativistic quantum theory
-
-#### 5.1 Free Field Theory
-- [ ] Klein-Gordon field
-- [ ] Dirac field (spinors)
-- [ ] Electromagnetic field quantization
-- [ ] Fock spaces and particle interpretation
-
-#### 5.2 Interacting Field Theory
-- [ ] Perturbation theory
-- [ ] Feynman diagrams (combinatorial structure)
-- [ ] Renormalization basics
-- [ ] Wick's theorem
-
-#### 5.3 Gauge Theories
-- [ ] Gauge symmetry and connections
-- [ ] Yang-Mills theory
-- [ ] Quantum electrodynamics (QED)
-- [ ] Standard Model overview
-
-**Resources**:
-- [Lean Millennium Prize Problems](https://github.com/lean-dojo/LeanMillenniumPrizeProblems) - Yang-Mills formalization
-- PhysLean's Wick theorem formalization
-
----
-
-### Phase 6: Approaches to Unification
-**Status**: Future
-**Goal**: Explore and formalize approaches to quantum gravity
-
-#### 6.1 The Incompatibility Problem
-- [ ] Document the technical incompatibilities:
-  - Discrete vs continuous structure
-  - Background dependence vs independence
-  - Fixed time ordering vs dynamical spacetime
-  - Problem of time in quantum gravity
-- [ ] Formalize why naive approaches fail
-
-#### 6.2 Canonical Quantum Gravity
-- [ ] ADM formalism in Lean/Rocq
-- [ ] Wheeler-DeWitt equation
-- [ ] Loop quantum gravity basics
-- [ ] Spin networks and spin foams
-
-#### 6.3 Perturbative Approaches
-- [ ] Graviton as spin-2 particle
-- [ ] Non-renormalizability proofs
-- [ ] Effective field theory of gravity
-
-#### 6.4 String Theory Foundations
-- [ ] Bosonic string basics
-- [ ] Worldsheet formulation
-- [ ] Conformal field theory
-- [ ] Extra dimensions and compactification
-
-#### 6.5 Other Approaches
-- [ ] Causal dynamical triangulations
-- [ ] Asymptotic safety
-- [ ] Emergent gravity proposals
-- [ ] Gauge-theoretic approaches (Aalto University 2025)
-
----
-
-### Phase 7: Novel Unification Attempts
-**Status**: Future
-**Goal**: Use formal verification to explore new ideas
-
-#### 7.1 Systematic Exploration
-- [ ] Use type theory to identify structural parallels
-- [ ] Formalize the common mathematical language
-- [ ] Explore categorical/topos-theoretic frameworks
-- [ ] Investigate non-commutative geometry
-
-#### 7.2 Verification of Claims
-- [ ] Check mathematical consistency of proposed theories
-- [ ] Verify limiting cases (QM and GR as limits)
-- [ ] Test predictions against known results
+**Key insight**: Tracks B, C, D can start as soon as Track A has basic infrastructure. Tracks H, I, J, L are largely independent of each other. Track K (quantum gravity) is the convergence point requiring inputs from most other tracks.
 
 ---
 
@@ -240,44 +201,78 @@ Create a rigorous, machine-verified formalization of:
 physical-unified-theory/
 ├── .github/
 │   └── workflows/
-│       ├── lean.yml          # Lean 4 CI/CD
-│       └── rocq.yml          # Rocq CI/CD
+│       ├── lean.yml                    # Lean 4 CI/CD
+│       └── rocq.yml                    # Rocq CI/CD
 ├── lean/
 │   ├── lakefile.lean
 │   ├── lean-toolchain
 │   └── PhysicalUnifiedTheory/
-│       ├── Foundations/
+│       ├── Foundations/                 # Track A
 │       │   ├── LinearAlgebra.lean
 │       │   ├── HilbertSpaces.lean
-│       │   └── DifferentialGeometry.lean
-│       ├── ClassicalMechanics/
-│       ├── QuantumMechanics/
+│       │   ├── DifferentialGeometry.lean
+│       │   ├── FiberBundles.lean
+│       │   ├── LieGroups.lean
+│       │   └── CategoryTheory.lean
+│       ├── ClassicalMechanics/         # Track B
+│       ├── QuantumMechanics/           # Track C
 │       │   ├── Postulates.lean
 │       │   ├── Operators.lean
-│       │   └── Systems.lean
-│       ├── GeneralRelativity/
+│       │   ├── Systems.lean
+│       │   └── OpenSystems.lean
+│       ├── GeneralRelativity/          # Track D
 │       │   ├── SpecialRelativity.lean
 │       │   ├── EinsteinEquations.lean
-│       │   └── Solutions.lean
-│       ├── QuantumFieldTheory/
-│       └── Unification/
+│       │   ├── Solutions.lean
+│       │   └── CausalStructure.lean
+│       ├── QuantumFieldTheory/         # Track E
+│       │   ├── FreeFields.lean
+│       │   ├── GaugeTheories.lean
+│       │   └── StandardModel.lean
+│       ├── StatisticalMechanics/       # Track F
+│       ├── Cosmology/                  # Track G
+│       ├── QuantumInformation/         # Track H
+│       ├── CondensedMatter/            # Track I
+│       ├── ParticlePhysics/            # Track J
+│       ├── QuantumGravity/             # Track K
+│       │   ├── LoopQuantumGravity.lean
+│       │   ├── StringTheory.lean
+│       │   └── CausalSets.lean
+│       ├── MathematicalPhysics/        # Track L
+│       └── Experimental/               # Track N
 ├── rocq/
 │   ├── _CoqProject
 │   └── theories/
-│       ├── Foundations/
-│       ├── QuantumMechanics/
-│       ├── GeneralRelativity/
+│       ├── Foundations/                 # Track A
+│       ├── QuantumMechanics/           # Track C
+│       ├── GeneralRelativity/          # Track D
+│       ├── QuantumFieldTheory/         # Track E
+│       ├── QuantumGravity/             # Track K
 │       └── Unification/
 ├── docs/
 │   ├── GLOSSARY.md
 │   ├── QUANTUM_MECHANICS.md
 │   ├── GENERAL_RELATIVITY.md
 │   └── UNIFICATION_CHALLENGES.md
+├── ROADMAP.md                          # This file (index)
+├── ROADMAP/                            # Detailed track files
+│   ├── A_mathematical_foundations.md
+│   ├── B_classical_physics.md
+│   ├── C_quantum_mechanics.md
+│   ├── D_general_relativity.md
+│   ├── E_quantum_field_theory.md
+│   ├── F_statistical_mechanics.md
+│   ├── G_cosmology.md
+│   ├── H_quantum_information.md
+│   ├── I_condensed_matter.md
+│   ├── J_particle_physics.md
+│   ├── K_quantum_gravity.md
+│   ├── L_mathematical_physics.md
+│   ├── M_hypotheses.md
+│   ├── N_experimental.md
+│   └── O_foundations.md
 ├── examples/
-│   └── ...
 ├── experiments/
-│   └── ...
-├── ROADMAP.md
 ├── README.md
 ├── CONTRIBUTING.md
 └── LICENSE
@@ -302,6 +297,15 @@ Physics literature often uses coordinates; formal mathematics prefers coordinate
 ### 5. Physical Units and Dimensions
 Tracking units (meters, seconds, kg) through calculations requires careful type design.
 
+### 6. Renormalization
+Mathematically rigorous formulation of renormalization (beyond perturbative approaches) is an active area of research (related to the Yang-Mills Millennium Prize problem).
+
+### 7. Non-Perturbative Definitions
+Many quantum field theories lack non-perturbative definitions. Constructive QFT aims to fill this gap but remains incomplete for 4D theories.
+
+### 8. Background Independence
+Formalizing background-independent theories (where spacetime itself is dynamical) in proof assistants designed around fixed type structures is a fundamental challenge.
+
 ---
 
 ## Resources and References
@@ -311,17 +315,24 @@ Tracking units (meters, seconds, kg) through calculations requires careful type 
 - [PhysLean](https://physlean.com/) - Physics formalization in Lean
 - [Lean-QuantumInfo](https://github.com/duckki/lean-quantum) - Quantum computing in Lean
 - [Mathematical Components](https://math-comp.github.io/) - Rocq/Coq math library
+- [UniMath](https://github.com/UniMath/UniMath) - Univalent mathematics in Rocq/Coq
 
 ### Physics References
 - Sakurai, "Modern Quantum Mechanics"
 - Wald, "General Relativity"
-- Weinberg, "The Quantum Theory of Fields"
+- Weinberg, "The Quantum Theory of Fields" (3 volumes)
 - Peskin & Schroeder, "An Introduction to Quantum Field Theory"
+- Kiefer, "Quantum Gravity"
+- Rovelli, "Quantum Gravity"
+- Polchinski, "String Theory" (2 volumes)
+- Nakahara, "Geometry, Topology and Physics"
+- Connes, "Noncommutative Geometry"
 
 ### Formalization Papers
 - [Elements of Differential Geometry in Lean](https://arxiv.org/abs/2108.00484)
 - [Formalization of physics index notation in Lean 4](https://arxiv.org/abs/2411.07667)
 - [Formalizing Geometric Algebra in Lean](https://link.springer.com/article/10.1007/s00006-021-01164-1)
+- [Formalization of Quantum Stein's Lemma](https://arxiv.org/html/2510.08672v1)
 
 ### Quantum Gravity Resources
 - [Stanford Encyclopedia: Quantum Gravity](https://plato.stanford.edu/entries/quantum-gravity/)
@@ -335,15 +346,16 @@ Tracking units (meters, seconds, kg) through calculations requires careful type 
 We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ### How to Contribute
-1. Pick an item from the roadmap
+1. Pick a track and item from the roadmap
 2. Discuss approach in an issue
 3. Implement and submit a PR
 4. Ensure CI passes (Lean and/or Rocq verification)
 
 ### Priority Areas
-- Mathematical foundations (Phase 1)
-- Simple quantum systems (Phase 3)
-- Special relativity (Phase 4)
+- Mathematical foundations (Track A) - enables all other work
+- Simple quantum systems (Track C) - immediate formalization targets
+- Special relativity (Track D) - well-understood, good starting point
+- Quantum information (Track H) - active community, many existing results
 - Documentation and examples
 
 ---
@@ -352,11 +364,12 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 This is a long-term project. Formalizing even basic physics is labor-intensive:
 
-- **Phase 1 (Foundations)**: Partially available in Mathlib; gaps need filling
-- **Phase 2-3 (Classical + QM)**: Core quantum mechanics formalization is achievable
-- **Phase 4 (GR)**: Requires significant differential geometry work
-- **Phase 5 (QFT)**: Advanced; depends on earlier phases
-- **Phase 6-7 (Unification)**: Research-level; timeline unknown
+- **Track A (Foundations)**: Partially available in Mathlib; gaps need filling
+- **Tracks B-D (Classical + QM + GR)**: Core formalizations are achievable medium-term
+- **Tracks E-F (QFT + StatMech)**: Advanced; depend on earlier tracks
+- **Tracks G-J (Applications)**: Can proceed in parallel once foundations exist
+- **Track K (Quantum Gravity)**: Research-level; timeline unknown
+- **Tracks L-O (Advanced/Speculative)**: Ongoing exploration with no fixed endpoint
 
 The goal is steady progress with each step verified, not speed.
 
