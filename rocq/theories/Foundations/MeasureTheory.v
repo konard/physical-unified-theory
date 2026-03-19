@@ -158,8 +158,12 @@ Lemma binary_entropy_nonneg (p : R) (hp0 : 0 < p) (hp1 : p < 1) :
     0 <= binary_entropy p hp0 hp1.
 Proof.
   unfold binary_entropy.
-  assert (hln_p : ln p <= 0) by (apply ln_le_zero; lra).
-  assert (hln_1mp : ln (1 - p) <= 0) by (apply ln_le_zero; lra).
+  assert (hln_p : ln p <= 0).
+  { assert (h : ln p < ln 1) by (apply ln_increasing; lra).
+    rewrite ln_1 in h. lra. }
+  assert (hln_1mp : ln (1 - p) <= 0).
+  { assert (h : ln (1 - p) < ln 1) by (apply ln_increasing; lra).
+    rewrite ln_1 in h. lra. }
   nra.
 Qed.
 
