@@ -21,6 +21,7 @@
 From Stdlib Require Import Reals.
 From Stdlib Require Import Lra.
 From Stdlib Require Import Lia.
+From Stdlib Require Import Psatz.
 Require Import PhysicalUnifiedTheory.Foundations.Basic.
 Open Scope R_scope.
 
