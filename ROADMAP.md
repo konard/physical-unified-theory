@@ -37,7 +37,7 @@ Create a rigorous, machine-verified formalization of:
 
 ## Research Tracks Overview
 
-This project is organized into **independent research tracks** that can be pursued in parallel by different researchers. Each track has its own detailed file in the [`ROADMAP/`](ROADMAP/) directory.
+This project is organized into **independent research tracks** that can be pursued in parallel by different researchers. Each track has its own detailed file in the [`ROADMAP/`](ROADMAP/) directory, and each track has a corresponding **detailed execution plan** in the [`plan/`](plan/) directory (see [plan/README.md](plan/README.md) for the index, [plan/DEPENDENCIES.md](plan/DEPENDENCIES.md) for the full dependency graph, and [plan/EXECUTION_STRATEGY.md](plan/EXECUTION_STRATEGY.md) for the phased execution approach).
 
 > **Parallel work principle**: Tracks are designed to minimize file-level conflicts. Each track works in its own subdirectory under `lean/PhysicalUnifiedTheory/` and `rocq/theories/`. Shared mathematical foundations (Track A) are the main dependency; other tracks can proceed independently once their required foundations are in place.
 
