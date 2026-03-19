@@ -126,7 +126,20 @@ Priority areas:
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
+This project is released into the **public domain** under [The Unlicense](LICENSE).
+
+### Why The Unlicense?
+
+The Unlicense is a public domain dedication with key advantages over other license models:
+
+- **No restrictions**: Unlike MIT, Apache, or GPL, The Unlicense imposes **zero obligations** on users. No attribution required, no license file to carry around, no conditions to comply with.
+- **Maximum freedom**: Anyone can copy, modify, publish, use, compile, sell, or distribute this work — for any purpose, commercial or non-commercial — without asking permission.
+- **Truly free for AI/ML training**: Other licenses (even permissive ones like MIT) may require attribution in derivative works, which is complex for model training datasets. The Unlicense removes this barrier entirely.
+- **No copyright headers needed**: Contributors don't need to add copyright notices to source files. The work belongs to everyone.
+- **Simpler than Creative Commons Zero (CC0)**: The Unlicense is specifically designed for software and is simpler and more widely understood in the software community than CC0.
+- **Encourages open science**: For a scientific formalization project, maximum openness accelerates research — anyone can build on this work without legal friction.
+
+In short: The Unlicense is the most permissive option available, making this project as open as possible for researchers, educators, and developers worldwide.
 
 ---
 

@@ -197,7 +197,7 @@ We especially welcome contributions in:
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+By contributing, you agree that your contributions will be dedicated to the **public domain** under [The Unlicense](LICENSE) — no copyright reserved, no conditions imposed on anyone who uses the work.
 
 ## Questions?
 
