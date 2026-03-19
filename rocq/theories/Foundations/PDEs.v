@@ -110,7 +110,7 @@ Qed.
 Lemma energy_nonneg (n : nat) : 0 <= particle_in_box_energy n.
 Proof.
   unfold particle_in_box_energy.
-  assert (hPI : 0 < PI) by (apply PI_pos).
+  assert (hPI : 0 < PI) by (apply PI_RGT_0).
   assert (hINR : 0 <= INR n) by (apply pos_INR).
   nra.
 Qed.
@@ -120,7 +120,7 @@ Lemma ground_lt_first_excited :
     particle_in_box_energy 1 < particle_in_box_energy 2.
 Proof.
   unfold particle_in_box_energy. simpl.
-  assert (hPI : 0 < PI) by (apply PI_pos).
+  assert (hPI : 0 < PI) by (apply PI_RGT_0).
   nra.
 Qed.
 
