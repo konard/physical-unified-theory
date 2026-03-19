@@ -121,8 +121,6 @@ Program Definition plus_measurement : TwoOutcomeMeasurement := {|
 Next Obligation.
   assert (hsqrt : 0 < sqrt 2) by (apply sqrt_lt_R0; lra).
   assert (hsq : sqrt 2 * sqrt 2 = 2) by (apply sqrt_sqrt; lra).
-  assert (hsqrt_ne : sqrt 2 <> 0) by lra.
-  field_simplify [hsqrt_ne].
   nra.
 Qed.
 Next Obligation.
@@ -140,8 +138,6 @@ Proof.
   unfold born_prob0, plus_measurement. simpl.
   assert (hsqrt : 0 < sqrt 2) by (apply sqrt_lt_R0; lra).
   assert (hsq : sqrt 2 * sqrt 2 = 2) by (apply sqrt_sqrt; lra).
-  assert (hsqrt_ne : sqrt 2 <> 0) by lra.
-  field_simplify [hsqrt_ne].
   nra.
 Qed.
 
