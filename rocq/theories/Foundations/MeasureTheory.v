@@ -121,7 +121,10 @@ Program Definition plus_measurement : TwoOutcomeMeasurement := {|
 Next Obligation.
   assert (hsqrt : 0 < sqrt 2) by (apply sqrt_lt_R0; lra).
   assert (hsq : sqrt 2 * sqrt 2 = 2) by (apply sqrt_sqrt; lra).
-  nra.
+  assert (hsqrt_ne : sqrt 2 <> 0) by lra.
+  assert (hprod : 1 / sqrt 2 * (1 / sqrt 2) = 1 / (sqrt 2 * sqrt 2)).
+  { field. exact hsqrt_ne. }
+  rewrite hprod, hsq. lra.
 Qed.
 Next Obligation.
   assert (hsqrt : 0 < sqrt 2) by (apply sqrt_lt_R0; lra).
@@ -138,7 +141,10 @@ Proof.
   unfold born_prob0, plus_measurement. simpl.
   assert (hsqrt : 0 < sqrt 2) by (apply sqrt_lt_R0; lra).
   assert (hsq : sqrt 2 * sqrt 2 = 2) by (apply sqrt_sqrt; lra).
-  nra.
+  assert (hsqrt_ne : sqrt 2 <> 0) by lra.
+  assert (hprod : 1 / sqrt 2 * (1 / sqrt 2) = 1 / (sqrt 2 * sqrt 2)).
+  { field. exact hsqrt_ne. }
+  rewrite hprod, hsq. lra.
 Qed.
 
 (** ** A.5.3: Shannon/von Neumann Entropy *)
