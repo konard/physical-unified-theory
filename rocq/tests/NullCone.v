@@ -20,3 +20,10 @@ Qed.
 
 Example boost_mismatch_at_double_scale : 4 * 2 / (1 + 2) ^ 2 < 1.
 Proof. apply boost_factor_lt_one; lra. Qed.
+
+Example gaussian_clock_resolvent_bound (clock focusing : R) :
+  (3 / 4) * exp focusing <= clock ->
+  3 / (3 + clock) <= (3 / (3 / 4)) * exp (- focusing).
+Proof.
+  apply resolvent_le_clock_laplace; lra.
+Qed.

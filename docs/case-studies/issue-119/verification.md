@@ -42,6 +42,7 @@ python3 experiments/null_cone.py -v
 | Cubic quotient near zero coupling | At $t=10^{-7}$ and $N=16,\,128,\,1024,\,8192$, the negative imaginary quotient agrees with the positive harmonic sum within the sine Taylor test bound and increases with $N$. |
 | Trace and replica ratio | With weight $2/3$, increasing the cut from 16 to 128 raises the trace from $32/3$ to $256/3$ and decreases exact purity from $1/16$ to $1/128$. |
 | Clock resolvent | At $L=3$, cutoff 16 has overlap $3/19$ and cutoff 1024 has overlap $3/1027$. Each overlap is positive and the Lean limit is zero. |
+| Commuting radial Gaussian clock | At $s=2$, gradient lower bound coefficient $a=1/2$, $L=3$ and $c=3/4$, the logarithm of the overlap upper bound falls from about $-7.10$ at cutoff 16 to $-2340.22$ at cutoff 1024. Rocq checks the pointwise resolvent inequality. |
 | Entropy coefficient | The fixed-mass arithmetic reproduces $106/45$ exactly. |
 
 [Lean theorems](../../../lean/PhysicalUnifiedTheory/Unification/NullCone.lean) · [Lean regressions](../../../lean/tests/NullCone.lean) · [Rocq theorems](../../../rocq/theories/Unification/NullCone.v) · [Rocq regressions](../../../rocq/tests/NullCone.v) · [Experiment](../../../experiments/null_cone.py)

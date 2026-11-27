@@ -34,6 +34,57 @@ A sufficient estimate for the stronger clock claim is $\sup_n Q_n[\Omega]\le M<\
 
 A further check concerns the topology in which one takes the continuum limit. If the independent configuration modes of (4.32) are expanded in an orthonormal radial basis with variance $1/(2sk)$, their product Gaussian is almost surely outside the square-summable configuration space. To see this, for coefficients $q_k$ and $t>0$, $\mathbb E e^{-t\sum_{k=1}^N q_k^2}=\prod_{k=1}^N(1+t/(sk))^{-1/2}\to0$, since the logarithm of the reciprocal diverges harmonically. Dominated convergence then forces $e^{-t\sum_{k\ge1}q_k^2}=0$ almost surely. This concerns the illustrated mode normalization and product state. Equation (4.32) is a benchmark choice and does not identify the general preparation of §5.1. A proof using other mode widths or a distribution-space topology must specify them and still establish the operator form-domain estimate. [Radial state (4.32)](https://arxiv.org/html/2611.34924v1#S4.E32) · [Fixed-area form analysis](https://arxiv.org/html/2611.34924v1#A3.SS2)
 
+### A commuting radial clock with the benchmark covariance
+
+The benchmark variance in (4.32) also permits a test with the shear gradient
+included. Choose a radial clock on one generator, fix its corner radius
+$r>0$, set the second polarization to zero, and use independent real
+coordinates $q_k$ with variances $1/(2sk)$. Let $\epsilon<v_0<1$ and
+$d=v_0-\epsilon$. On $[\epsilon,v_0]$ take the normalized modes
+$e_k(v)=\sqrt{2/d}\sin(k\pi(v-\epsilon)/d)$ and extend them by zero.
+They are continuous and have square-integrable weak derivatives. Write
+$z_N(v)=\sum_{k=1}^N q_k e_k(v)$ and
+$\Xi_N(v)=\frac14\int_\epsilon^v w|\partial_w z_N(w)|^2\,dw$.
+Orthogonality of the derivative cosines on the full subinterval gives, for
+$v\ge v_0$,
+
+$$
+\Xi_N(v)\ge F_N:=a\sum_{k=1}^N k^2q_k^2,
+\qquad a=\frac{\epsilon\pi^2}{4d^2}>0.
+$$
+
+Thus the single-generator clock $T_N=r\int_\epsilon^1 e^{\Xi_N(v)}\,dv$
+is at least $c e^{F_N}$, with $c=r(1-v_0)>0$. Consider the product Gaussian
+measure $\mu$ on the coordinates, multiplication by $T_N$ on $L^2(\mu)$,
+and the normalized constant vector $1$. Completing the square in the
+one-dimensional Gaussian integral gives
+$\mathbb E e^{-a k^2q_k^2}=(1+a k/s)^{-1/2}$. Independence and the pointwise
+resolvent bound therefore give
+
+$$
+0<\left\langle 1,\frac{L}{L+T_N}1\right\rangle
+\le \frac{L}{c}\prod_{k=1}^N(1+a k/s)^{-1/2}
+\le \frac{L}{c\sqrt{1+aN/s}}.
+$$
+
+Each cutoff has a dense form domain. The lower bounds $F_N$ are increasing,
+and dominated convergence applied to $e^{-F_N}$ shows that
+$F_N\to\infty$ almost surely. Hence $T_N\to\infty$ almost surely, the
+resolvents converge strongly to zero, and the vectors with
+$\sup_N\int T_N |\psi|^2\,d\mu<\infty$ form only the zero subspace.
+These conclusions use the monotonicity of $F_N$. The derivative cross terms
+on incomplete subintervals need not make $T_N$ itself monotone.
+
+Rocq checks the scalar resolvent inequality used in this argument. The
+bounded experiment evaluates the product in logarithms. This
+commuting model uses the variance of (4.32) and the one-polarization
+focusing formula from (4.22). The paper uses (4.32) for a selected
+amplitude and requires a full two-polarization preparation, reduced
+symplectic form and area-density operators for (5.16). The test establishes
+that this variance law alone cannot justify a smooth-profile tail argument
+for a clock with radial gradient energy.
+[Shear form (4.22)](https://arxiv.org/html/2611.34924v1#S4.E22) · [Benchmark covariance (4.32)](https://arxiv.org/html/2611.34924v1#S4.E32)
+
 ## Gluing and finite closed traces
 
 For a Hilbert basis $(e_i)$ and fixed vectors $x,y$, Parseval gives $\langle x,y\rangle=\sum_i\langle x,e_i\rangle\langle e_i,y\rangle$. Cauchy–Schwarz bounds the sum of the absolute values by $\|x\|\|y\|$. With normalizable endpoint states and unitary evolutions, one can absorb the evolutions into $x,y$. An orthogonal cut projection is a contraction. None of these inequalities bounds a trace by a fixed pair of Hilbert norms when the endpoints themselves are being summed. [Open gluing (4.29)–(4.30)](https://arxiv.org/html/2611.34924v1#S4.E29)

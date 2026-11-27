@@ -50,6 +50,26 @@ Proof.
   nra.
 Qed.
 
+(** An exponential lower bound on a commuting clock gives a Laplace upper
+    bound on its normalized resolvent. *)
+Theorem resolvent_le_clock_laplace : forall L floor clock focusing : R,
+  0 < L -> 0 < floor -> floor * exp focusing <= clock ->
+  L / (L + clock) <= (L / floor) * exp (- focusing).
+Proof.
+  intros L floor clock focusing HL Hfloor Hclock.
+  pose proof (exp_pos focusing) as Hexp.
+  pose proof (Rmult_lt_0_compat _ _ Hfloor Hexp) as Hproduct.
+  assert (Hsum : 0 < L + clock) by lra.
+  rewrite exp_Ropp.
+  apply (Rmult_le_reg_r ((L + clock) * (floor * exp focusing))).
+  - apply Rmult_lt_0_compat; assumption.
+  - replace (L / (L + clock) * ((L + clock) * (floor * exp focusing)))
+      with (L * (floor * exp focusing)) by (field; lra).
+    replace (L / floor * / exp focusing * ((L + clock) * (floor * exp focusing)))
+      with (L * (L + clock)) by (field; lra).
+    apply Rmult_le_compat_l; lra.
+Qed.
+
 (** Positive lower bounds on replica purity imply trace bounds when the
     cyclic numerator is bounded by the trace of the cut. *)
 Theorem trace_bound_from_purity : forall trace cyclic p : R,

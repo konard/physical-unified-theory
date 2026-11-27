@@ -27,6 +27,14 @@ def finite_weight_replica_purity(weight, dimension):
     return sum(diagonal), cyclic / independent
 
 
+def gaussian_clock_log_overlap_bound(s, rate, L, floor, cutoff):
+    """Log of a resolvent upper bound for the commuting radial clock model."""
+    log_laplace_transform = -0.5 * math.fsum(
+        math.log1p(rate * k / s) for k in range(1, cutoff + 1)
+    )
+    return math.log(L / floor) + log_laplace_transform
+
+
 class NullConeChecks(unittest.TestCase):
     def test_radial_tail_at_fixed_area(self):
         for s in (0.5, 2.0, 100.0):
@@ -68,6 +76,26 @@ class NullConeChecks(unittest.TestCase):
                 self.assertLess(resolvent, Fraction(L, n))
                 self.assertLessEqual(n * resolvent**2, Fraction(L, 4))
                 previous = resolvent
+
+    def test_radial_gaussian_clock_has_vanishing_overlap_bound(self):
+        s = 2.0
+        rate = 0.5
+        L = 3.0
+        floor = 0.75
+        first_mode_bound = math.log(L / floor) - 0.5 * math.log1p(rate / s)
+        self.assertAlmostEqual(
+            gaussian_clock_log_overlap_bound(s, rate, L, floor, 1),
+            first_mode_bound,
+        )
+        previous = first_mode_bound
+        for n in (16, 128, 1024):
+            with self.subTest(n=n):
+                bound = gaussian_clock_log_overlap_bound(s, rate, L, floor, n)
+                last_mode_bound = math.log(L / floor) - 0.5 * math.log1p(rate * n / s)
+                self.assertLess(bound, previous)
+                self.assertLessEqual(bound, last_mode_bound)
+                previous = bound
+        self.assertLess(previous, math.log(1e-12))
 
     def test_schwarzschild_log_coefficient(self):
         q = Fraction(257, 302)
