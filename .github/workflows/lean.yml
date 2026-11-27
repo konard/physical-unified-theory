@@ -5,11 +5,13 @@ on:
     branches: [ main ]
     paths:
       - 'lean/**'
+      - 'experiments/null_cone.py'
       - '.github/workflows/lean.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'lean/**'
+      - 'experiments/null_cone.py'
       - '.github/workflows/lean.yml'
   workflow_dispatch:
 
@@ -60,6 +62,10 @@ jobs:
         lake env lean tests/Units.lean 2>&1 | tee lean-test.log
         lake env lean tests/DensityMatrix.lean 2>&1 | tee -a lean-test.log
         lake env lean tests/PositionMeasurement.lean 2>&1 | tee -a lean-test.log
+        lake env lean tests/NullCone.lean 2>&1 | tee -a lean-test.log
+
+    - name: Run null cone numerical checks
+      run: python3 experiments/null_cone.py -v
 
     - name: Upload build logs
       if: always()
