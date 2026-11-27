@@ -20,6 +20,41 @@ The paper’s four-dimensional conclusion depends on constructing the continuum 
 
 In JT, the metric is locally AdS₂ under the stated conditions. For a positive AdS length the expression in (2.4c) increases with the proper width. The matter flux instead changes the dilaton through (2.5). With fixed corner dilaton and a fixed normalized matter vector, choose a normalized cap wavefunction $h$ with an absolutely continuous clock density on a finite interval. The cumulative distribution $F(u)=\int_0^u|h(v)|^2\,dv$ sends that clock measure to the uniform law on $[0,1]$. Multiplying $h$ by $e^{2\pi i n F(u)}$ leaves the clock probabilities unchanged. Orthogonality follows from the Fourier integral in (2.14). The positive constant boost weight therefore gives a diagonal lower bound independent of the clock cutoff. This checks the mechanism in the two-dimensional example, conditional on its proposed Hilbert representation. [JT calculation (2.4)](https://arxiv.org/html/2611.34924v1#S2.E4) · [JT states (2.14)](https://arxiv.org/html/2611.34924v1#S2.E14) · [JT trace (2.17)](https://arxiv.org/html/2611.34924v1#S2.E17)
 
+One can derive the clock directly from the null geodesic. For the right
+generator $\dot\tau=\dot\sigma$, the conformal metric gives
+$\ddot\sigma+2\tan\sigma\,\dot\sigma^2=0$, where dots denote affine
+derivatives. The normalization at the tip sets $\dot\sigma=\cos^2\sigma/L_{\mathrm{AdS}}$.
+Therefore $u=L_{\mathrm{AdS}}\tan\sigma$ and integrating the spatial line
+element gives $\lambda=L_{\mathrm{AdS}}\operatorname{arsinh}(\tan\sigma)$.
+With $x=w/(2L_{\mathrm{AdS}})$, the cap-normalized reading divided by
+$L_{\mathrm{AdS}}$ is
+$x\int_\epsilon^1 \cosh(xz)/\cosh(\epsilon x)\,dz$.
+For $z\ge\epsilon>0$ the logarithmic derivative of the integrand is
+$z\tanh(xz)-\epsilon\tanh(\epsilon x)\ge0$. Its positivity and the
+prefactor $x$ imply strict increase for $x\ge0$. On this fixed geometry, the
+null component of the dilaton equation gives $\Phi''=-\varphi'^2$. Twice
+integrating with matched initial dilaton and slope gives (2.5), and a constant
+scalar gradient $j$ gives the explicit change $-j^2 u_*^2/2$.
+[Metric and cap clock (2.3)–(2.4)](https://arxiv.org/html/2611.34924v1#S2.E4) · [Null constraint (2.5)](https://arxiv.org/html/2611.34924v1#S2.E5)
+
+The scalar matter terms in (2.7) determine the quoted zero-mode momentum.
+For the joint constant shift $S\varphi_i=S\varphi_0=1$ with $S\pi_\varphi=0$,
+the contraction of $\delta\Theta$ with $S$ is $-\delta p_1$, where
+$p_1=\int_{\Sigma_0}\pi_\varphi\,dx+\sum_i\int_\epsilon^1\partial_v\varphi_i\,dv$.
+The endpoint expression in (2.11) follows from the fundamental theorem of
+calculus. The cap average of $\varphi_0$ against a unit-integral weight changes
+at rate one under $S$, so it is conjugate to $p_1$. For a shift of only a
+corner rapidity $\Gamma_i$, the analogous contraction is
+$-\delta\mathscr K_i$. A compactly supported generator shift
+$X_f\varphi_i=f/2$ gives
+$\Omega(X_f,Y)=-\int f\,\partial_v(Y\varphi_i)\,dv=-Yj_i(f)$ by integration
+by parts. This fixes the classical bracket of two currents on the same
+generator to $\frac12\int f g'\,dv$, with zero bracket across the two
+generators. The calculation uses the cap symplectic potential and the
+support condition on the shifts. Deriving the complete potential from the
+action and constructing the evolution on the full Hilbert representation
+remain separate acceptance checks. [Symplectic potential (2.6)–(2.7)](https://arxiv.org/html/2611.34924v1#S2.E7) · [Current and zero mode (2.10)–(2.11)](https://arxiv.org/html/2611.34924v1#S2.E10)
+
 For an expanding generator in vacuum, write $p=\partial_u\rho>0$, $v=\rho/\rho_S$ and $D=(\partial_v\bar q)^{AB}(\partial_v\bar q)_{AB}\ge 0$ using the induced positive transverse metric to raise indices. Substitution into (3.25f) divides by $p^2/\rho_S$ and gives $\partial_v\log p=-vD/8$. Integration from the cap gives $p=p_\epsilon e^{-\Xi}$ with $\Xi(v)=\frac18\int_\epsilon^v tD(t)\,dt$. Integrating $du/dv=\rho_S/p$ then gives the clock (3.27). Under $u\mapsto\alpha u+\beta$, the cap slope divides by $\alpha$ and the elapsed affine parameter multiplies by it. The proof requires the expanding branch, a positive cap radius fraction and absence of a caustic on the segment. [Raychaudhuri (3.25)](https://arxiv.org/html/2611.34924v1#S3.E25) · [Integrated clock (3.26)–(3.28)](https://arxiv.org/html/2611.34924v1#S3.E26)
 
 Since $e^\Xi\ge1$, averaging $u_*(y)$ as in (3.28) gives $(1-\epsilon)A/a\le \bar u_*$, where $a=\int\rho_S d\Omega$. Cauchy–Schwarz with the round reference measure of mass $4\pi$ gives $a^2\le 4\pi A$. A reading $\bar u_*\le L$ implies $A\le 4\pi L^2/(1-\epsilon)^2$. For $\Xi=0$ and constant $\rho_S=r>0$, $a=4\pi r$, $A=4\pi r^2$ and $L=(1-\epsilon)r$ attain equality. In the quantum argument the corresponding inequalities must hold as forms and be preserved on the spectral subspace of the clock. Area and clock require compatible spectral projections for turning the pointwise bound into a statement about their joint support. [Operator definition (4.26)–(4.27)](https://arxiv.org/html/2611.34924v1#S4.E26) · [Area bound (5.21)](https://arxiv.org/html/2611.34924v1#S5.E21)
@@ -39,7 +74,7 @@ A further check concerns the topology in which one takes the continuum limit. If
 The benchmark variance in (4.32) also permits a test with the shear gradient
 included. Choose a radial clock on one generator, fix its corner radius
 $r>0$, set the second polarization to zero, and use independent real
-coordinates $q_k$ with variances $1/(2sk)$. Let $\epsilon<v_0<1$ and
+coordinates $q_k$ with variances $1/(2sk)$. Let $0<\epsilon<v_0<1$ and
 $d=v_0-\epsilon$. On $[\epsilon,v_0]$ take the normalized modes
 $e_k(v)=\sqrt{2/d}\sin(k\pi(v-\epsilon)/d)$ and extend them by zero.
 They are continuous and have square-integrable weak derivatives. Write
