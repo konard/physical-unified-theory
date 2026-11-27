@@ -13,18 +13,26 @@ The GitHub Actions run and job log download endpoints both return HTTP 410.
 The run has no available artifacts. The original investigation downloaded
 640 lines and copied the file into this case study, but Git ignored `*.log`
 and the file was omitted from PR #4. The published session transcript retains
-the output of the commands that selected the failure and its surrounding
-lines. The timestamped excerpts below were recovered from that output. They
-corroborate the live job annotations. The full 640-line log remains unavailable.
+parts of the installation and compiler failure, with some lines repeated
+across commands. The nonblank timestamped lines from the two error queries
+appear below once each. The transcript also
+records that the original attempt to read the complete log exceeded the read
+tool's output limit. The full 640-line log remains unavailable.
 [Original job](https://github.com/konard/physical-unified-theory/actions/runs/21453864333/job/61789404485) · [Investigation transcript link](https://github.com/konard/physical-unified-theory/pull/4#issuecomment-3813796529) · [PR #4 files](https://github.com/konard/physical-unified-theory/pull/4/files)
 
 ```text
+build	Build Rocq project using docker-coq-action	2026-01-28T20:12:29.5744359Z (3/5) Installing perl-error (0.17030-r0)
 build	Build Rocq project using docker-coq-action	2026-01-28T20:12:29.6585244Z Error response from daemon: No such image: rocq/rocq-prover:9.0
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.0321340Z ##[warning]Warning: Loading Stdlib without prefix is deprecated.
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.0327886Z Use "From Stdlib Require Reals" or the deprecated "From Coq Require Reals"
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.0328287Z for compatibility with older Coq versions.
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.0328696Z [deprecated-missing-stdlib,deprecated-since-9.0,deprecated,default]
 build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2248527Z File "./theories/Foundations/Basic.v", line 13, characters 15-33:
 build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2251852Z ##[error]Error: Cannot find a physical path bound to logical path Coquelicot.Complex.
 build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2291841Z make[1]: *** [Makefile.coq:818: theories/Foundations/Basic.vo] Error 1
 build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2292879Z make[1]: *** [theories/Foundations/Basic.vo] Deleting file 'theories/Foundations/Basic.glob'
 build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2294427Z make: *** [Makefile.coq:416: all] Error 2
+build	Revert permissions	﻿2026-01-28T20:13:30.3773951Z ##[group]Run sudo chown -R 1001:116 .
 ```
 
 **Root Cause**: Missing external library dependency (Coquelicot.Complex) that was not available in the base Rocq Docker image.
