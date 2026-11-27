@@ -127,8 +127,10 @@ def main():
 
     print("Requirements remain unverified. Deliver the work and record its evidence in "
           "docs/REQUIREMENTS.md to pass this check.", file=sys.stderr)
-    for requirement_id, (status, _) in rows.items():
-        if status != "Verified":
+    for requirement_id, (status, evidence) in rows.items():
+        if status == "Blocked":
+            print(f"{requirement_id}: {status}. {evidence}", file=sys.stderr)
+        elif status != "Verified":
             print(f"{requirement_id}: {status}", file=sys.stderr)
     return 1
 

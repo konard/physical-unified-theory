@@ -54,6 +54,14 @@ class RequirementsTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertIn("#1 cannot be Verified while #1/A.1.1 is Partial", result.stderr)
 
+    def test_blocked_requirement_reports_the_recorded_action(self):
+        reason = "Supply the retained archive. [Archive status](proof.md)"
+        rows = ISSUE_ROW.replace("Verified", "Partial")
+        rows += f"| #1/A.1.1 | Recover original logs | Blocked | {reason} |\n"
+        result = self.check(rows)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn(f"#1/A.1.1: Blocked. {reason}", result.stderr)
+
     def test_missing_issue_task_and_hypothesis_fail_coverage(self):
         self.pages[1][0]["body"] += "\n**Hypothesis**: The example generalizes."
         self.pages[0].append({"number": 3, "state": "open", "body": ""})

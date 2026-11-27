@@ -33,7 +33,8 @@ workflow](../.github/workflows/requirements.yml) checks this file against the
 paginated GitHub issue inventory and preserves IDs already recorded on the base
 branch. The check fails if it finds missing rows, invalid or duplicate statuses
 or IDs, invalid local evidence links, or any unverified row. Its log lists each
-unverified ID. Lean and Rocq still run their own proof checks.
+unverified ID and prints the recorded reason for each blocked requirement.
+Lean and Rocq still run their own proof checks.
 
 To reproduce the check with the live issue inventory:
 
@@ -62,7 +63,7 @@ evidence requires review.
 | #1/unification | Unify the completed theories in the same formal language | Open | [Equation-level checks and remaining proof obligations](case-studies/issue-119/analysis.md) |
 | #3 | [Fix CI/CD error](https://github.com/konard/physical-unified-theory/issues/3) | Partial | [Case study](case-studies/issue-3/analysis.md) |
 | #3/repair | Reproduce and repair the missing Coquelicot import in the standard Rocq image | Verified | [Passing repair run](https://github.com/konard/physical-unified-theory/actions/runs/21453960907) · [Case study](case-studies/issue-3/analysis.md) |
-| #3/logs | Preserve all original CI logs and related data in the case study | Blocked | GitHub returns HTTP 410 for the original log archive. The original session transcript preserved selected output. [Recovered excerpts and archive status](case-studies/issue-3/analysis.md#original-log-recovery) |
+| #3/logs | Preserve all original CI logs and related data in the case study | Blocked | Supply a retained copy of the original 640-line GitHub Actions log from run 21453864333, job 61789404485. Preserve it under docs/case-studies/issue-3/ and verify it against the recovered excerpts. Both GitHub log endpoints return HTTP 410. [Recovered excerpts and archive status](case-studies/issue-3/analysis.md#original-log-recovery) |
 | #3/study | Reconstruct the timeline and root cause, research comparable failures and libraries, and document remedies with reproduction steps | Verified | [Case study](case-studies/issue-3/analysis.md) |
 | #3/upstream | Determine upstream applicability and report an upstream defect with a reproducer, workaround and fix when applicable | Verified | The recorded cause was an undeclared project dependency in the selected image. [Case study](case-studies/issue-3/analysis.md) |
 | #5 | [Extend roadmap with all possible exploration/research paths, and as much hypotheses as possible](https://github.com/konard/physical-unified-theory/issues/5) | Partial | [Roadmap](../ROADMAP.md) · [Track files](../ROADMAP) |
