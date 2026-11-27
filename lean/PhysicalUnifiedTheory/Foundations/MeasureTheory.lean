@@ -16,7 +16,7 @@ This module formalizes measure theory and probability as needed for quantum mech
 ## Dependencies
 
 - `Mathlib.MeasureTheory.Measure.MeasureSpace` for measure spaces
-- `Mathlib.MeasureTheory.Integral.Lebesgue` for Lebesgue integration
+- `Mathlib.MeasureTheory.Integral.Lebesgue.Basic` for Lebesgue integration
 - `Mathlib.MeasureTheory.Measure.ProbabilityMeasure` for probability measures
 
 ## References
@@ -34,10 +34,13 @@ public import Mathlib.MeasureTheory.Measure.MeasureSpace
 public import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
 public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
 public import Mathlib.MeasureTheory.Function.L2Space
+public import Mathlib.Analysis.Matrix.PosDef
 
 @[expose] public section
 
 namespace PhysicalUnifiedTheory.Foundations.MeasureTheory
+
+open scoped ComplexOrder
 
 /-!
 ## A.5.1: Measure Spaces and Integration
@@ -69,16 +72,36 @@ The Lebesgue measure on ℝⁿ is the canonical example.
 structure DensityMatrix (n : ℕ) where
   /-- The matrix representing the quantum state -/
   mat : Matrix (Fin n) (Fin n) ℂ
-  /-- Hermitian: ρ = ρ† -/
-  hermitian : mat.IsHermitian
+  /-- The quadratic form is nonnegative on all vectors. This also implies Hermiticity. -/
+  posSemidef : mat.PosSemidef
   /-- Trace equals 1: Tr(ρ) = 1 -/
   trace_one : mat.trace = 1
-  -- Positive semidefiniteness requires eigenvalue analysis (TODO)
 
-/-- The pure state density matrix for a normalized vector ψ. -/
+/-- A density matrix equals its conjugate transpose. -/
+theorem DensityMatrix.hermitian {n : ℕ} (ρ : DensityMatrix n) : ρ.mat.IsHermitian :=
+  ρ.posSemidef.isHermitian
+
+/-- Born probability for an outcome in the computational basis. -/
+def DensityMatrix.basisProbability {n : ℕ} (ρ : DensityMatrix n) (i : Fin n) : ℝ :=
+  (ρ.mat i i).re
+
+theorem DensityMatrix.basisProbability_nonneg {n : ℕ} (ρ : DensityMatrix n) (i : Fin n) :
+    0 ≤ ρ.basisProbability i :=
+  (Complex.nonneg_iff.mp (ρ.posSemidef.diag_nonneg (i := i))).1
+
+theorem DensityMatrix.sum_basisProbability {n : ℕ} (ρ : DensityMatrix n) :
+    ∑ i, ρ.basisProbability i = 1 := by
+  simpa [Matrix.trace, basisProbability] using congrArg Complex.re ρ.trace_one
+
+/-- The outer product of ψ with its conjugate dual. Its trace is one when ψ is normalized. -/
 noncomputable def pureStateDensityMatrix {n : ℕ} (ψ : Fin n → ℂ) :
     Matrix (Fin n) (Fin n) ℂ :=
   fun i j => ψ i * star (ψ j)
+
+/-- The outer product of a vector with its conjugate dual is positive semidefinite. -/
+theorem pureState_posSemidef {n : ℕ} (ψ : Fin n → ℂ) :
+    (pureStateDensityMatrix ψ).PosSemidef :=
+  Matrix.posSemidef_vecMulVec_self_star ψ
 
 /-- The trace of the pure state density matrix is 1 when ψ is normalized. -/
 theorem pureState_trace_one {n : ℕ} (ψ : Fin n → ℂ) (hψ : ∑ i, Complex.normSq (ψ i) = 1) :
@@ -91,6 +114,13 @@ theorem pureState_trace_one {n : ℕ} (ψ : Fin n → ℂ) (hψ : ∑ i, Complex
       exact (Complex.normSq_eq_conj_mul_self.trans (mul_comm _ _)).symm
     _ = 1 := by
       rw [← Complex.ofReal_sum, hψ, Complex.ofReal_one]
+
+/-- A normalized state vector determines a positive trace-one density matrix. -/
+noncomputable def DensityMatrix.ofPureState {n : ℕ} (ψ : Fin n → ℂ)
+    (hψ : ∑ i, Complex.normSq (ψ i) = 1) : DensityMatrix n where
+  mat := pureStateDensityMatrix ψ
+  posSemidef := pureState_posSemidef ψ
+  trace_one := pureState_trace_one ψ hψ
 
 /-!
 ## A.5.2: Probability Theory

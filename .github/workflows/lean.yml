@@ -56,7 +56,9 @@ jobs:
     - name: Run Lean tests
       working-directory: lean
       shell: bash
-      run: lake env lean tests/Units.lean 2>&1 | tee lean-test.log
+      run: |
+        lake env lean tests/Units.lean 2>&1 | tee lean-test.log
+        lake env lean tests/DensityMatrix.lean 2>&1 | tee -a lean-test.log
 
     - name: Upload build logs
       if: always()

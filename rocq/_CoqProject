@@ -20,4 +20,7 @@ theories/Unification/Basic.v
 # Track N: Experimental Connections and Predictions
 theories/Experimental/Units.v
 theories/Experimental/Constants.v
+
+# Regression tests
 tests/Units.v
+tests/DensityMatrix.v
