@@ -34,11 +34,13 @@ toolchain during the run. [Main workflow run 45973370187](https://github.com/kon
 
 | Requirement | Implementation | Acceptance evidence |
 | --- | --- | --- |
-| A.1.3 and A.2.5 in part | The Lean self-adjoint expectation proof uses the adjoint identity. The Rocq minimal-monopole example requires nonzero electric charge. | Kernel checking proves the real expectation and the corrected monopole result. The wider spectral-theory and bundle requirements remain open. |
+| A.1.2 and A.1.3 in part | Lean provides domain-aware operators and adjoints, the continuous functional calculus for bounded self-adjoint operators, and a formula in a Hermitian matrix's eigenbasis. | Lean checks density and closedness for self-adjoint operators, the adjoint of a bounded operator restricted to a dense core, the spectral mapping theorem, the Pauli X square and real self-adjoint expectations. Borel calculus and spectral resolutions for general unbounded operators still need implementation. [LinearAlgebra.lean](../../../lean/PhysicalUnifiedTheory/Foundations/LinearAlgebra.lean) · [HilbertSpaces.lean](../../../lean/PhysicalUnifiedTheory/Foundations/HilbertSpaces.lean) |
 | A.1.4–A.1.5 | Lean constructs the Schwartz–L²–tempered-distribution triple on finite-dimensional real inner-product spaces. | Lean checks both continuous linear embeddings for injectivity, the density of the first embedding and the agreement of the two constructions of the distribution for a test function. [Distributions.lean](../../../lean/PhysicalUnifiedTheory/Foundations/Distributions.lean) |
+| A.2.5 in part | The Rocq minimal-monopole example requires nonzero electric charge. | Rocq checks denominator cancellation under the charge hypothesis. The wider bundle requirements remain open. |
+| C.1.3 and F.2.1 in part | Finite-dimensional Lean density matrices and real two-dimensional Rocq density matrices require a nonnegative quadratic form. | Both tests exclude the trace-one matrix with diagonal entries 1/2 and off-diagonal entries 1. Lean also constructs positive trace-one density matrices from normalized state vectors. [Lean test](../../../lean/tests/DensityMatrix.lean) · [Rocq test](../../../rocq/tests/DensityMatrix.v) |
 | C.6.3 and O.3.1 in part | Lean and Rocq formalize the CHSH bound for finite local hidden-variable models and compute the Bell-state score for Pauli-plane measurements. | Both kernels check the bound of 2 and a quantum score of 2√2. The model uses one distribution for all measurement settings. [Lean](../../../lean/PhysicalUnifiedTheory/QuantumMechanics/Bell.lean) · [Rocq](../../../rocq/theories/QuantumMechanics/Bell.v) · [Original CHSH paper](https://doi.org/10.1103/PhysRevLett.23.880) |
 | N.1.1 and N.1.4 | The seven SI base dimensions are type indices in both implementations. Quantities carry coherent SI values and typed addition, subtraction, products, quotients and square roots. | Both regression files reject an attempt to add time to length. |
-| N.1.2 and N.1.3 | Coherent natural units are parameterized by a positive energy scale. The Planck system uses the energy derived from ℏ, c and the CODATA central estimate for G. The electrical scale uses the elementary charge, and amount and luminous intensity retain their SI scales. | Both test suites verify the normalization of c and ℏ and the positivity of Planck length. The Lean tests also cover the electronvolt energy scale. |
+| N.1.2 and N.1.3 | Coherent natural units are parameterized by a positive energy scale. The Planck system uses the energy derived from ℏ, c and the CODATA central estimate for G. The electrical scale uses the elementary charge, and amount and luminous intensity retain their SI scales. | Both kernels check that the central estimate of G has magnitude one in Planck units. Both test suites verify the normalization of c and ℏ and the positivity of Planck length. The Lean tests also cover the electronvolt energy scale. |
 | N.1.5 | Conversion operates on a single dimension and supports coherent multiplicative systems. | Both kernels check conversion identity and composition. |
 | N.2.1–N.2.4 | SI defining constants and derived ℏ, 2022 CODATA G and fine-structure estimates, representative lepton and nucleon masses, weak mixing and Fermi coupling. The Fermi coupling is expressed in inverse square energy in the conventional natural-unit convention. | Exact values and uncertainty regressions run in both proof assistants. The source edition is pinned explicitly. |
 
@@ -62,11 +64,12 @@ tasks in the inventory still need task-specific implementation or verification.
 ## Research limits
 
 - A.5.3 asks for functional integration, and E.2.4 asks for nonperturbative
-  methods. Their related 4D interacting path-integral and Yang–Mills mass-gap
-  claims remain open at the generality described in the issues. A finite
-  lattice model or a Gaussian free-field measure can verify a narrower
-  construction. Verification of the continuum interacting claim requires the
-  measure or reconstructed field theory and a proof of the gap.
+  methods. Their related hypotheses concern 4D interacting path integrals
+  and the Yang–Mills mass gap. A finite lattice model or a Gaussian free-field
+  measure can provide checked examples for those tasks. The continuum mass-gap
+  problem asks for construction of the interacting theory and a proof of the
+  gap. Those results remain open. A precise statement of the hypotheses and
+  a formalization of established nonperturbative methods are still outstanding.
   [Clay Mathematics Institute](https://www.claymath.org/millennium/yang-mills-the-maths-gap/)
 - B.8.1 can formalize the Navier–Stokes equations, weak and strong solution
   notions and established restricted results. A general global smoothness
