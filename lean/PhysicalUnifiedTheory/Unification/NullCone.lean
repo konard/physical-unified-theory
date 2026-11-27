@@ -135,6 +135,18 @@ theorem constant_weight_trace_diverges (c : ℝ) (hc : 0 < c) :
   simpa only [Finset.sum_const, Finset.card_range, nsmul_eq_mul] using
     (tendsto_natCast_atTop_atTop (R := ℝ)).atTop_mul_const hc
 
+/-- A putative sewn cap vector with uniformly positive weight in infinitely
+many normalized cut channels cannot have finite Hilbert norm. -/
+theorem no_normalizable_cap_with_uniform_weights {E : Type*}
+    [NormedAddCommGroup E] [InnerProductSpace ℂ E] (v : ℕ → E) (hv : Orthonormal ℂ v)
+    (c : ℝ) (hc : 0 < c) : ¬ ∃ x : E, ∀ k, c ≤ ‖⟪v k, x⟫_ℂ‖ ^ 2 := by
+  rintro ⟨x, hx⟩
+  have hsum (n : ℕ) : (∑ _k ∈ Finset.range n, c) ≤ ‖x‖ ^ 2 :=
+    (Finset.sum_le_sum (fun k _ => hx k)).trans (hv.sum_inner_products_le x)
+  have hlarge := (tendsto_atTop.1 (constant_weight_trace_diverges c hc)) (‖x‖ ^ 2 + 1)
+  obtain ⟨n, hn⟩ := hlarge.exists
+  linarith [hsum n]
+
 /-- A bounded positive scalar operator on ℓ² has all open gluing bounds and
 divergent closed trace in its canonical basis. -/
 theorem open_gluing_with_divergent_closed_trace (c : ℝ) (hc : 0 < c) (hc' : c ≤ 1) :
@@ -217,6 +229,22 @@ theorem resolvent_energy_bound (L x : ℝ) (hL : 0 < L) (hx : 0 ≤ x) :
   have hsum : 0 < L + x := by linarith
   rw [div_pow, ← mul_div_assoc, div_le_iff₀ (sq_pos_of_pos hsum)]
   nlinarith [mul_nonneg hL.le (sq_nonneg (L - x))]
+
+/-- A uniform first moment controls the error in a finite spectral approximation
+to the clock resolvent. The same inequality can be integrated over a spectral measure. -/
+theorem finite_clock_resolvent_error {ι : Type*} (modes : Finset ι) (weight clock : ι → ℝ)
+    (L : ℝ) (hL : 0 < L) (hw : ∀ i ∈ modes, 0 ≤ weight i)
+    (hx : ∀ i ∈ modes, 0 ≤ clock i) (hn : ∑ i ∈ modes, weight i = 1) :
+    1 - ∑ i ∈ modes, weight i * (L / (L + clock i)) ≤
+      (∑ i ∈ modes, weight i * clock i) / L := by
+  rw [← hn, ← Finset.sum_sub_distrib, Finset.sum_div]
+  apply Finset.sum_le_sum
+  intro i hi
+  rw [← mul_one_sub, mul_div_assoc]
+  apply mul_le_mul_of_nonneg_left _ (hw i hi)
+  have hsum : 0 < L + clock i := by linarith [hx i hi]
+  rw [← div_self hsum.ne', ← sub_div, add_sub_cancel_left]
+  exact div_le_div_of_nonneg_left (hx i hi) hL (le_add_of_nonneg_right (hx i hi))
 
 /-- The strict tangent deficit of `x / (L + x)` used in the Wigner check. -/
 theorem resolvent_tangent_deficit (L x m : ℝ) (hL : 0 < L) (hx : 0 ≤ x) (hm : 0 ≤ m) :

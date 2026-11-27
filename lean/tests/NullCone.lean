@@ -18,6 +18,10 @@ example (r ε : ℝ) (hε : ε < 1) :
 example : Tendsto (fun n : ℕ => (3 : ℝ) / (3 + n)) atTop (𝓝 0) :=
   cutoff_resolvent_vanishes 3
 
+example : 1 - (3 : ℝ) / (3 + 2) ≤ 2 / 3 := by
+  simpa using finite_clock_resolvent_error ({0} : Finset ℕ) (fun _ => 1) (fun _ => 2)
+    3 (by norm_num) (by simp) (by simp) (by simp)
+
 example : (1 : ℝ) / (2 + 1) + 2 / (2 + 1) ^ 2 * (2 - 1) - 2 / (2 + 2) = 1 / 18 := by
   convert resolvent_tangent_deficit 2 2 1 (by norm_num) (by norm_num) (by norm_num) using 1
   norm_num
@@ -31,6 +35,10 @@ example : ∃ b : HilbertBasis ℕ ℂ (lp (fun _ : ℕ => ℂ) 2),
         (∑' k, ‖⟪x, b k⟫_ℂ * ⟪b k, W y⟫_ℂ‖) ≤ ‖x‖ * ‖y‖) ∧
       Tendsto (fun n : ℕ => ∑ k ∈ Finset.range n, (⟪b k, W (b k)⟫_ℂ).re) atTop atTop :=
   open_gluing_with_divergent_closed_trace (2 / 3) (by norm_num) (by norm_num)
+
+example {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
+    (v : ℕ → E) (hv : Orthonormal ℂ v) : ¬ ∃ x : E, ∀ k, (2 / 3 : ℝ) ≤ ‖⟪v k, x⟫_ℂ‖ ^ 2 :=
+  no_normalizable_cap_with_uniform_weights v hv (2 / 3) (by norm_num)
 
 example : (∑ _k ∈ Finset.range 128, (2 / 3 : ℝ) ^ 2) /
     (∑ _k ∈ Finset.range 128, (2 / 3 : ℝ)) ^ 2 = 1 / 128 :=
