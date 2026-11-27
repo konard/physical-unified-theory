@@ -1,8 +1,10 @@
 module
 
+public import Mathlib.Analysis.Calculus.MeanValue
 public import Mathlib.Analysis.InnerProductSpace.l2Space
 public import Mathlib.Analysis.PSeries
 public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 public import Mathlib.Tactic.Linarith
 public import Mathlib.Tactic.Ring
@@ -12,7 +14,24 @@ public import Mathlib.Tactic.Ring
 namespace PhysicalUnifiedTheory.Unification.NullCone
 
 open scoped InnerProductSpace Topology
-open Filter
+open Filter Set
+
+/-- The integrating factor in (3.26) on a null generator. Here `f` is the
+focusing rate and `Xi` is its primitive normalized at the cap. -/
+theorem focused_slope (p Xi f : ℝ → ℝ) (a b : ℝ) (hcap : Xi a = 0)
+    (hp : ∀ v ∈ Icc a b, HasDerivAt p (-(f v * p v)) v)
+    (hXi : ∀ v ∈ Icc a b, HasDerivAt Xi (f v) v) (v : ℝ) (hv : v ∈ Icc a b) :
+    p v = p a * Real.exp (-Xi v) := by
+  have hcont : ContinuousOn (fun w => p w * Real.exp (Xi w)) (Icc a b) :=
+    fun w hw => ((hp w hw).mul (hXi w hw).exp).continuousAt.continuousWithinAt
+  have hzero (w : ℝ) (hw : w ∈ Ico a b) :
+      HasDerivWithinAt (fun u => p u * Real.exp (Xi u)) 0 (Ici w) w := by
+    have hw' : w ∈ Icc a b := ⟨hw.1, hw.2.le⟩
+    convert ((hp w hw').mul (hXi w hw').exp).hasDerivWithinAt using 1
+    ring
+  have hprod := constant_of_has_deriv_right_zero hcont hzero v hv
+  rw [hcap, Real.exp_zero, mul_one] at hprod
+  rw [Real.exp_neg, ← hprod, mul_assoc, mul_inv_cancel₀ (Real.exp_ne_zero _), mul_one]
 
 /-- Cap-normalized elapsed time is unchanged by a positive affine rescaling. -/
 theorem cap_clock_affine_invariant (slope start finish shift scale : ℝ) (hs : 0 < scale) :
@@ -55,6 +74,28 @@ theorem open_gluing {ι E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ
     norm_num
   simpa only [norm_mul, norm_inner_symm x (b _), ← b.repr_apply_apply, b.repr.norm_map] using
     lp.tsum_mul_le_mul_norm h₂ (b.repr x) (b.repr y)
+
+/-- Restoring finitely many cuts gives the norm estimate underlying (4.31).
+Unitary evolutions and orthogonal projections are special cases of contractions. -/
+theorem multiple_cut_error_bound {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
+    (U P : ℕ → E →L[ℂ] E) (full truncated : ℕ → E)
+    (hU : ∀ j, ‖U j‖ ≤ 1) (hP : ∀ j, ‖P j‖ ≤ 1) (hstart : full 0 = truncated 0)
+    (hfull : ∀ j, full (j + 1) = U j (full j))
+    (htruncated : ∀ j, truncated (j + 1) = P j (U j (truncated j))) (n : ℕ) :
+    ‖full n - truncated n‖ ≤ ∑ j ∈ Finset.range n, ‖full (j + 1) - P j (full (j + 1))‖ := by
+  have contract (T : E →L[ℂ] E) (hT : ‖T‖ ≤ 1) (x : E) : ‖T x‖ ≤ ‖x‖ :=
+    (T.le_opNorm x).trans (mul_le_of_le_one_left (norm_nonneg x) hT)
+  induction n with
+  | zero => simp [hstart]
+  | succ j ih =>
+    rw [Finset.sum_range_succ]
+    have hsplit : full (j + 1) - truncated (j + 1) =
+        (P j (U j (full j - truncated j))) + (full (j + 1) - P j (full (j + 1))) := by
+      rw [hfull j, htruncated j, map_sub, map_sub]
+      abel
+    rw [hsplit]
+    exact (norm_add_le _ _).trans (add_le_add
+      ((contract (P j) (hP j) _).trans ((contract (U j) (hU j) _).trans ih)) le_rfl)
 
 /-- The `k+1` term in (4.33) for one fixed angular harmonic and polarization. -/
 noncomputable def radialTerm (s : ℝ) (k : ℕ) : ℂ :=
@@ -147,6 +188,17 @@ theorem trace_bound_from_purity (trace cyclic p : ℝ) (htrace : 0 < trace) (hp 
     _ ≤ trace := hcyclic
     _ = 1 * trace := by ring
 
+/-- An exact positive replica limit supplies an eventual uniform trace bound. -/
+theorem trace_bound_from_replica_limit {ι : Type*} (cuts : Filter ι)
+    (trace cyclic : ι → ℝ) (p : ℝ) (hp : 0 < p) (htrace : ∀ i, 0 < trace i)
+    (hcyclic : ∀ i, cyclic i ≤ trace i)
+    (hlimit : Tendsto (fun i => cyclic i / trace i ^ 2) cuts (𝓝 p)) :
+    ∀ᶠ i in cuts, trace i ≤ 2 / p := by
+  filter_upwards [(tendsto_order.1 hlimit).1 (p / 2) (by linarith)] with i hi
+  have h := trace_bound_from_purity (trace i) (cyclic i) (p / 2) (htrace i)
+    (by positivity) (hcyclic i) hi.le
+  simpa only [div_div_eq_mul_div, one_mul] using h
+
 /-- If the finite closed-cut amplitudes converge to the exact uncut one,
 the sign pattern in (5.38) is impossible. -/
 theorem no_positive_closed_gluing_limit {ι : Type*} (cuts : Filter ι) [NeBot cuts]
@@ -165,6 +217,15 @@ theorem resolvent_energy_bound (L x : ℝ) (hL : 0 < L) (hx : 0 ≤ x) :
   have hsum : 0 < L + x := by linarith
   rw [div_pow, ← mul_div_assoc, div_le_iff₀ (sq_pos_of_pos hsum)]
   nlinarith [mul_nonneg hL.le (sq_nonneg (L - x))]
+
+/-- The strict tangent deficit of `x / (L + x)` used in the Wigner check. -/
+theorem resolvent_tangent_deficit (L x m : ℝ) (hL : 0 < L) (hx : 0 ≤ x) (hm : 0 ≤ m) :
+    m / (L + m) + L / (L + m) ^ 2 * (x - m) - x / (L + x) =
+      L * (x - m) ^ 2 / ((L + m) ^ 2 * (L + x)) := by
+  have hxm : L + x ≠ 0 := by linarith
+  have hmm : L + m ≠ 0 := by linarith
+  field_simp
+  ring
 
 /-- The boost mismatch factor in (5.29) is strictly suppressed away from matching. -/
 theorem boost_mismatch (r : ℝ) (hr : 0 < r) :
@@ -199,5 +260,21 @@ theorem finite_gibbs_entropy {ι : Type*} (cut : Finset ι) (hcut : cut.Nonempty
 theorem one_loop_coefficient :
     (257 / 302 : ℝ) / (2 * (1 - 257 / 302)) - 1 / 2 = 106 / 45 := by
   norm_num
+
+/-- The covariance contraction (6.12)–(6.13) for a finite family, given the
+second variation of the Einstein equation. -/
+theorem finite_backreaction_contraction {ι E F : Type*} (modes : Finset ι)
+    [AddCommGroup E] [Module ℝ E] [AddCommGroup F] [Module ℝ F]
+    (covariance : ι → ℝ) (secondMetricVariation : ι → E) (linearized : E →ₗ[ℝ] F)
+    (quadraticSource : ι → F)
+    (hvar : ∀ i ∈ modes, linearized (secondMetricVariation i) = (-2 : ℝ) • quadraticSource i) :
+    linearized (∑ i ∈ modes, (covariance i / 2) • secondMetricVariation i) =
+      -(∑ i ∈ modes, covariance i • quadraticSource i) := by
+  rw [map_sum, ← Finset.sum_neg_distrib]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [map_smul, hvar i hi, smul_smul, ← neg_smul]
+  congr 1
+  ring
 
 end PhysicalUnifiedTheory.Unification.NullCone

@@ -4,6 +4,11 @@ open PhysicalUnifiedTheory.Unification.NullCone
 open scoped InnerProductSpace Topology
 open Filter
 
+example (p : ℝ) : p = p * Real.exp (-(0 : ℝ)) := by
+  exact focused_slope (fun _ => p) (fun _ => 0) (fun _ => 0) 0 1 rfl
+    (fun _ _ => by simpa using hasDerivAt_const _ p)
+    (fun _ _ => hasDerivAt_const _ 0) 1 (by norm_num [Set.mem_Icc])
+
 -- The classical shear-free, constant-density example saturates the bound.
 example (r ε : ℝ) (hε : ε < 1) :
     4 * Real.pi * ((1 - ε) * r) ^ 2 / (1 - ε) ^ 2 = 4 * Real.pi * r ^ 2 := by
@@ -12,6 +17,10 @@ example (r ε : ℝ) (hε : ε < 1) :
 -- Positive clock resolvents can have zero weight after the cutoff is removed.
 example : Tendsto (fun n : ℕ => (3 : ℝ) / (3 + n)) atTop (𝓝 0) :=
   cutoff_resolvent_vanishes 3
+
+example : (1 : ℝ) / (2 + 1) + 2 / (2 + 1) ^ 2 * (2 - 1) - 2 / (2 + 2) = 1 / 18 := by
+  convert resolvent_tangent_deficit 2 2 1 (by norm_num) (by norm_num) (by norm_num) using 1
+  norm_num
 
 -- Every absolute open gluing sum is bounded even in this divergent trace model.
 example : ∃ b : HilbertBasis ℕ ℂ (lp (fun _ : ℕ => ℂ) 2),
