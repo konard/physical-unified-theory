@@ -136,6 +136,22 @@ class NullConeChecks(unittest.TestCase):
                 self.assertLessEqual(n * resolvent**2, Fraction(L, 4))
                 previous = resolvent
 
+    def test_joint_cut_cancellation_depends_on_cofinal_exhaustion(self):
+        p = Fraction(1, 2)
+        inside = p * (1 - p)
+        outside = (1 - p) * -p
+        for n in (1, 4, 16, 64):
+            with self.subTest(n=n):
+                for inside_count, outside_count, expected in (
+                    (n, n, 0),
+                    (2 * n, n, Fraction(n, 4)),
+                    (n, 2 * n, Fraction(-n, 4)),
+                ):
+                    cut = {(i, True) for i in range(inside_count)}
+                    cut.update((i, False) for i in range(outside_count))
+                    contributions = (inside if in_band else outside for _, in_band in cut)
+                    self.assertEqual(sum(contributions), expected)
+
     def test_radial_gaussian_clock_has_vanishing_overlap_bound(self):
         s = 2.0
         rate = 0.5
