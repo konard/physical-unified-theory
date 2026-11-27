@@ -1,6 +1,17 @@
 -R theories PhysicalUnifiedTheory
 
+# Track A: Mathematical Foundations
 theories/Foundations/Basic.v
+theories/Foundations/LinearAlgebra.v
+theories/Foundations/HilbertSpaces.v
+theories/Foundations/DifferentialGeometry.v
+theories/Foundations/FiberBundles.v
+theories/Foundations/Algebra.v
+theories/Foundations/MeasureTheory.v
+theories/Foundations/Topology.v
+theories/Foundations/PDEs.v
+
+# Higher tracks (depend on Track A)
 theories/QuantumMechanics/Basic.v
 theories/GeneralRelativity/Basic.v
 theories/Unification/Basic.v
