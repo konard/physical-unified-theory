@@ -18,7 +18,8 @@ required for quantum mechanics and other tracks.
 
 - `Mathlib.Analysis.InnerProductSpace.Basic` for inner product spaces
 - `Mathlib.Analysis.InnerProductSpace.Adjoint` for adjoint operators
-- `Mathlib.Analysis.SpecialFunctions.Pow.Real` for functional calculus stubs
+- `Mathlib.Analysis.InnerProductSpace.LinearPMap` for domain-aware adjoints
+- `Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic` for bounded spectral calculus
 
 ## References
 
@@ -29,6 +30,9 @@ required for quantum mechanics and other tracks.
 public import Mathlib.Analysis.InnerProductSpace.Basic
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.LinearPMap
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
+public import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
 public import Mathlib.Analysis.InnerProductSpace.Projection.Basic
 public import Mathlib.LinearAlgebra.TensorProduct.Basic
 public import Mathlib.Topology.Algebra.Module.Basic
@@ -84,7 +88,7 @@ theorem transitionProbability_self {ι : Type*} [Fintype ι]
   simp [transitionProbability, braket, inner_self_eq_norm_sq_to_K, ψ.normalized]
 
 /-!
-## A.1.2: Bounded Linear Operators
+## A.1.2: Linear Operators
 
 Observables in quantum mechanics correspond to self-adjoint (Hermitian) operators.
 Symmetries are represented by unitary operators.
@@ -127,18 +131,53 @@ noncomputable def commutator {ι : Type*} [Fintype ι]
     (A B : BoundedOp ι) : BoundedOp ι :=
   compOp A B - compOp B A
 
+/-- A linear operator on a complex Hilbert space, with its domain as a submodule.
+The operator acts on the domain and can be unbounded there. -/
+abbrev HilbertOperator (H : Type*) [NormedAddCommGroup H] [InnerProductSpace ℂ H] :=
+  H →ₗ.[ℂ] H
+
+section GeneralOperators
+
+variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+
+/-- A self-adjoint operator has dense domain and closed graph. -/
+theorem selfAdjointOperator_dense_closed {A : HilbertOperator H} (hA : IsSelfAdjoint A) :
+    Dense (A.domain : Set H) ∧ A.IsClosed :=
+  ⟨hA.dense_domain, hA.isClosed⟩
+
+/-- Restricting a bounded observable to a dense core keeps the same adjoint,
+whose domain is the whole space. -/
+theorem adjoint_dense_restriction (A : H →L[ℂ] H) {D : Submodule ℂ H}
+    (hD : Dense (D : Set H)) :
+    (A.toPMap D).adjoint = A.adjoint.toPMap ⊤ :=
+  A.toPMap_adjoint_eq_adjoint_toPMap_of_dense hD
+
 /-!
 ## A.1.3: Spectral Theory
 
-The spectral theorem states that every self-adjoint operator has a spectral decomposition.
-This is fundamental for the measurement postulate in quantum mechanics.
+The continuous functional calculus realizes functions on the spectrum of a
+bounded self-adjoint operator as operators on the same Hilbert space.
 -/
 
-/- The spectrum of an operator: the set of λ for which (A - λI) is not invertible.
-    For self-adjoint operators, the spectrum is contained in ℝ.
-    Note: Full spectral theory in Lean requires Mathlib.Analysis.Spectrum. -/
--- TODO (A.1.3): Develop full spectral theory using Mathlib.Analysis.Spectrum
--- The spectral theorem for compact self-adjoint operators is available in Mathlib.
+/-- The continuous functional calculus on the real spectrum of a bounded
+observable, as a star algebra homomorphism. -/
+noncomputable def observableCalculus (A : H →L[ℂ] H) (hA : IsSelfAdjoint A) :
+    C(spectrum ℝ A, ℝ) →⋆ₐ[ℝ] (H →L[ℂ] H) :=
+  cfcHom hA
+
+/-- The coordinate function on the spectrum recovers the original observable. -/
+theorem observableCalculus_id (A : H →L[ℂ] H) (hA : IsSelfAdjoint A) :
+    observableCalculus A hA ((ContinuousMap.id ℝ).restrict (spectrum ℝ A)) = A :=
+  cfcHom_id hA
+
+/-- The spectrum of a function of an observable is the image of its spectrum
+under that function. -/
+theorem observableCalculus_spectrum (A : H →L[ℂ] H) (hA : IsSelfAdjoint A)
+    (f : C(spectrum ℝ A, ℝ)) :
+    spectrum ℝ (observableCalculus A hA f) = Set.range f :=
+  cfcHom_map_spectrum hA f
+
+end GeneralOperators
 
 /-- A projection operator satisfies P² = P and P = P†.
     Projections represent quantum measurement events. -/
