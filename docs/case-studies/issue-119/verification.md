@@ -22,6 +22,8 @@ lake env lean tests/NullCone.lean
 
 The Lean module also checks the integrating factor in (3.26), the error from inserting finitely many contractions in (4.31), the exact resolvent tangent deficit, the eventual trace bound from a positive replica limit, and the finite covariance contraction in (6.12)–(6.13). These theorems expose their assumptions in their signatures.
 
+The fixed-area operator check for (5.21) is analytic. Starting from (4.25) as a norm identity, apply vector integration and Cauchy–Schwarz to bound the integrated density. Then use positivity of the focusing exponential and the density normalization in (4.27). The same calculation applies to each focusing cutoff and to the limiting form on its domain. [Fixed-area proof](analysis.md#classical-clock-and-the-jt-control)
+
 Rocq CI runs the entries in `_CoqProject` under Rocq 9.0. The independent real-number proofs and their regressions can be checked directly.
 
 ```sh

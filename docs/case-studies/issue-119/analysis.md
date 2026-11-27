@@ -57,7 +57,39 @@ remain separate acceptance checks. [Symplectic potential (2.6)–(2.7)](https://
 
 For an expanding generator in vacuum, write $p=\partial_u\rho>0$, $v=\rho/\rho_S$ and $D=(\partial_v\bar q)^{AB}(\partial_v\bar q)_{AB}\ge 0$ using the induced positive transverse metric to raise indices. Substitution into (3.25f) divides by $p^2/\rho_S$ and gives $\partial_v\log p=-vD/8$. Integration from the cap gives $p=p_\epsilon e^{-\Xi}$ with $\Xi(v)=\frac18\int_\epsilon^v tD(t)\,dt$. Integrating $du/dv=\rho_S/p$ then gives the clock (3.27). Under $u\mapsto\alpha u+\beta$, the cap slope divides by $\alpha$ and the elapsed affine parameter multiplies by it. The proof requires the expanding branch, a positive cap radius fraction and absence of a caustic on the segment. [Raychaudhuri (3.25)](https://arxiv.org/html/2611.34924v1#S3.E25) · [Integrated clock (3.26)–(3.28)](https://arxiv.org/html/2611.34924v1#S3.E26)
 
-Since $e^\Xi\ge1$, averaging $u_*(y)$ as in (3.28) gives $(1-\epsilon)A/a\le \bar u_*$, where $a=\int\rho_S d\Omega$. Cauchy–Schwarz with the round reference measure of mass $4\pi$ gives $a^2\le 4\pi A$. A reading $\bar u_*\le L$ implies $A\le 4\pi L^2/(1-\epsilon)^2$. For $\Xi=0$ and constant $\rho_S=r>0$, $a=4\pi r$, $A=4\pi r^2$ and $L=(1-\epsilon)r$ attain equality. In the quantum argument the corresponding inequalities must hold as forms and be preserved on the spectral subspace of the clock. Area and clock require compatible spectral projections for turning the pointwise bound into a statement about their joint support. [Operator definition (4.26)–(4.27)](https://arxiv.org/html/2611.34924v1#S4.E26) · [Area bound (5.21)](https://arxiv.org/html/2611.34924v1#S5.E21)
+Since $e^\Xi\ge1$, averaging $u_*(y)$ as in (3.28) gives $(1-\epsilon)A/a\le \bar u_*$, where $a=\int\rho_S d\Omega$. Cauchy–Schwarz with the round reference measure of mass $4\pi$ gives $a^2\le 4\pi A$. A reading $\bar u_*\le L$ implies $A\le 4\pi L^2/(1-\epsilon)^2$. For $\Xi=0$ and constant $\rho_S=r>0$, $a=4\pi r$, $A=4\pi r^2$ and $L=(1-\epsilon)r$ attain equality. [Area bound (5.21)](https://arxiv.org/html/2611.34924v1#S5.E21)
+
+The operator bound can also be derived on any positive fixed-area sector
+where the displayed density and focusing operators exist. Assume that the
+vector field $y\mapsto\widehat\rho_S(y)\psi$ is strongly measurable on a
+dense common domain and that (4.25) holds there as
+$\int\|\widehat\rho_S(y)\psi\|^2d\Omega=A\|\psi\|^2$. The vector integral
+$\widehat a\psi=\int\widehat\rho_S(y)\psi\,d\Omega$ satisfies
+$\|\widehat a\psi\|^2\le4\pi A\|\psi\|^2$ by the triangle inequality
+and scalar Cauchy–Schwarz, so it extends to a bounded positive operator
+with $\widehat a^2\le4\pi A I$. For a vector in the clock form domain, the
+spectral bound $e^{\widehat\Xi_y(v)}\ge I$ in (4.27) and the density
+normalization applied to $\widehat a^{-1/2}\psi$ give
+
+$$
+Q[\psi]\ge (1-\epsilon) A\|\widehat a^{-1/2}\psi\|^2
+\ge (1-\epsilon)\sqrt{A/(4\pi)}\|\psi\|^2.
+$$
+
+The second inequality uses spectral calculus on the positive support of
+$\widehat a$. This proof also works with the nonnegative bounded focusing
+cutoff of (C.11) and requires no commutation among the individual density
+and focusing operators. The upper bound $e^{\Xi_*}I$ for that cutoff gives
+the other side of (C.11), so the cutoff form norm is equivalent to the
+complete graph norm of $\widehat a^{-1/2}$. Increasing the cutoff raises the
+form, by spectral calculus for each fixed focusing operator and monotone
+integration over $y$ and $v$. If the limiting clock form is closed, its spectral projection
+onto $[0,L]$ within the closure of its form domain vanishes whenever the
+scalar lower bound exceeds $L$. A direct integral of these sector bounds
+gives (5.21d) if the clock projections act fiberwise in the area spectral
+decomposition. This conclusion still requires the area decomposition, the
+exact normalized density, and a nonzero surviving clock domain to describe
+nontrivial states. [Ordered clock (4.25)–(4.27)](https://arxiv.org/html/2611.34924v1#S4.E25) · [Cutoff domain (C.11)](https://arxiv.org/html/2611.34924v1#A3.E11)
 
 ## Cutoffs and the continuum clock
 
