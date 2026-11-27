@@ -36,6 +36,31 @@ def gaussian_clock_log_overlap_bound(s, rate, L, floor, cutoff):
 
 
 class NullConeChecks(unittest.TestCase):
+    def test_jt_clock_momentum_boundary_term(self):
+        # Rational points on the unit circles for the global AdS coordinates.
+        sin_time, cos_time = Fraction(5, 13), Fraction(12, 13)
+        for sin_space, cos_space in ((0, 1), (Fraction(3, 5), Fraction(4, 5)),
+                                     (Fraction(-8, 17), Fraction(15, 17))):
+            with self.subTest(sin_space=sin_space, cos_space=cos_space):
+                sec_space = Fraction(1) / cos_space
+                tan_space = sin_space / Fraction(cos_space)
+                dilaton_mode = sin_time * sec_space
+                # Set c = L_AdS = 1. Collect the four independent one-form terms.
+                y_zero, y_one = -sin_time * tan_space, -cos_time
+                variation = (
+                    y_zero * sec_space * tan_space + dilaton_mode * sec_space**2,
+                    y_one * sec_space * tan_space,
+                    y_zero * sec_space + dilaton_mode * tan_space,
+                    y_one * sec_space,
+                )
+                exact_derivative = (
+                    sin_time * sec_space,
+                    -cos_time * sec_space * tan_space,
+                    0,
+                    -cos_time * sec_space,
+                )
+                self.assertEqual(variation, exact_derivative)
+
     def test_radial_tail_at_fixed_area(self):
         for s in (0.5, 2.0, 100.0):
             for n in (16, 128, 1024):

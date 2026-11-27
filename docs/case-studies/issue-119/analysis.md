@@ -55,6 +55,62 @@ support condition on the shifts. Deriving the complete potential from the
 action and constructing the evolution on the full Hilbert representation
 remain separate acceptance checks. [Symplectic potential (2.6)–(2.7)](https://arxiv.org/html/2611.34924v1#S2.E7) · [Current and zero mode (2.10)–(2.11)](https://arxiv.org/html/2611.34924v1#S2.E10)
 
+### JT clock momentum at fixed matter and corner charges
+
+In the paper's global coordinates, the nonzero Christoffel symbols are
+$\Gamma^\sigma_{\tau\tau}=\Gamma^\sigma_{\sigma\sigma}
+=\Gamma^\tau_{\tau\sigma}=\Gamma^\tau_{\sigma\tau}=\tan\sigma$.
+For $f=h(\tau)\sec\sigma$ with $h''=-h$, the covariant Hessian has diagonal
+entries $-f,f$ and zero mixed entries. For $f=\tan\sigma$, the diagonal
+entries are also $-f,f$ and the mixed entries vanish. These solve (2.8).
+The value and gradient at $(\tau,\sigma)=(0,0)$ uniquely determine a solution
+on the connected diamond. Along a smooth curve (2.8) gives a linear
+first-order system for $(f,\nabla f)$, which has a unique solution for its
+initial data. The three displayed solutions supply independent initial data.
+The two corner conditions at $(0,\pm\sigma_S)$ set the coefficients of
+$\cos\tau\sec\sigma$ and $\tan\sigma$ to zero for $\sigma_S>0$.
+Thus $\Delta\Phi=c\sin\tau\sec\sigma$ is the full homogeneous freedom with
+matter and both corner charges fixed. [Dilaton equation (2.8)](https://arxiv.org/html/2611.34924v1#S2.E8)
+
+For the tetrad in (2.9), the torsion-free connection is
+$\omega^{01}=\tan\sigma\,d\tau$. The constraint gives
+$\Delta Y_0=-c\sin\tau\tan\sigma/L_{\mathrm{AdS}}$ and
+$\Delta Y_1=-c\cos\tau/L_{\mathrm{AdS}}$.
+Under a displacement at fixed contour coordinates, varying the pulled-back
+tetrad produces derivatives $d(\delta\tau)$ and $d(\delta\sigma)$.
+Substitute the shifts into
+$\Delta Y_\mu\delta e^\mu+\Delta\Phi\,\delta\omega^{01}$.
+The $d(\delta\tau)$ terms cancel, and the $\delta\sigma\,d\tau$ terms
+combine using $\sec^2\sigma-\tan^2\sigma=1$. What remains is
+
+$$
+c\sin\tau\sec\sigma\,\delta\sigma\,d\tau
+-c\cos\tau\sec\sigma\tan\sigma\,\delta\sigma\,d\sigma
+-c\cos\tau\sec\sigma\,d(\delta\sigma)
+=-c\,d(\cos\tau\sec\sigma\,\delta\sigma).
+$$
+
+The contributions at the cap joins cancel when the displacements match.
+The two outer corners have $\tau=0$ and displacements $\pm\delta\sigma_S$,
+so the integrated change is $-2c\sec\sigma_S\,\delta\sigma_S$.
+The spatial length obeys $dw=2L_{\mathrm{AdS}}\sec\sigma_S\,d\sigma_S$.
+Consequently $\Delta p_{u_*}=-c/[L_{\mathrm{AdS}}(du_*/dw)]$, and the
+positive derivative for $w>0$ makes this shift range over $\mathbb R$.
+This verifies the gravitational momentum variation in (2.9c–d) for the
+specified contour. [First-order variation (2.9)](https://arxiv.org/html/2611.34924v1#S2.E9)
+
+The clock Hilbert space in (2.13a) supports the positive multiplication
+operator $u_*$. On $C_c^\infty(0,\infty)$ the formal translation generator
+$-i\hbar\,d/du_*$ has deficiency indices $(1,0)$. With $\hbar>0$, the two
+adjoint equations at $+i$ and $-i$ give $e^{-u_*/\hbar}$ and
+$e^{u_*/\hbar}$ respectively, and only the first is square integrable.
+Thus the classical momentum calculation cannot be used to generate a
+unitary group of additive clock translations on this Hilbert space.
+Unitary evolution in the paper's physical time requires its own
+Hamiltonian and domain. [Clock representation (2.13)](https://arxiv.org/html/2611.34924v1#S2.E13)
+
+### Four-dimensional focusing and area
+
 For an expanding generator in vacuum, write $p=\partial_u\rho>0$, $v=\rho/\rho_S$ and $D=(\partial_v\bar q)^{AB}(\partial_v\bar q)_{AB}\ge 0$ using the induced positive transverse metric to raise indices. Substitution into (3.25f) divides by $p^2/\rho_S$ and gives $\partial_v\log p=-vD/8$. Integration from the cap gives $p=p_\epsilon e^{-\Xi}$ with $\Xi(v)=\frac18\int_\epsilon^v tD(t)\,dt$. Integrating $du/dv=\rho_S/p$ then gives the clock (3.27). Under $u\mapsto\alpha u+\beta$, the cap slope divides by $\alpha$ and the elapsed affine parameter multiplies by it. The proof requires the expanding branch, a positive cap radius fraction and absence of a caustic on the segment. [Raychaudhuri (3.25)](https://arxiv.org/html/2611.34924v1#S3.E25) · [Integrated clock (3.26)–(3.28)](https://arxiv.org/html/2611.34924v1#S3.E26)
 
 Since $e^\Xi\ge1$, averaging $u_*(y)$ as in (3.28) gives $(1-\epsilon)A/a\le \bar u_*$, where $a=\int\rho_S d\Omega$. Cauchy–Schwarz with the round reference measure of mass $4\pi$ gives $a^2\le 4\pi A$. A reading $\bar u_*\le L$ implies $A\le 4\pi L^2/(1-\epsilon)^2$. For $\Xi=0$ and constant $\rho_S=r>0$, $a=4\pi r$, $A=4\pi r^2$ and $L=(1-\epsilon)r$ attain equality. [Area bound (5.21)](https://arxiv.org/html/2611.34924v1#S5.E21)

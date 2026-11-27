@@ -22,7 +22,7 @@ lake env lean tests/NullCone.lean
 
 The Lean module also checks the integrating factor in (3.26), the error from inserting finitely many contractions in (4.31), the exact resolvent tangent deficit, the eventual trace bound from a positive replica limit, and the finite covariance contraction in (6.12)–(6.13). These theorems expose their assumptions in their signatures.
 
-The fixed-area operator check for (5.21) is analytic. Starting from (4.25) as a norm identity, apply vector integration and Cauchy–Schwarz to bound the integrated density. Then use positivity of the focusing exponential and the density normalization in (4.27). The same calculation applies to each focusing cutoff and to the limiting form on its domain. [Fixed-area proof](analysis.md#classical-clock-and-the-jt-control)
+The fixed-area operator check for (5.21) is analytic. Starting from (4.25) as a norm identity, apply vector integration and Cauchy–Schwarz to bound the integrated density. Then use positivity of the focusing exponential and the density normalization in (4.27). The same calculation applies to each focusing cutoff and to the limiting form on its domain. [Fixed-area proof](analysis.md#four-dimensional-focusing-and-area)
 
 Rocq CI runs the entries in `_CoqProject` under Rocq 9.0. The independent real-number proofs and their regressions can be checked directly.
 
@@ -45,6 +45,7 @@ python3 experiments/null_cone.py -v
 
 | Check | Reproduction result |
 | --- | --- |
+| JT clock momentum | At three rational trigonometric points the four coefficients of the displaced gravitational potential match the exact derivative in (2.9c), including the cancellation of the coefficient of $d(\delta\tau)$. [Derivation](analysis.md#jt-clock-momentum-at-fixed-matter-and-corner-charges) |
 | Fixed-area radial sum | Compare cutoffs $N$ and $2N$ at $s=0.5,\,2,\,100$ with $N=16,\,128,\,1024$. The difference stays within $1/(2s^2N)$. |
 | Cubic quotient near zero coupling | At $t=10^{-7}$ and $N=16,\,128,\,1024,\,8192$, the negative imaginary quotient agrees with the positive harmonic sum within the sine Taylor test bound and increases with $N$. |
 | Trace and replica ratio | With weight $2/3$, increasing the cut from 16 to 128 raises the trace from $32/3$ to $256/3$ and decreases exact purity from $1/16$ to $1/128$. |
