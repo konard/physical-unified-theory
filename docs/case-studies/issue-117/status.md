@@ -2,9 +2,10 @@
 
 [Requirements and proposed verification](requirements.md) covers the full scope of
 [issue 117](https://github.com/konard/physical-unified-theory/issues/117). The
-deliverables below are evidence for particular tasks. Issue 117 remains open
-and [PR 118](https://github.com/konard/physical-unified-theory/pull/118) remains
-a draft.
+deliverables below are evidence for particular tasks. GitHub closed issue 117
+when [PR 118](https://github.com/konard/physical-unified-theory/pull/118) merged.
+The [follow-up audit](../issue-119/issue-117.md) verifies the merge and records
+which roadmap requirements remained outstanding.
 
 ## Scope of the existing formalization
 
