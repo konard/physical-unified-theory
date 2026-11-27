@@ -35,15 +35,22 @@ toolchain during the run. [Main workflow run 45973370187](https://github.com/kon
 | Requirement | Implementation | Acceptance evidence |
 | --- | --- | --- |
 | A.1.3 and A.2.5 in part | The Lean self-adjoint expectation proof uses the adjoint identity. The Rocq minimal-monopole example requires nonzero electric charge. | Kernel checking proves the real expectation and the corrected monopole result. The wider spectral-theory and bundle requirements remain open. |
+| A.1.4–A.1.5 | Lean constructs the Schwartz–L²–tempered-distribution triple on finite-dimensional real inner-product spaces. | Lean checks both continuous linear embeddings for injectivity, the density of the first embedding and the agreement of the two constructions of the distribution for a test function. [Distributions.lean](../../../lean/PhysicalUnifiedTheory/Foundations/Distributions.lean) |
+| C.6.3 and O.3.1 in part | Lean and Rocq formalize the CHSH bound for finite local hidden-variable models and compute the Bell-state score for Pauli-plane measurements. | Both kernels check the bound of 2 and a quantum score of 2√2. The model uses one distribution for all measurement settings. [Lean](../../../lean/PhysicalUnifiedTheory/QuantumMechanics/Bell.lean) · [Rocq](../../../rocq/theories/QuantumMechanics/Bell.v) · [Original CHSH paper](https://doi.org/10.1103/PhysRevLett.23.880) |
 | N.1.1 and N.1.4 | The seven SI base dimensions are type indices in both implementations. Quantities carry coherent SI values and typed addition, subtraction, products, quotients and square roots. | Both regression files reject an attempt to add time to length. |
-| N.1.2 and N.1.3 | Coherent natural units are parameterized by a positive energy scale. The Planck system uses the energy derived from ℏ, c and the CODATA central estimate for G. The electrical scale uses the elementary charge, and amount and luminous intensity retain their SI scales. | The tests cover the electronvolt energy scale, positive Planck length and conversion composition. |
+| N.1.2 and N.1.3 | Coherent natural units are parameterized by a positive energy scale. The Planck system uses the energy derived from ℏ, c and the CODATA central estimate for G. The electrical scale uses the elementary charge, and amount and luminous intensity retain their SI scales. | Both test suites verify the normalization of c and ℏ and the positivity of Planck length. The Lean tests also cover the electronvolt energy scale. |
 | N.1.5 | Conversion operates on a single dimension and supports coherent multiplicative systems. | Both kernels check conversion identity and composition. |
 | N.2.1–N.2.4 | SI defining constants and derived ℏ, 2022 CODATA G and fine-structure estimates, representative lepton and nucleon masses, weak mixing and Fermi coupling. The Fermi coupling is expressed in inverse square energy in the conventional natural-unit convention. | Exact values and uncertainty regressions run in both proof assistants. The source edition is pinned explicitly. |
 
 The unit-system model uses positive multiplicative scales. Affine display
 scales, such as degrees Celsius, require a separate origin. The measured
-constants carry standard uncertainties from CODATA, which describe the cited
-adjustment. They do not impose bounds on the physical quantities.
+constants carry standard uncertainties from the cited CODATA adjustment.
+[2022 CODATA adjustment](https://doi.org/10.1103/RevModPhys.97.025002)
+
+The previous scalar constants in the foundations modules retain the fixed
+Planck-unit convention of the examples that use them. The SI values, dimensions
+and unit conversions are provided by the experimental modules. The remaining
+tasks in the inventory still need task-specific implementation or verification.
 
 [Lean Units](../../../lean/PhysicalUnifiedTheory/Experimental/Units.lean) ·
 [Lean Constants](../../../lean/PhysicalUnifiedTheory/Experimental/Constants.lean) ·
