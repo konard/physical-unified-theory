@@ -124,11 +124,10 @@ Definition dirac_quantization_condition (e g : R) (n : Z) : Prop :=
   e * g = IZR n / 2.
 
 (** For the minimal monopole (n=1): eg = 1/2. *)
-Example minimal_monopole (e : R) :
+Example minimal_monopole (e : R) (he : e <> 0) :
     dirac_quantization_condition e (1 / (2 * e)) 1.
 Proof.
   unfold dirac_quantization_condition.
   simpl.
-  field_simplify.
-  (* Assumes e ≠ 0 *)
-Admitted.  (* TODO (A.2.5): Complete with e ≠ 0 hypothesis *)
+  field. exact he.
+Qed.
