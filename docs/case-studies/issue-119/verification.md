@@ -32,6 +32,11 @@ rocq compile -R theories PhysicalUnifiedTheory theories/Unification/NullCone.v
 rocq compile -R theories PhysicalUnifiedTheory tests/NullCone.v
 ```
 
+`clock_resolvent_window` checks the pointwise inequalities used to recover the
+projection weight from the cutoff clock spectral distributions. The two Rocq
+regressions exercise a reading at the closed window endpoint and one above it.
+[Spectral window identity](analysis.md#recovering-the-projection-weight-from-cutoff-spectral-windows)
+
 The numerical experiment uses Python’s standard library, fixed cutoffs no larger than 8192, and exact rational calculations for the trace, clock countermodel and entropy coefficient. The radial comparisons are floating point with a small roundoff allowance. Run it from the repository root.
 
 ```sh

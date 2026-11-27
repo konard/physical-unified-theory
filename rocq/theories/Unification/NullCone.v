@@ -50,6 +50,32 @@ Proof.
   nra.
 Qed.
 
+(** Bound the normalized clock resolvent by a two-valued function on the
+    spectral windows [0, cutoff] and (cutoff, infinity). *)
+Theorem clock_resolvent_window : forall L cutoff reading : R,
+  0 < L -> 0 <= cutoff -> 0 <= reading ->
+  (reading <= cutoff -> L / (L + cutoff) <= L / (L + reading) <= 1) /\
+  (cutoff < reading -> 0 <= L / (L + reading) <= L / (L + cutoff)).
+Proof.
+  intros L cutoff reading HL Hcutoff Hreading.
+  assert (HreadingDenom : 0 < L + reading) by lra.
+  assert (HcutoffDenom : 0 < L + cutoff) by lra.
+  assert (Hreg : forall x y : R, 0 < L + x -> x <= y ->
+    L / (L + y) <= L / (L + x)).
+  { intros x y Hx Hxy.
+    unfold Rdiv.
+    apply Rmult_le_compat_l; [lra|].
+    apply Rinv_le_contravar; lra. }
+  split; intro Hwindow.
+  - split.
+    + apply Hreg; assumption.
+    + replace 1 with (L / (L + 0)) by (field; lra).
+      apply Hreg; lra.
+  - split.
+    + apply Rlt_le, Rdiv_lt_0_compat; assumption.
+    + apply Hreg; lra.
+Qed.
+
 (** An exponential lower bound on a commuting clock gives a Laplace upper
     bound on its normalized resolvent. *)
 Theorem resolvent_le_clock_laplace : forall L floor clock focusing : R,

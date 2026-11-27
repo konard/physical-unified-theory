@@ -99,9 +99,44 @@ For a countermodel take $Q_n[\psi]=n\|\psi\|^2$ on any nonzero Hilbert space. Ea
 
 A sufficient estimate for the stronger clock claim is $\sup_n Q_n[\Omega]\le M<\infty$ for the normalized preparation $\Omega$. Against each cutoff spectral measure, $1-L/(L+x)=x/(L+x)\le x/L$, so the resolvent deficit is bounded by $M/L$ uniformly in $n$. The finite spectral-sum version is checked in Lean. Passing to the form limit then gives unit weight as $L\to\infty$. If the first moment diverges, a uniform law for spectral tails still suffices: for any $K>0$ the deficit is bounded by $K/L+\mu_n((K,\infty))$. The corresponding acceptance test is tightness of the actual cutoff spectral measures in the specified preparation. [Clock resolvent (5.7)](https://arxiv.org/html/2611.34924v1#S5.E7) · [Resolvent limit (C.13)](https://arxiv.org/html/2611.34924v1#A3.E13)
 
-A further check concerns the topology in which one takes the continuum limit. If the independent configuration modes of (4.32) are expanded in an orthonormal radial basis with variance $1/(2sk)$, their product Gaussian is almost surely outside the square-summable configuration space. To see this, for coefficients $q_k$ and $t>0$, $\mathbb E e^{-t\sum_{k=1}^N q_k^2}=\prod_{k=1}^N(1+t/(sk))^{-1/2}\to0$, since the logarithm of the reciprocal diverges harmonically. Dominated convergence then forces $e^{-t\sum_{k\ge1}q_k^2}=0$ almost surely. This concerns the illustrated mode normalization and product state. Equation (4.32) is a benchmark choice and does not identify the general preparation of §5.1. A proof using other mode widths or a distribution-space topology must specify them and still establish the operator form-domain estimate. [Radial state (4.32)](https://arxiv.org/html/2611.34924v1#S4.E32) · [Fixed-area form analysis](https://arxiv.org/html/2611.34924v1#A3.SS2)
+### Recovering the projection weight from cutoff spectral windows
+
+Assume the strong resolvent limit in (C.13) exists. For a normalized
+preparation $\Omega$, write $m_n(K)=\mu_n([0,K])$ for the probability of
+a finite reading up to $K$ at regulator $n$, and write
+$r_n(L)=\int L/(L+x)\,d\mu_n(x)$. For $L>0$ and $K\ge 0$, put
+$b=L/(L+K)$. On $[0,K]$ the integrand lies between $b$ and $1$. On
+$(K,\infty)$ it lies between $0$ and $b$. Integration gives
+
+$$
+b\,m_n(K)\le r_n(L)\le m_n(K)+b(1-m_n(K)).
+$$
+
+Let $r(L)=\lim_n r_n(L)$ and $p=\lim_{L\to\infty}r(L)=\|P_M\Omega\|^2$.
+For fixed $K$, the lower bound gives $\limsup_n m_n(K)\le r(L)/b$.
+Taking $L\to\infty$ at fixed $K$ gives $\limsup_n m_n(K)\le p$.
+For fixed $L$, the upper bound gives $\liminf_n m_n(K)\ge r(L)-b$.
+Taking $K\to\infty$ first then $L\to\infty$ gives the reverse bound on
+the limiting lower mass. Hence
+
+$$
+p=\lim_{K\to\infty}\liminf_n m_n(K)
+ =\lim_{K\to\infty}\limsup_n m_n(K).
+$$
+
+The finite-clock survival claim is equivalent to finding one bounded window
+whose probability has positive lower limit as the regulator is removed.
+The unit-weight claim is equivalent to asymptotic tightness. These tests
+use the spectral probabilities of the cutoff clock in the actual
+preparation and need no first-moment or commutation assumption. Rocq checks
+the two pointwise bounds, including the window endpoint. Establishing the
+strong resolvent limit and the spectral probabilities for the gravitational
+preparation remains part of the clock acceptance criterion.
+[Clock overlap (5.7)](https://arxiv.org/html/2611.34924v1#S5.E7) · [Resolvent limit (C.13)](https://arxiv.org/html/2611.34924v1#A3.E13) · [Rocq theorem](../../../rocq/theories/Unification/NullCone.v)
 
 ### A commuting radial clock with the benchmark covariance
+
+If the independent configuration modes of (4.32) are expanded in an orthonormal radial basis with variance $1/(2sk)$, their product Gaussian is almost surely outside the square-summable configuration space. To see this, for coefficients $q_k$ and $t>0$, $\mathbb E e^{-t\sum_{k=1}^N q_k^2}=\prod_{k=1}^N(1+t/(sk))^{-1/2}\to0$, since the logarithm of the reciprocal diverges harmonically. Dominated convergence then forces $e^{-t\sum_{k\ge1}q_k^2}=0$ almost surely. This concerns the illustrated mode normalization and product state. Equation (4.32) is a benchmark choice and does not identify the general preparation of §5.1. A proof using other mode widths or a distribution-space topology must specify them and still establish the operator form-domain estimate. [Radial state (4.32)](https://arxiv.org/html/2611.34924v1#S4.E32) · [Fixed-area form analysis](https://arxiv.org/html/2611.34924v1#A3.SS2)
 
 The benchmark variance in (4.32) also permits a test with the shear gradient
 included. Choose a radial clock on one generator, fix its corner radius
