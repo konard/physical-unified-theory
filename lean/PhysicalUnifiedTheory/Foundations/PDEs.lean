@@ -1,3 +1,5 @@
+module
+
 /-
 # Partial Differential Equations (A.6)
 
@@ -21,8 +23,10 @@ Schrödinger equation, Einstein field equations) are all PDEs.
 - Taylor, "Partial Differential Equations I-III"
 -/
 
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Calculus.MeanValue
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.Foundations.PDEs
 
@@ -53,18 +57,18 @@ In physics:
 -- Sobolev spaces allow rigorous treatment of solutions with distributional derivatives.
 -- Elliptic regularity: Δu = f ∈ H^k implies u ∈ H^{k+2}.
 
-/-- The Klein-Gordon equation (∂_tt - ∇² + m²)φ = 0 describes a free massive scalar field.
+/- The Klein-Gordon equation (∂_tt - ∇² + m²)φ = 0 describes a free massive scalar field.
     It is the relativistic generalization of the Schrödinger equation for spin-0 particles.
     Solutions represent particles of mass m in quantum field theory. -/
 -- In 1+1 dimensions: ∂_tt φ - ∂_xx φ + m² φ = 0
 -- Plane wave solutions: φ(t,x) = A exp(i(kx - ωt)) with ω² = k² + m²
 
-/-- The Schrödinger equation iℏ ∂_t ψ = Hψ governs quantum state evolution.
+/- The Schrödinger equation iℏ ∂_t ψ = Hψ governs quantum state evolution.
     In natural units (ℏ=1): i ∂_t ψ = Hψ.
     For a free particle: i ∂_t ψ = -∇²/(2m) ψ (parabolic PDE in imaginary time). -/
 -- TODO (A.6.1): Formalize the Schrödinger equation for specific Hamiltonians
 
-/-- The Dirac equation (iγ^μ ∂_μ - m)ψ = 0 describes spin-1/2 particles.
+/- The Dirac equation (iγ^μ ∂_μ - m)ψ = 0 describes spin-1/2 particles.
     It is first-order in spacetime derivatives and automatically relativistically covariant.
     Solutions are 4-component spinors. -/
 -- TODO (A.6.1): Formalize after Clifford algebras (A.4.3) are implemented

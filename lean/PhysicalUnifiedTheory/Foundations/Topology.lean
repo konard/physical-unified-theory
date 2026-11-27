@@ -1,3 +1,5 @@
+module
+
 /-
 # Topology (A.3)
 
@@ -22,10 +24,12 @@ and condensed matter physics.
 - Nakahara, "Geometry, Topology and Physics"
 -/
 
-import Mathlib.Topology.Basic
-import Mathlib.Topology.Connected.Basic
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Topology.Basic
+public import Mathlib.Topology.Connected.Basic
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Topology.MetricSpace.Basic
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.Foundations.Topology
 
@@ -43,11 +47,11 @@ without a notion of distance. Manifolds are locally Euclidean topological spaces
 -- - Brouwer fixed point theorem
 -- These are used implicitly throughout the physics formalization.
 
-/-- A topological space is connected if it cannot be split into two disjoint open sets.
+/- A topological space is connected if it cannot be split into two disjoint open sets.
     Physical spacetime is assumed to be connected (no disconnected components). -/
 -- `ConnectedSpace M` is available in Mathlib
 
-/-- The fundamental domain of a lattice Γ acting on ℝⁿ gives rise to
+/- The fundamental domain of a lattice Γ acting on ℝⁿ gives rise to
     a compact quotient space ℝⁿ/Γ (e.g., tori in compactification scenarios). -/
 -- This appears in string theory (Kaluza-Klein compactification) and condensed matter.
 
@@ -73,7 +77,7 @@ These invariants classify spaces up to homeomorphism or homotopy equivalence.
 -- π_3(S²) ≅ ℤ: Hopf fibration, relevant to skyrmions and monopoles
 -- π_4(S³) ≅ ℤ/2ℤ: spin statistics theorem
 
-/-- The winding number of a loop in ℝ² \ {0}.
+/- The winding number of a loop in ℝ² \ {0}.
     Physically: quantization of magnetic flux in superconductors,
     Aharonov-Bohm effect. -/
 -- TODO (A.3.2): Formalize winding number using Mathlib's circle integration
@@ -98,11 +102,11 @@ They appear as conserved quantum numbers and quantized physical quantities.
 -- Gauss-Bonnet theorem: ∫_M K dA = 2π χ(M) relates geometry to topology.
 -- Generalization: Chern-Gauss-Bonnet theorem in 4 dimensions.
 
-/-- The Euler characteristic is a topological invariant.
+/- The Euler characteristic is a topological invariant.
     For a closed orientable surface of genus g: χ = 2 - 2g. -/
 -- sphere S²: χ = 2, torus T²: χ = 0, double torus: χ = -2
 
-/-- An instanton is a solution to the (anti-)self-dual Yang-Mills equations
+/- An instanton is a solution to the (anti-)self-dual Yang-Mills equations
     with finite action. The instanton number (Pontryagin number) is quantized.
     Instantons are important for tunneling between vacua in QFT. -/
 -- Self-duality: *F = ±F where * is the Hodge star operator

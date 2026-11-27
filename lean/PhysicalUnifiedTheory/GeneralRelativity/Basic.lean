@@ -1,3 +1,5 @@
+module
+
 /-
 # General Relativity
 
@@ -25,9 +27,11 @@ This module formalizes Einstein's theory of general relativity.
 - Mathlib differential geometry: Mathlib.Geometry.Manifold
 -/
 
-import PhysicalUnifiedTheory.Foundations.Basic
-import Mathlib.Geometry.Manifold.SmoothManifoldWithCorners
-import Mathlib.LinearAlgebra.QuadraticForm.Basic
+public import PhysicalUnifiedTheory.Foundations.Basic
+public import Mathlib.Geometry.Manifold.ContMDiff.Basic
+public import Mathlib.LinearAlgebra.QuadraticForm.Basic
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.GeneralRelativity
 
@@ -49,7 +53,7 @@ abbrev Spacetime := Fin SpacetimeDim → ℝ
 def timeIndex : Fin SpacetimeDim := 0
 
 /-- Spatial coordinate indices -/
-def spaceIndex (i : Fin 3) : Fin SpacetimeDim := ⟨i.val + 1, by omega⟩
+def spaceIndex (i : Fin 3) : Fin SpacetimeDim := i.succ
 
 /-!
 ## Minkowski Metric
@@ -91,7 +95,7 @@ The spacetime interval between two events.
     For timelike separation: Δs² < 0
     For spacelike separation: Δs² > 0
     For lightlike (null) separation: Δs² = 0 -/
-def spacetimeInterval (x y : Spacetime) : ℝ :=
+noncomputable def spacetimeInterval (x y : Spacetime) : ℝ :=
   let Δ : Spacetime := fun i => y i - x i
   ∑ μ : Fin SpacetimeDim, ∑ ν : Fin SpacetimeDim, minkowskiMetric μ ν * Δ μ * Δ ν
 
@@ -102,10 +106,10 @@ theorem interval_self (x : Spacetime) : spacetimeInterval x x = 0 := by
 /-- The interval is symmetric. -/
 theorem interval_symm (x y : Spacetime) : spacetimeInterval x y = spacetimeInterval y x := by
   simp only [spacetimeInterval]
-  congr 1
-  ext μ
-  congr 1
-  ext ν
+  apply Finset.sum_congr rfl
+  intro μ _
+  apply Finset.sum_congr rfl
+  intro ν _
   ring
 
 /-!
@@ -143,7 +147,7 @@ structure SpacetimeMetric where
   components : Matrix (Fin SpacetimeDim) (Fin SpacetimeDim) ℝ
   /-- The metric is symmetric: g_μν = g_νμ -/
   symmetric : components.IsSymm
-  /-- The metric has Lorentzian signature (one negative eigenvalue) -/
+  -- The metric has Lorentzian signature (one negative eigenvalue).
   -- lorentzian : HasLorentzianSignature components
 
 end PhysicalUnifiedTheory.GeneralRelativity

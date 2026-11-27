@@ -22,36 +22,39 @@ Require Import PhysicalUnifiedTheory.Foundations.LinearAlgebra.
 (** ** Density Matrices
 
     A density matrix ρ represents a (possibly mixed) quantum state.
-    Properties: ρ is symmetric, Tr(ρ) = 1, diagonal entries >= 0.
+    Properties: ρ is symmetric, Tr(ρ) = 1 and its quadratic form is nonnegative.
     For a pure state |ψ⟩: ρ = |ψ⟩⟨ψ|. *)
 
-(** A density matrix in 2D: symmetric, trace = 1, non-negative diagonal. *)
+(** A real symmetric density matrix in 2D. *)
 Record DensityMatrix2D : Type := mkDensity {
   d00 : R;  (** probability weight of |0⟩ *)
   d01 : R;  (** off-diagonal coherence *)
   d11 : R;  (** probability weight of |1⟩ *)
   (** Trace = 1: d00 + d11 = 1 *)
   trace_one : d00 + d11 = 1;
-  (** Positive semidefinite diagonal entries *)
-  d00_nonneg : 0 <= d00;
-  d11_nonneg : 0 <= d11
+  (** Positive semidefiniteness on the entire vector space. *)
+  density_positive : forall x y : R, 0 <= d00 * x^2 + 2 * d01 * x * y + d11 * y^2
 }.
+
+Lemma d00_nonneg (rho : DensityMatrix2D) : 0 <= rho.(d00).
+Proof. pose proof (density_positive rho 1 0). lra. Qed.
+
+Lemma d11_nonneg (rho : DensityMatrix2D) : 0 <= rho.(d11).
+Proof. pose proof (density_positive rho 0 1). lra. Qed.
 
 (** The pure state |0⟩ has density matrix [[1, 0], [0, 0]]. *)
 Program Definition pure_state0 : DensityMatrix2D := {|
   d00 := 1; d01 := 0; d11 := 0
 |}.
 Next Obligation. lra. Qed.
-Next Obligation. lra. Qed.
-Next Obligation. lra. Qed.
+Next Obligation. nra. Qed.
 
 (** The pure state |1⟩ has density matrix [[0, 0], [0, 1]]. *)
 Program Definition pure_state1 : DensityMatrix2D := {|
   d00 := 0; d01 := 0; d11 := 1
 |}.
 Next Obligation. lra. Qed.
-Next Obligation. lra. Qed.
-Next Obligation. lra. Qed.
+Next Obligation. nra. Qed.
 
 (** The maximally mixed state has density matrix (1/2)I = [[1/2, 0], [0, 1/2]].
     It represents complete ignorance about the quantum state. *)
@@ -59,8 +62,7 @@ Program Definition maximallyMixed : DensityMatrix2D := {|
   d00 := 1/2; d01 := 0; d11 := 1/2
 |}.
 Next Obligation. lra. Qed.
-Next Obligation. lra. Qed.
-Next Obligation. lra. Qed.
+Next Obligation. nra. Qed.
 
 (** ** Born Rule
 
@@ -76,12 +78,12 @@ Definition prob_outcome1 (rho : DensityMatrix2D) : R := rho.(d11).
 (** Probabilities are non-negative. *)
 Lemma prob0_nonneg (rho : DensityMatrix2D) : 0 <= prob_outcome0 rho.
 Proof.
-  exact rho.(d00_nonneg).
+  exact (d00_nonneg rho).
 Qed.
 
 Lemma prob1_nonneg (rho : DensityMatrix2D) : 0 <= prob_outcome1 rho.
 Proof.
-  exact rho.(d11_nonneg).
+  exact (d11_nonneg rho).
 Qed.
 
 (** Probabilities sum to 1 (conservation of probability). *)

@@ -1,3 +1,5 @@
+module
+
 /-
 # Unification of Quantum Mechanics and General Relativity
 
@@ -34,9 +36,11 @@ We formalize:
 - Rovelli, "Quantum Gravity"
 -/
 
-import PhysicalUnifiedTheory.Foundations.Basic
-import PhysicalUnifiedTheory.QuantumMechanics.Basic
-import PhysicalUnifiedTheory.GeneralRelativity.Basic
+public import PhysicalUnifiedTheory.Foundations.Basic
+public import PhysicalUnifiedTheory.QuantumMechanics.Basic
+public import PhysicalUnifiedTheory.GeneralRelativity.Basic
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.Unification
 
@@ -51,13 +55,13 @@ Both QM and GR share certain mathematical foundations that may provide
 hints for unification.
 -/
 
-/-- Symplectic structure appears in both:
+/- Symplectic structure appears in both:
     - Classical mechanics (phase space)
     - Canonical quantization
     - ADM formalism in GR -/
 -- placeholder for symplectic structure formalization
 
-/-- Gauge symmetry appears in both:
+/- Gauge symmetry appears in both:
     - Standard Model gauge theories
     - GR as a gauge theory of diffeomorphisms -/
 -- placeholder for gauge symmetry formalization
@@ -86,10 +90,7 @@ noncomputable def planckEnergy : ℝ := 1 / Real.sqrt gravitationalConstant
 
 /-- At the Planck scale, quantum and gravitational effects are equally important. -/
 theorem planck_scale_relation : planckLength * planckMass = 1 := by
-  simp [planckLength, planckMass]
-  rw [← Real.sqrt_inv gravitationalConstant]
-  rw [← Real.sqrt_mul (by positivity : 0 ≤ gravitationalConstant)]
-  simp
+  simp [planckLength, planckMass, gravitationalConstant]
 
 /-!
 ## Key Questions for Unification
@@ -97,7 +98,7 @@ theorem planck_scale_relation : planckLength * planckMass = 1 := by
 These are the fundamental questions that a unified theory must address:
 -/
 
-/--
+/-
 **Question 1: What is the nature of spacetime at the Planck scale?**
 
 Options:
@@ -106,14 +107,14 @@ Options:
 - Emergent (from more fundamental degrees of freedom)
 -/
 
-/--
+/-
 **Question 2: How does quantum superposition apply to spacetime itself?**
 
 If spacetime is dynamical and quantum mechanics is fundamental,
 should we expect superpositions of different spacetime geometries?
 -/
 
-/--
+/-
 **Question 3: What replaces the classical spacetime manifold?**
 
 Candidates:

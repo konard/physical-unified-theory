@@ -1,3 +1,5 @@
+module
+
 /-
 # Hilbert Spaces: Operators and Spectral Theory (A.1.2–A.1.3)
 
@@ -10,7 +12,7 @@ complementing the basic definitions in LinearAlgebra.lean.
 - Hermitian matrices and their properties
 - Unitary matrices and groups
 - Pauli matrices as fundamental observables
-- Functional calculus (stub)
+- Functional calculus via unitary diagonalization
 
 ## References
 
@@ -18,11 +20,15 @@ complementing the basic definitions in LinearAlgebra.lean.
 - Halmos, "A Hilbert Space Problem Book"
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.LinearAlgebra.UnitaryGroup
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
+public import Mathlib.LinearAlgebra.Matrix.Hermitian
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.LinearAlgebra.UnitaryGroup
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.Foundations.HilbertSpaces
 
@@ -63,7 +69,7 @@ theorem pauliY_hermitian : pauliY.IsHermitian := by
   rw [Matrix.IsHermitian]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [pauliY, Matrix.conjTranspose, Matrix.transpose, Complex.I_sq]
+    simp [pauliY, Matrix.conjTranspose, Matrix.transpose]
 
 /-- Pauli Z is Hermitian. -/
 theorem pauliZ_hermitian : pauliZ.IsHermitian := by
@@ -78,15 +84,15 @@ theorem pauliX_pauliZ_anticommute :
     pauliX * pauliZ + pauliZ * pauliX = 0 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [pauliX, pauliZ, Matrix.mul_fin_two]
+    simp [pauliX, pauliZ]
 
 /-- The commutator [X, Z] = -2iY (Pauli algebra relation). -/
 theorem pauliXZ_commutator :
     pauliX * pauliZ - pauliZ * pauliX = (-2 * Complex.I) • pauliY := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [pauliX, pauliY, pauliZ, Matrix.mul_fin_two, Complex.I_sq]
-  all_goals ring
+    simp [pauliX, pauliY, pauliZ] <;>
+    ring_nf <;> simp [Complex.I_sq]
 
 /-!
 ## Unitary Matrices
@@ -123,24 +129,28 @@ The norm of an operator controls its action on state vectors.
 /-- The operator norm of a matrix M is the largest singular value.
     For Hermitian matrices, this equals the largest absolute eigenvalue. -/
 noncomputable def matrixOpNorm {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
-  ‖Matrix.toLin' M‖
+  ‖(Matrix.toEuclideanLin M).toContinuousLinearMap‖
 
 /-!
-## Functional Calculus (Stub)
+## Functional Calculus for Hermitian Matrices
 
-The functional calculus allows applying functions to operators via the spectral theorem.
-For f : ℝ → ℝ and self-adjoint A with spectral measure E_A, we define f(A) = ∫ f(λ) dE_A(λ).
+The Hermitian spectral theorem diagonalizes a matrix in an orthonormal basis.
+Applying a real function to its eigenvalues in that basis implements the
+functional calculus. Every function on this finite spectrum is continuous.
 -/
 
--- TODO (A.1.3): Implement functional calculus
--- Key results needed:
--- 1. Spectral theorem for compact self-adjoint operators (in Mathlib)
--- 2. Borel functional calculus for bounded self-adjoint operators
--- 3. Unbounded self-adjoint operators and their spectral resolutions
+/-- The functional calculus of a Hermitian matrix applies a function to each
+real eigenvalue and conjugates back by the unitary matrix of eigenvectors. -/
+theorem hermitianFunctionalCalculus {ι : Type*} [Fintype ι] [DecidableEq ι]
+    {A : Matrix ι ι ℂ} (hA : A.IsHermitian) (f : ℝ → ℝ) :
+    cfc f A = Unitary.conjStarAlgAut ℂ _ hA.eigenvectorUnitary
+      (diagonal fun i => (f (hA.eigenvalues i) : ℂ)) :=
+  hA.cfc_eq f
 
-/-- Time evolution operator: U(t) = e^{-iHt/ℏ} for Hamiltonian H.
-    This is computed via the functional calculus applied to the exponential function.
-    In natural units (ℏ = 1): U(t) = e^{-iHt}. -/
--- TODO (A.1.3): Formalize using matrix exponential from Mathlib.LinearAlgebra.Matrix.Exp
+/-- Squaring the Pauli X observable in the functional calculus gives the identity. -/
+theorem pauliX_cfc_square : cfc (fun x : ℝ => x ^ 2) pauliX = 1 := by
+  rw [cfc_pow_id (R := ℝ) pauliX 2 pauliX_hermitian.isSelfAdjoint, pow_two]
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [pauliX]
 
 end PhysicalUnifiedTheory.Foundations.HilbertSpaces

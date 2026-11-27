@@ -1,3 +1,5 @@
+module
+
 /-
 # Physical Unified Theory
 
@@ -9,6 +11,7 @@ A formalization of physics toward a unified theory of quantum mechanics and gene
   - `Basic`: Core definitions and physical constants
   - `LinearAlgebra`: Hilbert spaces, operators, spectral theory (A.1)
   - `HilbertSpaces`: Matrix operators, Pauli matrices, unitaries (A.1.2–A.1.3)
+  - `Distributions`: Schwartz space, tempered distributions and a rigged Hilbert space (A.1.4–A.1.5)
   - `DifferentialGeometry`: Manifolds, tensors, curvature, causal structure (A.2)
   - `FiberBundles`: Principal bundles, gauge theories (A.2.5)
   - `Algebra`: Lie groups, representations, Clifford algebras (A.4)
@@ -26,17 +29,23 @@ A formalization of physics toward a unified theory of quantum mechanics and gene
 -/
 
 -- Track A: Mathematical Foundations
-import PhysicalUnifiedTheory.Foundations.Basic
-import PhysicalUnifiedTheory.Foundations.LinearAlgebra
-import PhysicalUnifiedTheory.Foundations.HilbertSpaces
-import PhysicalUnifiedTheory.Foundations.DifferentialGeometry
-import PhysicalUnifiedTheory.Foundations.FiberBundles
-import PhysicalUnifiedTheory.Foundations.Algebra
-import PhysicalUnifiedTheory.Foundations.MeasureTheory
-import PhysicalUnifiedTheory.Foundations.Topology
-import PhysicalUnifiedTheory.Foundations.PDEs
+public import PhysicalUnifiedTheory.Foundations.Basic
+public import PhysicalUnifiedTheory.Foundations.LinearAlgebra
+public import PhysicalUnifiedTheory.Foundations.HilbertSpaces
+public import PhysicalUnifiedTheory.Foundations.Distributions
+public import PhysicalUnifiedTheory.Foundations.DifferentialGeometry
+public import PhysicalUnifiedTheory.Foundations.FiberBundles
+public import PhysicalUnifiedTheory.Foundations.Algebra
+public import PhysicalUnifiedTheory.Foundations.MeasureTheory
+public import PhysicalUnifiedTheory.Foundations.Topology
+public import PhysicalUnifiedTheory.Foundations.PDEs
 
 -- Higher tracks (depend on Track A)
-import PhysicalUnifiedTheory.QuantumMechanics.Basic
-import PhysicalUnifiedTheory.GeneralRelativity.Basic
-import PhysicalUnifiedTheory.Unification.Basic
+public import PhysicalUnifiedTheory.QuantumMechanics.Basic
+public import PhysicalUnifiedTheory.QuantumMechanics.Bell
+public import PhysicalUnifiedTheory.GeneralRelativity.Basic
+public import PhysicalUnifiedTheory.Unification.Basic
+
+-- Track N: Experimental Connections and Predictions
+public import PhysicalUnifiedTheory.Experimental.Units
+public import PhysicalUnifiedTheory.Experimental.Constants

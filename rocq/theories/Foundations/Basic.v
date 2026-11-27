@@ -15,10 +15,10 @@ From Stdlib Require Import Reals.
 From Stdlib Require Import Lra.
 Open Scope R_scope.
 
-(** ** Physical Constants (Natural Units) *)
+(** ** Physical Constants (Fixed Planck Units) *)
 
-(** In natural units, we set c = ℏ = 1.
-    This simplifies equations and makes dimensional analysis clearer. *)
+(** These scalars fix c = ℏ = G = 1 in the elementary examples.
+    Experimental.Constants provides coherent SI quantities and unit systems. *)
 
 (** Reduced Planck constant ℏ = h/(2π) *)
 Definition hbar : R := 1.
@@ -26,9 +26,7 @@ Definition hbar : R := 1.
 (** Speed of light c *)
 Definition speed_of_light : R := 1.
 
-(** Gravitational constant G
-    In natural units with c = ℏ = 1, we have G = ℓ_P²
-    where ℓ_P is the Planck length *)
+(** The gravitational constant in the fixed Planck-unit convention. *)
 Definition gravitational_constant : R := 1.
 
 (** Planck length ℓ_P = √(ℏG/c³) = √G in natural units *)
