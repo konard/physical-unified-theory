@@ -16,6 +16,7 @@ theories/QuantumMechanics/Basic.v
 theories/QuantumMechanics/Bell.v
 theories/GeneralRelativity/Basic.v
 theories/Unification/Basic.v
+theories/Unification/NullCone.v
 
 # Track N: Experimental Connections and Predictions
 theories/Experimental/Units.v
@@ -24,3 +25,4 @@ theories/Experimental/Constants.v
 # Regression tests
 tests/Units.v
 tests/DensityMatrix.v
+tests/NullCone.v

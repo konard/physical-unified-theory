@@ -2,6 +2,8 @@
 
 This roadmap outlines the path toward formalizing all of physics in the Lean and Rocq proof assistants, with the ultimate goal of exploring unification of quantum theory and general relativity.
 
+See the [requirements register](docs/REQUIREMENTS.md) for implementation and verification status.
+
 ## Vision
 
 Create a rigorous, machine-verified formalization of:

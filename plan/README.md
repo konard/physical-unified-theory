@@ -2,6 +2,8 @@
 
 This directory contains detailed, conflict-free execution plans for each research track defined in the [ROADMAP](../ROADMAP.md). Each track has its own folder with implementation details, task breakdowns, and dependency analysis.
 
+The [requirements register](../docs/REQUIREMENTS.md) links each registered issue and task to its delivery evidence.
+
 > **Purpose**: Enable parallel, independent work across tracks while respecting dependencies. Each plan identifies what can start immediately vs. what must wait for prerequisites.
 
 ## Plan Index

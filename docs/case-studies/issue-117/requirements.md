@@ -1,5 +1,8 @@
 # Requirements and verification for issue 117
 
+The [repository requirements register](../../REQUIREMENTS.md) tracks the
+current delivery status of these original requirements.
+
 [Issue 117](https://github.com/konard/physical-unified-theory/issues/117) requires
 all 102 listed issues to be fully implemented in [PR 118](https://github.com/konard/physical-unified-theory/pull/118).
 Its body and the recursive GitHub sub-issue tree reach the same 102 issues.

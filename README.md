@@ -75,6 +75,9 @@ make -f Makefile.coq
 
 ## Current Status
 
+The [requirements register](docs/REQUIREMENTS.md) records delivery and
+verification evidence for every registered issue.
+
 This is an early-stage project. We are currently working on:
 
 - [x] Project structure and CI/CD setup
@@ -90,6 +93,7 @@ See [ROADMAP.md](ROADMAP.md) for the detailed plan.
 ## Documentation
 
 - [ROADMAP.md](ROADMAP.md) - Full project roadmap with phases
+- [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) - Repository-wide delivery and verification record
 - [docs/GLOSSARY.md](docs/GLOSSARY.md) - Key physics and math terms
 - [docs/QUANTUM_MECHANICS.md](docs/QUANTUM_MECHANICS.md) - QM formalization guide
 - [docs/GENERAL_RELATIVITY.md](docs/GENERAL_RELATIVITY.md) - GR formalization guide

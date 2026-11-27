@@ -4,6 +4,37 @@
 
 This case study analyzes the CI/CD failure in GitHub Actions run [#21453864333](https://github.com/konard/physical-unified-theory/actions/runs/21453864333/job/61789404485) that prevented the Rocq verification workflow from building the physical theory formalization.
 
+The [requirements register](../../REQUIREMENTS.md) tracks the fix and original
+log preservation separately.
+
+## Original log recovery
+
+The GitHub Actions run and job log download endpoints both return HTTP 410.
+The run has no available artifacts. The original investigation downloaded
+640 lines and copied the file into this case study, but Git ignored `*.log`
+and the file was omitted from PR #4. The published session transcript retains
+parts of the installation and compiler failure, with some lines repeated
+across commands. The nonblank timestamped lines from the two error queries
+appear below once each. The transcript also
+records that the original attempt to read the complete log exceeded the read
+tool's output limit. The full 640-line log remains unavailable.
+[Original job](https://github.com/konard/physical-unified-theory/actions/runs/21453864333/job/61789404485) · [Investigation transcript link](https://github.com/konard/physical-unified-theory/pull/4#issuecomment-3813796529) · [PR #4 files](https://github.com/konard/physical-unified-theory/pull/4/files)
+
+```text
+build	Build Rocq project using docker-coq-action	2026-01-28T20:12:29.5744359Z (3/5) Installing perl-error (0.17030-r0)
+build	Build Rocq project using docker-coq-action	2026-01-28T20:12:29.6585244Z Error response from daemon: No such image: rocq/rocq-prover:9.0
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.0321340Z ##[warning]Warning: Loading Stdlib without prefix is deprecated.
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.0327886Z Use "From Stdlib Require Reals" or the deprecated "From Coq Require Reals"
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.0328287Z for compatibility with older Coq versions.
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.0328696Z [deprecated-missing-stdlib,deprecated-since-9.0,deprecated,default]
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2248527Z File "./theories/Foundations/Basic.v", line 13, characters 15-33:
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2251852Z ##[error]Error: Cannot find a physical path bound to logical path Coquelicot.Complex.
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2291841Z make[1]: *** [Makefile.coq:818: theories/Foundations/Basic.vo] Error 1
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2292879Z make[1]: *** [theories/Foundations/Basic.vo] Deleting file 'theories/Foundations/Basic.glob'
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2294427Z make: *** [Makefile.coq:416: all] Error 2
+build	Revert permissions	﻿2026-01-28T20:13:30.3773951Z ##[group]Run sudo chown -R 1001:116 .
+```
+
 **Root Cause**: Missing external library dependency (Coquelicot.Complex) that was not available in the base Rocq Docker image.
 
 **Status**: ✅ RESOLVED - Fix implemented in commit [d3cde51](https://github.com/konard/physical-unified-theory/commit/d3cde51843ea846d76ad11625e72facbfad0b5c7)
@@ -223,12 +254,12 @@ This preserves institutional knowledge for future enhancement.
 - ❌ No .vo files generated
 - ❌ Workflow status: FAILED
 
-### Post-Fix State (Expected)
+### Post-Fix State
 - ✅ All files use only Stdlib
 - ✅ No external dependencies required
 - ✅ Compilation should succeed
 - ✅ All theorems verified
-- ⏳ **Pending**: CI run on branch `issue-3-cd3daeea189d` to confirm fix
+- ✅ [Rocq repair run #21453960907](https://github.com/konard/physical-unified-theory/actions/runs/21453960907) succeeded at the fix commit
 
 ### Files Modified
 ```
@@ -337,7 +368,7 @@ The CI/CD error was successfully resolved by removing the external Coquelicot de
 
 The fix demonstrates that meaningful physical theory formalization can begin with minimal dependencies, with more advanced mathematical structures added incrementally as needed.
 
-**Next Steps**: Await CI verification to confirm the fix resolves the issue completely.
+The [passing repair run](https://github.com/konard/physical-unified-theory/actions/runs/21453960907) confirms the build fix.
 
 ---
 
