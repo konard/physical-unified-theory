@@ -28,3 +28,21 @@ The PR description and the authoring agent’s delivered-work comment documented
 | O [#27](https://github.com/konard/physical-unified-theory/issues/27) | A finite local bound and a quantum CHSH violation. | Foundations topics [#115](https://github.com/konard/physical-unified-theory/issues/115) and the rest of the track. |
 
 This is a negative delivery finding, based on the merged source and unsatisfied tasks. The original inventory remains the task-level record for every descendant and distinguishes proof obligations from hypotheses that require research. The audit treats #117 as a dependency check under #119 because #119 asks to double-check its delivery. Work directly relevant to null-cone verification includes characteristic Einstein dynamics, operator theory, functional integration, gauge observables and gravitational thermodynamics. The rest of the old roadmap is evidence of the earlier shortfall. [Task inventory](../issue-117/requirements.md) · [Original implementation and research limits](../issue-117/status.md)
+
+## Issue registration and relationships
+
+Issue #11 requested native hierarchy and dependency links throughout the plan.
+All 103 planned issue groups (#13–#115) exist. In the current GitHub graph,
+issues #28–#33 have #117 as their parent, while Track A #13 still lists them
+as its six planned sub-tasks. GitHub exposes one native parent per issue, so the
+original planning hierarchy and the later delivery hierarchy overlap. The
+repository register preserves both scopes through their source issues.
+[Issue #11](https://github.com/konard/physical-unified-theory/issues/11) · [Track A](https://github.com/konard/physical-unified-theory/issues/13) · [Requirements register](../../REQUIREMENTS.md)
+
+The paginated GitHub issue graph has 109 `blockedBy` edges across 73 planned
+issues. Some issue prerequisites remain in prose only. For example, issue
+#104 specifies C.1 and H.5 for the information-theoretic physics task but has
+zero native blockers. Track M describes its dependencies as cross-cutting.
+Completing the relationship requirement calls for reconciling the native
+issue-level links with the task-level prerequisite graph and preserving
+the historic #117 scope. [Issue #104](https://github.com/konard/physical-unified-theory/issues/104) · [Dependency plan](../../../plan/DEPENDENCIES.md)

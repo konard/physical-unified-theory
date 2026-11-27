@@ -8,6 +8,10 @@ Issue #117 was partially delivered. The merged PR provides real, independently c
 
 ## Evidence and requirements
 
+The [repository requirements register](../../REQUIREMENTS.md) includes the
+acceptance criteria from the latest PR discussion and the earlier roadmap
+issues. CI verifies inventory coverage and fails when any row is unverified.
+
 The source snapshot is arXiv:2611.34924v1, submitted 2026-11-25 18:58:55 UTC. The arXiv versioned PDF retrieved for this audit had SHA-256 `d17caccbee57cfbee6fc2eeed2e5a53467c9401be979fd2952aa2bf92d5443af`. The analysis uses the full text including Appendices A–E and the figures relevant to the arguments. Equation links target the versioned HTML. The issue had zero comments and zero registered sub-issues when inventoried. PR #120 had no conversation comments, inline comments or reviews at the initial inspection. [Paper PDF](https://arxiv.org/pdf/2611.34924v1) · [Paper HTML](https://arxiv.org/html/2611.34924v1) · [Issue #119](https://github.com/konard/physical-unified-theory/issues/119) · [PR #120](https://github.com/konard/physical-unified-theory/pull/120)
 
 | Requirement in #119 | Approach and verification evidence | Status |

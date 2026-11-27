@@ -1,5 +1,8 @@
 # Implementation status and research sources for issue 117
 
+The [repository requirements register](../../REQUIREMENTS.md) tracks delivery
+at the level of each issue, task and hypothesis.
+
 [Requirements and proposed verification](requirements.md) covers the full scope of
 [issue 117](https://github.com/konard/physical-unified-theory/issues/117). The
 deliverables below are evidence for particular tasks. GitHub closed issue 117

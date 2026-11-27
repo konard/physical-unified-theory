@@ -43,6 +43,7 @@ This project aims to formalize quantum mechanics and general relativity in the L
 ### Understanding the Codebase
 
 - `ROADMAP.md` - Overall project roadmap and phases
+- [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) - Requirements and verified delivery
 - `docs/` - Background documentation
 - `lean/` - Lean 4 formalizations
 - `rocq/` - Rocq formalizations
@@ -79,6 +80,9 @@ Before submitting:
 - Lean: `lake build` succeeds
 - Rocq: `make -f Makefile.coq` succeeds
 - All existing tests pass
+- Update the [requirements register](docs/REQUIREMENTS.md#checking-delivery) with the
+  affected issue criteria and verification evidence. The requirements check stays
+  red while any registered criterion remains unverified.
 
 ### 6. Submit a Pull Request
 

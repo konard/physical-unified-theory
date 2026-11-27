@@ -4,6 +4,11 @@
 
 This case study analyzes the CI/CD failure in GitHub Actions run [#21453864333](https://github.com/konard/physical-unified-theory/actions/runs/21453864333/job/61789404485) that prevented the Rocq verification workflow from building the physical theory formalization.
 
+The [requirements register](../../REQUIREMENTS.md) tracks the fix and original
+log preservation separately. The GitHub Actions log download endpoint for the
+original run now returns HTTP 410. The committed error excerpts and issue
+discussion preserve the available evidence.
+
 **Root Cause**: Missing external library dependency (Coquelicot.Complex) that was not available in the base Rocq Docker image.
 
 **Status**: ✅ RESOLVED - Fix implemented in commit [d3cde51](https://github.com/konard/physical-unified-theory/commit/d3cde51843ea846d76ad11625e72facbfad0b5c7)
@@ -223,12 +228,12 @@ This preserves institutional knowledge for future enhancement.
 - ❌ No .vo files generated
 - ❌ Workflow status: FAILED
 
-### Post-Fix State (Expected)
+### Post-Fix State
 - ✅ All files use only Stdlib
 - ✅ No external dependencies required
 - ✅ Compilation should succeed
 - ✅ All theorems verified
-- ⏳ **Pending**: CI run on branch `issue-3-cd3daeea189d` to confirm fix
+- ✅ [Rocq repair run #21453960907](https://github.com/konard/physical-unified-theory/actions/runs/21453960907) succeeded at the fix commit
 
 ### Files Modified
 ```
@@ -337,7 +342,7 @@ The CI/CD error was successfully resolved by removing the external Coquelicot de
 
 The fix demonstrates that meaningful physical theory formalization can begin with minimal dependencies, with more advanced mathematical structures added incrementally as needed.
 
-**Next Steps**: Await CI verification to confirm the fix resolves the issue completely.
+The [passing repair run](https://github.com/konard/physical-unified-theory/actions/runs/21453960907) confirms the build fix.
 
 ---
 
