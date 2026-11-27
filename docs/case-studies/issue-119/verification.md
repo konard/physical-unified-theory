@@ -45,6 +45,7 @@ python3 experiments/null_cone.py -v
 
 | Check | Reproduction result |
 | --- | --- |
+| JT dilaton equation | At a rational trigonometric point with $\sigma\ne0$, the three homogeneous profiles satisfy the coordinate Hessian equation (2.8), including the factor $\sec^2\sigma$ on its diagonal. |
 | JT clock momentum | At three rational trigonometric points the four coefficients of the displaced gravitational potential match the exact derivative in (2.9c), including the cancellation of the coefficient of $d(\delta\tau)$. [Derivation](analysis.md#jt-clock-momentum-at-fixed-matter-and-corner-charges) |
 | Fixed-area radial sum | Compare cutoffs $N$ and $2N$ at $s=0.5,\,2,\,100$ with $N=16,\,128,\,1024$. The difference stays within $1/(2s^2N)$. |
 | Cubic quotient near zero coupling | At $t=10^{-7}$ and $N=16,\,128,\,1024,\,8192$, the negative imaginary quotient agrees with the positive harmonic sum within the sine Taylor test bound and increases with $N$. |

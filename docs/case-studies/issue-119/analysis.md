@@ -61,8 +61,11 @@ In the paper's global coordinates, the nonzero Christoffel symbols are
 $\Gamma^\sigma_{\tau\tau}=\Gamma^\sigma_{\sigma\sigma}
 =\Gamma^\tau_{\tau\sigma}=\Gamma^\tau_{\sigma\tau}=\tan\sigma$.
 For $f=h(\tau)\sec\sigma$ with $h''=-h$, the covariant Hessian has diagonal
-entries $-f,f$ and zero mixed entries. For $f=\tan\sigma$, the diagonal
-entries are also $-f,f$ and the mixed entries vanish. These solve (2.8).
+entries $-f\sec^2\sigma,f\sec^2\sigma$ and zero mixed entries. For
+$f=\tan\sigma$, the same formula follows from
+$\partial_\sigma f=\sec^2\sigma$ and
+$\partial_\sigma^2 f=2\tan\sigma\sec^2\sigma$.
+These solve (2.8).
 The value and gradient at $(\tau,\sigma)=(0,0)$ uniquely determine a solution
 on the connected diamond. Along a smooth curve (2.8) gives a linear
 first-order system for $(f,\nabla f)$, which has a unique solution for its

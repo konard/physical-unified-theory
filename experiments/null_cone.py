@@ -36,6 +36,28 @@ def gaussian_clock_log_overlap_bound(s, rate, L, floor, cutoff):
 
 
 class NullConeChecks(unittest.TestCase):
+    def test_jt_homogeneous_dilaton_hessian(self):
+        sin_time, cos_time = Fraction(5, 13), Fraction(12, 13)
+        sec_space, tan_space = Fraction(5, 4), Fraction(3, 4)
+        spatial_profiles = (
+            (sec_space, sec_space * tan_space, sec_space * (tan_space**2 + sec_space**2)),
+            (tan_space, sec_space**2, 2 * tan_space * sec_space**2),
+        )
+        time_profiles = (
+            (sin_time, cos_time, -sin_time, spatial_profiles[0]),
+            (cos_time, -sin_time, -cos_time, spatial_profiles[0]),
+            (1, 0, 0, spatial_profiles[1]),
+        )
+        for time, d_time, dd_time, (space, d_space, dd_space) in time_profiles:
+            with self.subTest(time=time, space=space):
+                hessian = (
+                    dd_time * space - tan_space * time * d_space,
+                    d_time * d_space - tan_space * d_time * space,
+                    time * dd_space - tan_space * time * d_space,
+                )
+                scaled_dilaton = time * space * sec_space**2
+                self.assertEqual(hessian, (-scaled_dilaton, 0, scaled_dilaton))
+
     def test_jt_clock_momentum_boundary_term(self):
         # Rational points on the unit circles for the global AdS coordinates.
         sin_time, cos_time = Fraction(5, 13), Fraction(12, 13)
