@@ -11,6 +11,7 @@ A formalization of physics toward a unified theory of quantum mechanics and gene
   - `Basic`: Core definitions and physical constants
   - `LinearAlgebra`: Hilbert spaces, operators, spectral theory (A.1)
   - `HilbertSpaces`: Matrix operators, Pauli matrices, unitaries (A.1.2–A.1.3)
+  - `Distributions`: Schwartz space, tempered distributions and a rigged Hilbert space (A.1.4–A.1.5)
   - `DifferentialGeometry`: Manifolds, tensors, curvature, causal structure (A.2)
   - `FiberBundles`: Principal bundles, gauge theories (A.2.5)
   - `Algebra`: Lie groups, representations, Clifford algebras (A.4)
@@ -31,6 +32,7 @@ A formalization of physics toward a unified theory of quantum mechanics and gene
 public import PhysicalUnifiedTheory.Foundations.Basic
 public import PhysicalUnifiedTheory.Foundations.LinearAlgebra
 public import PhysicalUnifiedTheory.Foundations.HilbertSpaces
+public import PhysicalUnifiedTheory.Foundations.Distributions
 public import PhysicalUnifiedTheory.Foundations.DifferentialGeometry
 public import PhysicalUnifiedTheory.Foundations.FiberBundles
 public import PhysicalUnifiedTheory.Foundations.Algebra
