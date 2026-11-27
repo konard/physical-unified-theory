@@ -158,3 +158,30 @@ Qed.
 (** Planck mechanical and temperature scales, with the elementary charge
     setting the electrical scale. *)
 Definition planck_units : unit_system := natural_units planck_energy planck_energy_pos.
+
+(** The central estimate of Newton's constant sets its magnitude to one. *)
+Lemma planck_units_gravitation :
+  magnitude planck_units (estimate gravitational_constant_si) = 1.
+Proof.
+  set (h := si_value reduced_planck_constant_si).
+  set (c := si_value speed_of_light_si).
+  set (g := si_value (estimate gravitational_constant_si)).
+  set (e := si_value planck_energy).
+  pose proof hbar_si_pos as hh.
+  pose proof light_pos as hc.
+  pose proof gravitation_pos as hg.
+  pose proof planck_energy_pos as he.
+  fold h in hh. fold c in hc. fold g in hg. fold e in he.
+  change (g / ((h * c / e)^3 * / (e / c^2)^1 * / (h / e)^2 * 1 * 1 * 1 * 1) = 1).
+  replace ((h * c / e)^3 * / (e / c^2)^1 * / (h / e)^2 * 1 * 1 * 1 * 1)
+    with (h * c^5 / e^2) by (field; repeat split; lra).
+  assert (hEnergy : e^2 = h * c^5 / g).
+  { unfold e, planck_energy. simpl si_value.
+    change ((sqrt (h * c^5 / g))^2 = h * c^5 / g).
+    rewrite <- Rsqr_pow2.
+    apply Rsqr_sqrt, Rlt_le, Rdiv_lt_0_compat.
+    - apply Rmult_lt_0_compat; [exact hh | apply pow_lt, hc].
+    - exact hg. }
+  rewrite hEnergy.
+  field. repeat split; lra.
+Qed.

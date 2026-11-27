@@ -2,6 +2,7 @@ module
 
 public import PhysicalUnifiedTheory.Experimental.Units
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
 
@@ -112,5 +113,24 @@ theorem planckEnergy_pos : 0 < planckEnergy.siValue := by
 /-- Planck mechanical and temperature scales. The electrical scale uses
 the elementary charge, and the remaining scales follow the SI. -/
 def planckUnits : UnitSystem := naturalUnits planckEnergy planckEnergy_pos
+
+/-- Newton's constant has magnitude one in Planck units when its central
+estimate sets the unit scales. -/
+theorem planckUnits_gravitation : planckUnits.magnitude gravitationalConstantSI.estimate = 1 := by
+  have hh := hbar_pos.ne'
+  have hc := light_pos.ne'
+  have hg := gravitation_pos.ne'
+  have he := planckEnergy_pos.ne'
+  have hScale : planckUnits.scale gravitationDim =
+      reducedPlanckConstantSI.siValue * speedOfLightSI.siValue ^ 5 / planckEnergy.siValue ^ 2 := by
+    simp [UnitSystem.scale, planckUnits, naturalUnits, gravitationDim,
+      lengthDim, massDim, timeDim, baseDimension]
+    field_simp
+  have hEnergy : planckEnergy.siValue ^ 2 =
+      reducedPlanckConstantSI.siValue * speedOfLightSI.siValue ^ 5 /
+        gravitationalConstantSI.estimate.siValue :=
+    Real.sq_sqrt (div_nonneg (mul_nonneg hbar_pos.le (pow_nonneg light_pos.le _)) gravitation_pos.le)
+  rw [UnitSystem.magnitude, hScale, hEnergy]
+  field_simp
 
 end PhysicalUnifiedTheory.Experimental
