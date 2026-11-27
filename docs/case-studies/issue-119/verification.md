@@ -48,6 +48,7 @@ python3 experiments/null_cone.py -v
 | Fixed-area radial sum | Compare cutoffs $N$ and $2N$ at $s=0.5,\,2,\,100$ with $N=16,\,128,\,1024$. The difference stays within $1/(2s^2N)$. |
 | Cubic quotient near zero coupling | At $t=10^{-7}$ and $N=16,\,128,\,1024,\,8192$, the negative imaginary quotient agrees with the positive harmonic sum within the sine Taylor test bound and increases with $N$. |
 | Trace and replica ratio | With weight $2/3$, increasing the cut from 16 to 128 raises the trace from $32/3$ to $256/3$ and decreases exact purity from $1/16$ to $1/128$. |
+| Sewn state on a fixed window | On the first four channels of a cut of size $N$, the exact probability for constant weights is $4/N$. For summable weights $1/[k(k+1)]$ it is $4(N+1)/(5N)$ and stays above $4/5$. [Normal-limit test](analysis.md#test-for-a-normal-limit-of-sewn-preparations) |
 | Clock resolvent | At $L=3$, cutoff 16 has overlap $3/19$ and cutoff 1024 has overlap $3/1027$. Each overlap is positive and the Lean limit is zero. |
 | Commuting radial Gaussian clock | At $s=2$, gradient lower bound coefficient $a=1/2$, $L=3$ and $c=3/4$, the logarithm of the overlap upper bound falls from about $-7.10$ at cutoff 16 to $-2340.22$ at cutoff 1024. Rocq checks the pointwise resolvent inequality. |
 | Entropy coefficient | The fixed-mass arithmetic reproduces $106/45$ exactly. |

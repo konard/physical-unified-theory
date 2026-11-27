@@ -200,6 +200,23 @@ There are two proposed paths to a finite trace.
 
 There is also a direct construction target for the uncut preparation. If it yields a normalizable vector on the two copies of the cut, with the exact coefficients implied by (D.22), test it against $(C_b e_i/\|C_b e_i\|)\otimes e_i^*$. These vectors are orthonormal because the second factors are orthonormal. Bessel’s inequality bounds the sum of the squared coefficients $\|C_b e_i\|^2$ by the squared norm of the uncut vector. Lean checks that a uniform positive lower bound on those coefficients is impossible for any normalizable vector with infinitely many such channels. Constructing the normalizable vector independently and proving its coefficients therefore suffices for the finite trace under (5.30). [Positive lower weight (5.30)](https://arxiv.org/html/2611.34924v1#S5.E30) · [Sewn vector (D.22)](https://arxiv.org/html/2611.34924v1#A4.E22)
 
+### Test for a normal limit of sewn preparations
+
+Let $F$ range over finite sets of cut basis labels and let $Z_F=\sum_{i\in F}\|C_b e_i\|^2>0$.
+For another finite set $S$, let $Q_S$ project the conjugate copy onto the span of the $e_i^*$ with $i\in S$.
+Orthogonality on that copy in (D.22) gives the exact identity
+
+$$
+\langle\Psi_F,(I\otimes Q_S)\Psi_F\rangle
+=\frac{\sum_{i\in F\cap S}\|C_b e_i\|^2}{Z_F}.
+$$
+
+If $Z_F$ diverges, the expectation goes to zero for every fixed $S$.
+The projections $I\otimes Q_S$ increase strongly to the identity, so every normal state on the two-copy Hilbert space must assign them probabilities with supremum one.
+The cutoff state expectations therefore cannot converge on all bounded operators to a normal state when $Z_F$ diverges. In the other direction, if $Z=\sup_F Z_F$ is positive and finite, the squared norm of any omitted part of the unnormalized sum is the sum of its weights. The sums form a Cauchy net and their normalizations converge in Hilbert norm.
+
+This gives an exact acceptance test for the (D.22) approximation. Show the two-copy limit has a normal state with matching finite-window probabilities, or give a uniform positive lower bound for the probability of one fixed finite window along the cofinal cuts. In the latter case a probability lower bound $p>0$ gives $Z_F\le\sum_{i\in S}\|C_b e_i\|^2/p$ on those cuts. In the constant-weight countermodel a window of $m$ labels has probability $m/N$ once the cut contains it, even though every cutoff state has norm one. Applying the test to gravity requires the exact $C_b$, the identified cut basis and the stated limit or probability estimate. [Sewn vector (D.22)](https://arxiv.org/html/2611.34924v1#A4.E22)
+
 The AdS argument uses cancellation of a centred area projection against a boundary heat weight on the joint cut. If the heat trace diverges and the area probability is strictly between zero and one, nonzero positive and negative summands each have divergent mass. Grouping all area labels over each energy vector gives zero. General finite projections also expose each sign separately. Obtaining unconditional summation from the same closed amplitude therefore has to be justified at this joint cut. Once the heat trace is finite, (5.46) follows because each state below the energy threshold contributes at least $e^{-\beta\Lambda}$. The same positive weight argument converts a finite closed trace and (5.30) to a dimension bound for the diamond. [Joint cut and AdS bounds (5.44)–(5.46)](https://arxiv.org/html/2611.34924v1#S5.E44)
 
 Appendix E starts from amplitudes with positivity, composition and factorization. Condition 5 additionally assumes that all allowed closures in bounded spectral bands have finite amplitudes. Section E.3 uses the earlier finiteness argument when asserting the gravitational realization. A conditional equivalence with the Euclidean construction cannot furnish the missing gravitational closed traces. [Appendix E.1](https://arxiv.org/html/2611.34924v1#A5.SS1) · [Gravitational realization (E.15)](https://arxiv.org/html/2611.34924v1#A5.E15)

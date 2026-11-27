@@ -66,6 +66,18 @@ class NullConeChecks(unittest.TestCase):
                 self.assertEqual(purity, Fraction(1, n))
                 self.assertLessEqual(trace, 1 / purity)
 
+    def test_sewn_preparation_retains_window_weight_only_for_summable_weights(self):
+        window_size = 4
+        for cut_size in (16, 128, 1024):
+            with self.subTest(cut_size=cut_size):
+                constant_weights = (Fraction(2, 3),) * cut_size
+                summable_weights = [Fraction(1, k * (k + 1)) for k in range(1, cut_size + 1)]
+                constant_probability = sum(constant_weights[:window_size]) / sum(constant_weights)
+                summable_probability = sum(summable_weights[:window_size]) / sum(summable_weights)
+                self.assertEqual(constant_probability, Fraction(window_size, cut_size))
+                self.assertEqual(summable_probability, Fraction(4 * (cut_size + 1), 5 * cut_size))
+                self.assertGreaterEqual(summable_probability, Fraction(4, 5))
+
     def test_clock_form_countermodel(self):
         L = 3
         previous = Fraction(1)
