@@ -5,9 +5,27 @@
 This case study analyzes the CI/CD failure in GitHub Actions run [#21453864333](https://github.com/konard/physical-unified-theory/actions/runs/21453864333/job/61789404485) that prevented the Rocq verification workflow from building the physical theory formalization.
 
 The [requirements register](../../REQUIREMENTS.md) tracks the fix and original
-log preservation separately. The GitHub Actions log download endpoint for the
-original run now returns HTTP 410. The committed error excerpts and issue
-discussion preserve the available evidence.
+log preservation separately.
+
+## Original log recovery
+
+The GitHub Actions run and job log download endpoints both return HTTP 410.
+The run has no available artifacts. The original investigation downloaded
+640 lines and copied the file into this case study, but Git ignored `*.log`
+and the file was omitted from PR #4. The published session transcript retains
+the output of the commands that selected the failure and its surrounding
+lines. The timestamped excerpts below were recovered from that output. They
+corroborate the live job annotations. The full 640-line log remains unavailable.
+[Original job](https://github.com/konard/physical-unified-theory/actions/runs/21453864333/job/61789404485) · [Investigation transcript link](https://github.com/konard/physical-unified-theory/pull/4#issuecomment-3813796529) · [PR #4 files](https://github.com/konard/physical-unified-theory/pull/4/files)
+
+```text
+build	Build Rocq project using docker-coq-action	2026-01-28T20:12:29.6585244Z Error response from daemon: No such image: rocq/rocq-prover:9.0
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2248527Z File "./theories/Foundations/Basic.v", line 13, characters 15-33:
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2251852Z ##[error]Error: Cannot find a physical path bound to logical path Coquelicot.Complex.
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2291841Z make[1]: *** [Makefile.coq:818: theories/Foundations/Basic.vo] Error 1
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2292879Z make[1]: *** [theories/Foundations/Basic.vo] Deleting file 'theories/Foundations/Basic.glob'
+build	Build Rocq project using docker-coq-action	2026-01-28T20:13:30.2294427Z make: *** [Makefile.coq:416: all] Error 2
+```
 
 **Root Cause**: Missing external library dependency (Coquelicot.Complex) that was not available in the base Rocq Docker image.
 
