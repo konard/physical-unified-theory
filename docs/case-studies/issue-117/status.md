@@ -1,0 +1,123 @@
+# Implementation status and research sources for issue 117
+
+[Requirements and proposed verification](requirements.md) covers the full scope of
+[issue 117](https://github.com/konard/physical-unified-theory/issues/117). The
+deliverables below are evidence for particular tasks. Issue 117 remains open
+and [PR 118](https://github.com/konard/physical-unified-theory/pull/118) remains
+a draft.
+
+## Scope of the existing formalization
+
+[PR 116](https://github.com/konard/physical-unified-theory/pull/116) supplied
+parts of each Track A issue. The declarations under
+[Lean Foundations](../../../lean/PhysicalUnifiedTheory/Foundations) and
+[Rocq Foundations](../../../rocq/theories/Foundations) contain a mixture of
+general APIs, restricted models and described future constructions. For
+example, the topology code refers to characteristic classes in comments, and
+the Rocq PDE models include the discriminant of three linear examples and a
+scalar Ricci flow model. Those results are insufficient to close #30 or #33.
+
+The existing QM and GR directories cover some of C.1, C.2, C.6, D.1, D.2 and
+D.5, including finite-state examples and flat-space calculations. The
+[unification basics](../../../lean/PhysicalUnifiedTheory/Unification/Basic.lean)
+and [unification background](../../UNIFICATION_CHALLENGES.md) cover some
+concepts in K.0. The other planned tracks do not have complete formalizations
+in the starting revision. No required issue was found to be fully resolved in
+that revision.
+
+The baseline Lean workflow logged compilation failures while passing the build
+step. The shell reported the status of `tee` in the build pipeline. The first
+errors include obsolete Mathlib imports and a change of the selected Lean
+toolchain during the run. [Main workflow run 45973370187](https://github.com/konard/physical-unified-theory/actions/runs/45973370187)
+
+## Implementation and verification
+
+| Requirement | Implementation | Acceptance evidence |
+| --- | --- | --- |
+| A.1.3 and A.2.5 in part | The Lean self-adjoint expectation proof uses the adjoint identity. The Rocq minimal-monopole example requires nonzero electric charge. | Kernel checking proves the real expectation and the corrected monopole result. The wider spectral-theory and bundle requirements remain open. |
+| N.1.1 and N.1.4 | The seven SI base dimensions are type indices in both implementations. Quantities carry coherent SI values and typed addition, subtraction, products, quotients and square roots. | Both regression files reject an attempt to add time to length. |
+| N.1.2 and N.1.3 | Coherent natural units are parameterized by a positive energy scale. The Planck system uses the energy derived from ℏ, c and the CODATA central estimate for G. The electrical scale uses the elementary charge, and amount and luminous intensity retain their SI scales. | The tests cover the electronvolt energy scale, positive Planck length and conversion composition. |
+| N.1.5 | Conversion operates on a single dimension and supports coherent multiplicative systems. | Both kernels check conversion identity and composition. |
+| N.2.1–N.2.4 | SI defining constants and derived ℏ, 2022 CODATA G and fine-structure estimates, representative lepton and nucleon masses, weak mixing and Fermi coupling. The Fermi coupling is expressed in inverse square energy in the conventional natural-unit convention. | Exact values and uncertainty regressions run in both proof assistants. The source edition is pinned explicitly. |
+
+The unit-system model uses positive multiplicative scales. Affine display
+scales, such as degrees Celsius, require a separate origin. The measured
+constants carry standard uncertainties from CODATA, which describe the cited
+adjustment. They do not impose bounds on the physical quantities.
+
+[Lean Units](../../../lean/PhysicalUnifiedTheory/Experimental/Units.lean) ·
+[Lean Constants](../../../lean/PhysicalUnifiedTheory/Experimental/Constants.lean) ·
+[Lean tests](../../../lean/tests/Units.lean) ·
+[Rocq Units](../../../rocq/theories/Experimental/Units.v) ·
+[Rocq Constants](../../../rocq/theories/Experimental/Constants.v) ·
+[Rocq tests](../../../rocq/tests/Units.v)
+
+## Research limits
+
+- A.5.3 asks for functional integration, and E.2.4 asks for nonperturbative
+  methods. Their related 4D interacting path-integral and Yang–Mills mass-gap
+  claims remain open at the generality described in the issues. A finite
+  lattice model or a Gaussian free-field measure can verify a narrower
+  construction. Verification of the continuum interacting claim requires the
+  measure or reconstructed field theory and a proof of the gap.
+  [Clay Mathematics Institute](https://www.claymath.org/millennium/yang-mills-the-maths-gap/)
+- B.8.1 can formalize the Navier–Stokes equations, weak and strong solution
+  notions and established restricted results. A general global smoothness
+  theorem in three dimensions would exceed those established results.
+  [Clay Mathematics Institute](https://www.claymath.org/millennium/navier-stokes-equation/)
+- D.5.4 explicitly asks for a conjecture. It needs separate weak and strong
+  statements with precise initial data, asymptotic conditions and the chosen
+  genericity and regularity assumptions. A formulation is a different
+  deliverable from a proof. [Dafermos and Luk, the interior of dynamical vacuum black holes](https://arxiv.org/abs/1710.01722)
+- K.2.5 can use Maldacena's stated correspondence and checked classical or
+  semiclassical limits. A full formal equivalence needs precise definitions of
+  both sides, the regime covered and proofs that their observables agree.
+  [Maldacena's original paper](https://arxiv.org/abs/hep-th/9711200)
+- G.3, J.6, K, M and N contain model-dependent or observationally unresolved
+  claims. Formal statements should expose the model and observable and link
+  relevant data, with the scope of the inference explicit. A verified
+  conditional result proves the model implication. Establishing the premise
+  itself requires further mathematical or experimental evidence.
+  [Particle Data Group review and data](https://pdg.lbl.gov/)
+
+## Reuse options
+
+- **Mathlib and MathComp Analysis.** In Lean, reuse the pinned Mathlib
+  Hilbert-space, matrix, geometry, category, topology and measure APIs. In Rocq,
+  MathComp Analysis is an option for moving beyond the standard-library real
+  and finite worked examples. A migration would need an interface between
+  existing statements and the external analysis types.
+  [Mathlib](https://github.com/leanprover-community/mathlib4) ·
+  [MathComp Analysis](https://github.com/math-comp/analysis)
+- **Physlib.** Compare its available modules against B, C, D, E, F, G, I, J, K
+  and N. Its classical mechanics, relativity, QFT, particle physics and units
+  modules offer candidate definitions and prior formalizations. Importing it
+  directly would require matching its Lean/Mathlib toolchain and honoring the
+  upstream license. The implementation here uses the local APIs and original
+  proofs. [Physlib](https://github.com/leanprover-community/physlib)
+- **CoqQ and SQIR.** CoqQ supplies a logic and libraries for quantum programs.
+  SQIR supplies circuits, matrix semantics and proofs for quantum algorithms
+  and program transformations. For H.1–H.3 and finite parts of C, an adapter
+  can connect register, matrix and probability conventions. H.4 still needs
+  a protocol and its security model.
+  [CoqQ](https://github.com/coq-quantum/CoqQ) ·
+  [SQIR](https://github.com/inQWIRE/SQIR)
+- **Astropy and CAMB.** Astropy offers an independent check of conversions and
+  units. CAMB offers numerical predictions for CMB and structure formation
+  once inputs and options are fixed. Their numerical results can validate
+  reference examples in G and N. Proofs that use those values still need an
+  explicit numerical error budget.
+  [Astropy](https://github.com/astropy/astropy) ·
+  [CAMB](https://github.com/cmbant/CAMB)
+- **Reference observations.** Use the source release and units for each
+  experimental value. The SI Brochure and 2022 CODATA table ground N.1–N.2.
+  Planck frequency products and likelihoods, GWOSC strain and catalogs, ATLAS
+  open data, and PDG reviews are candidate inputs for G, J and N. Each derived
+  interval should record its sample, calibrated release, confidence or
+  credibility convention and model assumptions.
+  [BIPM SI Brochure](https://www.bipm.org/en/publications/si-brochure) ·
+  [NIST 2022 CODATA table](https://physics.nist.gov/cuu/Constants/Table/allascii.txt) ·
+  [Planck Legacy Archive](https://pla.esac.esa.int/) ·
+  [Gravitational Wave Open Science Center](https://gwosc.org/) ·
+  [ATLAS Open Data](https://opendata.atlas.cern/) ·
+  [Particle Data Group](https://pdg.lbl.gov/)
