@@ -26,49 +26,37 @@ jobs:
         curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
         echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
-    - name: Verify Lean installation
-      run: |
-        lean --version
-        lake --version
-
     - name: Cache Lean toolchain
       uses: actions/cache@v4
       with:
         path: |
           ~/.elan
-        key: ${{ runner.os }}-lean-elan-v2-${{ hashFiles('lean/lakefile.lean') }}
+        key: ${{ runner.os }}-lean-elan-v2-${{ hashFiles('lean/lean-toolchain') }}
         restore-keys: |
           ${{ runner.os }}-lean-elan-v2-
 
-    - name: Clean stale build artifacts
+    - name: Verify Lean installation
+      working-directory: lean
       run: |
-        cd lean
-        echo "Cleaning .lake directory for fresh build..."
-        rm -rf .lake
+        lean --version
+        lake --version
 
-    - name: List Lean files
+    - name: Fetch cached Mathlib dependencies
+      working-directory: lean
+      shell: bash
       run: |
-        echo "=== Lean Files Found ==="
-        find lean -name "*.lean" -type f | sort
+        mapfile -t modules < <(rg --no-filename '^(public )?import Mathlib\.' --glob '*.lean' | awk '{print $NF}' | sort -u)
+        lake exe cache get "${modules[@]}"
 
     - name: Build Lean project
-      run: |
-        cd lean
-        if [ -f "lakefile.lean" ]; then
-          lake build 2>&1 | tee lean-build.log
-        else
-          echo "No lakefile.lean found - skipping build"
-          echo "To use Lean verification, add Lean source files (.lean) and a lakefile.lean"
-        fi
+      working-directory: lean
+      shell: bash
+      run: lake build 2>&1 | tee lean-build.log
 
     - name: Run Lean tests
-      run: |
-        cd lean
-        if [ -f "lakefile.lean" ]; then
-          lake test 2>&1 | tee lean-test.log || echo "No tests defined"
-        else
-          echo "No lakefile.lean found - skipping tests"
-        fi
+      working-directory: lean
+      shell: bash
+      run: lake env lean tests/Units.lean 2>&1 | tee lean-test.log
 
     - name: Upload build logs
       if: always()

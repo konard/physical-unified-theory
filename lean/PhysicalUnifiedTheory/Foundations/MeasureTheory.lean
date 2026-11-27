@@ -1,3 +1,5 @@
+module
+
 /-
 # Measure Theory and Probability (A.5)
 
@@ -15,7 +17,7 @@ This module formalizes measure theory and probability as needed for quantum mech
 
 - `Mathlib.MeasureTheory.Measure.MeasureSpace` for measure spaces
 - `Mathlib.MeasureTheory.Integral.Lebesgue` for Lebesgue integration
-- `Mathlib.Probability.ProbabilityMeasure` for probability measures
+- `Mathlib.MeasureTheory.Measure.ProbabilityMeasure` for probability measures
 
 ## References
 
@@ -28,14 +30,14 @@ Rigorous path integrals can be constructed in 4D via constructive QFT methods
 (Osterwalder-Schrader axioms + Wightman reconstruction theorem).
 -/
 
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.MeasureTheory.Integral.Lebesgue
-import Mathlib.Probability.ProbabilityMeasure
-import Mathlib.MeasureTheory.Function.L2Space
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.MeasureTheory.Function.L2Space
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.Foundations.MeasureTheory
-
-open MeasureTheory
 
 /-!
 ## A.5.1: Measure Spaces and Integration
@@ -48,16 +50,16 @@ A measure space (X, Σ, μ) consists of:
 The Lebesgue measure on ℝⁿ is the canonical example.
 -/
 
-/-- The L² space: square-integrable functions on a measure space.
+/- The L² space: square-integrable functions on a measure space.
     In quantum mechanics, wave functions live in L²(ℝⁿ, ℂ).
     L² is a Hilbert space with inner product ⟨φ|ψ⟩ = ∫ φ*(x) ψ(x) dx. -/
 -- L²(X, μ) is available as MeasureTheory.Lp E 2 μ in Mathlib
 
-/-- The L² inner product of two functions: ⟨φ|ψ⟩ = ∫ conj(φ(x)) ψ(x) dx. -/
+/- The L² inner product of two functions: ⟨φ|ψ⟩ = ∫ conj(φ(x)) ψ(x) dx. -/
 -- This is the inner product making wave functions in quantum mechanics.
 -- For ψ ∈ L²(ℝ, ℂ): the norm ‖ψ‖² = ∫|ψ(x)|² dx = 1 for normalized states.
 
-/-- A density operator (density matrix) represents a mixed quantum state.
+/- A density operator (density matrix) represents a mixed quantum state.
     ρ: H → H with ρ ≥ 0 (positive semidefinite), Tr(ρ) = 1.
     Pure states: ρ = |ψ⟩⟨ψ| (rank-1 projector). -/
 -- In finite dimensions: ρ is a positive semidefinite Hermitian matrix with trace 1.
@@ -76,17 +78,19 @@ structure DensityMatrix (n : ℕ) where
 /-- The pure state density matrix for a normalized vector ψ. -/
 noncomputable def pureStateDensityMatrix {n : ℕ} (ψ : Fin n → ℂ) :
     Matrix (Fin n) (Fin n) ℂ :=
-  Matrix.col ψ * Matrix.row (star ψ)
+  fun i j => ψ i * star (ψ j)
 
 /-- The trace of the pure state density matrix is 1 when ψ is normalized. -/
 theorem pureState_trace_one {n : ℕ} (ψ : Fin n → ℂ) (hψ : ∑ i, Complex.normSq (ψ i) = 1) :
     (pureStateDensityMatrix ψ).trace = 1 := by
-  simp [pureStateDensityMatrix, Matrix.trace, Matrix.mul_apply]
-  simp [Matrix.col, Matrix.row, star]
-  rw [← hψ]
-  congr 1
-  ext i
-  simp [Complex.normSq_eq_conj_mul_self, mul_comm]
+  calc
+    (pureStateDensityMatrix ψ).trace = ∑ i, (Complex.normSq (ψ i) : ℂ) := by
+      simp only [Matrix.trace, Matrix.diag_apply, pureStateDensityMatrix]
+      apply Finset.sum_congr rfl
+      intro i _
+      exact (Complex.normSq_eq_conj_mul_self.trans (mul_comm _ _)).symm
+    _ = 1 := by
+      rw [← Complex.ofReal_sum, hψ, Complex.ofReal_one]
 
 /-!
 ## A.5.2: Probability Theory
@@ -96,18 +100,18 @@ In quantum mechanics, the Born rule gives the probability measure:
 P(measured in set A) = ∫_A |ψ(x)|² dx for position measurement.
 -/
 
-/-- The Born rule: probability of finding a particle in region A.
+/- The Born rule: probability of finding a particle in region A.
     P(A) = ∫_A |ψ(x)|² dx for normalized wave function ψ.
     This connects the Hilbert space formalism to experimental predictions. -/
 -- For a discrete system with basis {|n⟩}: P(n) = |⟨n|ψ⟩|²
 
-/-- Entropy of a quantum state (von Neumann entropy).
+/- Entropy of a quantum state (von Neumann entropy).
     S(ρ) = -Tr(ρ log ρ).
     For pure states: S = 0.
     For maximally mixed state: S = log(n). -/
 -- TODO (A.5.2): Formalize von Neumann entropy using matrix logarithm
 
-/-- The Heisenberg uncertainty principle: ΔA · ΔB ≥ (1/2)|⟨[A,B]⟩|.
+/- The Heisenberg uncertainty principle: ΔA · ΔB ≥ (1/2)|⟨[A,B]⟩|.
     For position and momentum: Δx · Δp ≥ ℏ/2.
     In natural units (ℏ=1): Δx · Δp ≥ 1/2. -/
 -- TODO (A.5.2): Formalize uncertainty relations from commutators

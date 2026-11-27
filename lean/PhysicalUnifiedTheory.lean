@@ -1,3 +1,5 @@
+module
+
 /-
 # Physical Unified Theory
 
@@ -26,17 +28,21 @@ A formalization of physics toward a unified theory of quantum mechanics and gene
 -/
 
 -- Track A: Mathematical Foundations
-import PhysicalUnifiedTheory.Foundations.Basic
-import PhysicalUnifiedTheory.Foundations.LinearAlgebra
-import PhysicalUnifiedTheory.Foundations.HilbertSpaces
-import PhysicalUnifiedTheory.Foundations.DifferentialGeometry
-import PhysicalUnifiedTheory.Foundations.FiberBundles
-import PhysicalUnifiedTheory.Foundations.Algebra
-import PhysicalUnifiedTheory.Foundations.MeasureTheory
-import PhysicalUnifiedTheory.Foundations.Topology
-import PhysicalUnifiedTheory.Foundations.PDEs
+public import PhysicalUnifiedTheory.Foundations.Basic
+public import PhysicalUnifiedTheory.Foundations.LinearAlgebra
+public import PhysicalUnifiedTheory.Foundations.HilbertSpaces
+public import PhysicalUnifiedTheory.Foundations.DifferentialGeometry
+public import PhysicalUnifiedTheory.Foundations.FiberBundles
+public import PhysicalUnifiedTheory.Foundations.Algebra
+public import PhysicalUnifiedTheory.Foundations.MeasureTheory
+public import PhysicalUnifiedTheory.Foundations.Topology
+public import PhysicalUnifiedTheory.Foundations.PDEs
 
 -- Higher tracks (depend on Track A)
-import PhysicalUnifiedTheory.QuantumMechanics.Basic
-import PhysicalUnifiedTheory.GeneralRelativity.Basic
-import PhysicalUnifiedTheory.Unification.Basic
+public import PhysicalUnifiedTheory.QuantumMechanics.Basic
+public import PhysicalUnifiedTheory.GeneralRelativity.Basic
+public import PhysicalUnifiedTheory.Unification.Basic
+
+-- Track N: Experimental Connections and Predictions
+public import PhysicalUnifiedTheory.Experimental.Units
+public import PhysicalUnifiedTheory.Experimental.Constants

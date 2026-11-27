@@ -1,3 +1,5 @@
+module
+
 /-
 # Quantum Mechanics
 
@@ -25,9 +27,11 @@ This module formalizes the mathematical foundations of quantum mechanics.
 - Lean-QuantumInfo: https://github.com/duckki/lean-quantum
 -/
 
-import PhysicalUnifiedTheory.Foundations.Basic
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.LinearAlgebra.Matrix.Hermitian
+public import PhysicalUnifiedTheory.Foundations.Basic
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.LinearAlgebra.Matrix.Hermitian
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.QuantumMechanics
 
@@ -102,15 +106,8 @@ def prob1 (ψ : QubitState) : ℝ := Complex.normSq (ψ.vec 1)
 
 /-- Probabilities sum to 1 (conservation of probability) -/
 theorem prob_sum_one (ψ : QubitState) : prob0 ψ + prob1 ψ = 1 := by
-  simp only [prob0, prob1]
   have h := ψ.normalized
-  simp only [EuclideanSpace.norm_eq] at h
-  have h2 : Real.sqrt (∑ i : Fin 2, ‖ψ.vec i‖^2) = 1 := h
-  have h3 : ∑ i : Fin 2, ‖ψ.vec i‖^2 = 1 := by
-    have := Real.sqrt_eq_one.mp h2
-    linarith [Finset.sum_nonneg (fun i _ => sq_nonneg ‖ψ.vec i‖)]
-  simp only [Fin.sum_univ_two, Complex.norm_eq_abs] at h3
-  simp only [Complex.normSq_eq_abs, sq_abs]
-  exact h3
+  rw [EuclideanSpace.norm_eq, Real.sqrt_eq_one, Fin.sum_univ_two] at h
+  simpa [prob0, prob1, Complex.normSq_eq_norm_sq] using h
 
 end PhysicalUnifiedTheory.QuantumMechanics

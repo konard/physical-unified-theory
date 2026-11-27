@@ -1,3 +1,5 @@
+module
+
 /-
 # Hilbert Spaces: Operators and Spectral Theory (A.1.2–A.1.3)
 
@@ -18,11 +20,14 @@ complementing the basic definitions in LinearAlgebra.lean.
 - Halmos, "A Hilbert Space Problem Book"
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.LinearAlgebra.UnitaryGroup
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Matrix.Hermitian
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.LinearAlgebra.UnitaryGroup
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.Foundations.HilbertSpaces
 
@@ -85,8 +90,8 @@ theorem pauliXZ_commutator :
     pauliX * pauliZ - pauliZ * pauliX = (-2 * Complex.I) • pauliY := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [pauliX, pauliY, pauliZ, Matrix.mul_fin_two, Complex.I_sq]
-  all_goals ring
+    simp [pauliX, pauliY, pauliZ, Matrix.mul_fin_two] <;>
+    ring_nf <;> simp [Complex.I_sq]
 
 /-!
 ## Unitary Matrices
@@ -123,7 +128,7 @@ The norm of an operator controls its action on state vectors.
 /-- The operator norm of a matrix M is the largest singular value.
     For Hermitian matrices, this equals the largest absolute eigenvalue. -/
 noncomputable def matrixOpNorm {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
-  ‖Matrix.toLin' M‖
+  ‖(Matrix.toEuclideanLin M).toContinuousLinearMap‖
 
 /-!
 ## Functional Calculus (Stub)
@@ -138,7 +143,7 @@ For f : ℝ → ℝ and self-adjoint A with spectral measure E_A, we define f(A)
 -- 2. Borel functional calculus for bounded self-adjoint operators
 -- 3. Unbounded self-adjoint operators and their spectral resolutions
 
-/-- Time evolution operator: U(t) = e^{-iHt/ℏ} for Hamiltonian H.
+/- Time evolution operator: U(t) = e^{-iHt/ℏ} for Hamiltonian H.
     This is computed via the functional calculus applied to the exponential function.
     In natural units (ℏ = 1): U(t) = e^{-iHt}. -/
 -- TODO (A.1.3): Formalize using matrix exponential from Mathlib.LinearAlgebra.Matrix.Exp

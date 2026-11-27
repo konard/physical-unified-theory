@@ -1,3 +1,5 @@
+module
+
 /-
 # Mathematical Foundations
 
@@ -15,13 +17,15 @@ quantum mechanics and general relativity.
 
 We build upon Mathlib's extensive library of formalized mathematics:
 - `Mathlib.Analysis.InnerProductSpace.Basic` for Hilbert spaces
-- `Mathlib.Geometry.Manifold.SmoothManifoldWithCorners` for smooth manifolds
+- `Mathlib.Geometry.Manifold.ContMDiff.Basic` for smooth manifolds
 - `Mathlib.LinearAlgebra.TensorProduct.Basic` for tensor products
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.Foundations
 
@@ -37,31 +41,29 @@ We define type aliases and basic structures here.
 abbrev HilbertSpace := EuclideanSpace ℂ (Fin 2)
 
 /-- The standard computational basis for a two-dimensional Hilbert space (qubit). -/
-def basis0 : HilbertSpace := ![1, 0]
-def basis1 : HilbertSpace := ![0, 1]
+noncomputable def basis0 : HilbertSpace := EuclideanSpace.single 0 1
+noncomputable def basis1 : HilbertSpace := EuclideanSpace.single 1 1
 
 /-- The two basis states are orthonormal. -/
-theorem basis_orthogonal : inner basis0 basis1 = (0 : ℂ) := by
-  simp [basis0, basis1, inner, EuclideanSpace.inner_piLp_equiv_symm]
-  ring
+theorem basis_orthogonal : inner ℂ basis0 basis1 = 0 := by
+  rw [basis0, EuclideanSpace.inner_single_left]
+  simp [basis1]
 
 /-!
 ## Physical Constants
 
-We define structures for working with physical units and constants.
-Note: Full unit tracking is a complex topic; this is a starting point.
+The following scalars fix the Planck-unit convention for the elementary
+examples. `Experimental.Constants` provides dimension-indexed SI estimates and
+constructs coherent natural units for other energy scales.
 -/
 
-/-- Placeholder for reduced Planck constant (ℏ).
-    In natural units, ℏ = 1. -/
+/-- The reduced Planck constant in the fixed Planck-unit convention. -/
 noncomputable def hbar : ℝ := 1
 
-/-- Placeholder for speed of light (c).
-    In natural units, c = 1. -/
+/-- The speed of light in the fixed Planck-unit convention. -/
 noncomputable def speedOfLight : ℝ := 1
 
-/-- Placeholder for gravitational constant (G).
-    In natural units with c = ℏ = 1, we have G = ℓ_P² where ℓ_P is Planck length. -/
+/-- Newton's gravitational constant in the fixed Planck-unit convention. -/
 noncomputable def gravitationalConstant : ℝ := 1
 
 end PhysicalUnifiedTheory.Foundations

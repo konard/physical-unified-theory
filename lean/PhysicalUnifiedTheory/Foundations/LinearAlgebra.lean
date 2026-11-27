@@ -1,3 +1,5 @@
+module
+
 /-
 # Linear Algebra and Functional Analysis (A.1)
 
@@ -24,13 +26,16 @@ required for quantum mechanics and other tracks.
 - Rudin, "Functional Analysis"
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.InnerProductSpace.Projection
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Topology.Algebra.Module.Basic
-import Mathlib.Analysis.NormedSpace.BoundedLinearMaps
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Topology.Algebra.Module.Basic
+public import Mathlib.Analysis.Normed.Operator.BoundedLinearMaps
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.Foundations.LinearAlgebra
 
@@ -60,7 +65,7 @@ structure QuantumState (ι : Type*) [Fintype ι] where
 /-- The inner product of two quantum states (Dirac bra-ket notation: ⟨φ|ψ⟩). -/
 noncomputable def braket {ι : Type*} [Fintype ι]
     (φ ψ : QuantumState ι) : ℂ :=
-  inner φ.vec ψ.vec
+  inner ℂ φ.vec ψ.vec
 
 /-- The probability amplitude squared gives the transition probability.
     This is a consequence of the Born rule. -/
@@ -76,9 +81,7 @@ theorem transitionProbability_nonneg {ι : Type*} [Fintype ι]
 /-- A state has transition probability 1 to itself (self-overlap). -/
 theorem transitionProbability_self {ι : Type*} [Fintype ι]
     (ψ : QuantumState ι) : transitionProbability ψ ψ = 1 := by
-  simp [transitionProbability, braket]
-  rw [real_inner_self_eq_norm_sq]
-  simp [ψ.normalized]
+  simp [transitionProbability, braket, inner_self_eq_norm_sq_to_K, ψ.normalized]
 
 /-!
 ## A.1.2: Bounded Linear Operators
@@ -131,7 +134,7 @@ The spectral theorem states that every self-adjoint operator has a spectral deco
 This is fundamental for the measurement postulate in quantum mechanics.
 -/
 
-/-- The spectrum of an operator: the set of λ for which (A - λI) is not invertible.
+/- The spectrum of an operator: the set of λ for which (A - λI) is not invertible.
     For self-adjoint operators, the spectrum is contained in ℝ.
     Note: Full spectral theory in Lean requires Mathlib.Analysis.Spectrum. -/
 -- TODO (A.1.3): Develop full spectral theory using Mathlib.Analysis.Spectrum
@@ -146,16 +149,20 @@ def isProjection {ι : Type*} [Fintype ι] (P : BoundedOp ι) : Prop :=
     This gives the average measurement outcome. -/
 noncomputable def expectationValue {ι : Type*} [Fintype ι]
     (A : BoundedOp ι) (ψ : QuantumState ι) : ℂ :=
-  inner ψ.vec (A ψ.vec)
+  inner ℂ ψ.vec (A ψ.vec)
 
 /-- Expectation values of self-adjoint operators are real. -/
 theorem expectationValue_real {ι : Type*} [Fintype ι]
     (A : BoundedOp ι) (ψ : QuantumState ι)
     (hA : isSelfAdjoint A) :
     (expectationValue A ψ).im = 0 := by
-  simp [expectationValue, isSelfAdjoint, adjointOp] at *
-  -- The imaginary part of ⟨ψ, Aψ⟩ vanishes when A is self-adjoint
-  sorry -- TODO (A.1.3): Complete using ContinuousLinearMap.adjoint_inner_left
+  have h := ContinuousLinearMap.adjoint_inner_left A ψ.vec ψ.vec
+  rw [show ContinuousLinearMap.adjoint A = A from hA] at h
+  have hIm := inner_im_symm (𝕜 := ℂ) ψ.vec (A ψ.vec)
+  rw [h] at hIm
+  change (inner ℂ ψ.vec (A ψ.vec)).im = 0
+  change (inner ℂ ψ.vec (A ψ.vec)).im = -(inner ℂ ψ.vec (A ψ.vec)).im at hIm
+  linarith
 
 /-!
 ## A.1.4: Distribution Theory
@@ -164,14 +171,7 @@ Distributions (generalized functions) extend classical functions and are essenti
 for making sense of the Dirac delta and other singular objects in physics.
 -/
 
--- TODO (A.1.4): Formalize Schwartz space and tempered distributions
--- The Schwartz space 𝒮(ℝⁿ) consists of smooth rapidly-decreasing functions.
--- Tempered distributions are continuous linear functionals on 𝒮(ℝⁿ).
-
-/-- Placeholder for the Schwartz space on ℝⁿ.
-    Full formalization requires Mathlib.Analysis.Schwartz (in development). -/
--- Schwartz space: { f : ℝⁿ → ℂ | ∀ α β, sup |x^α ∂^β f(x)| < ∞ }
--- This is the natural domain for the Fourier transform in physics.
+-- `Foundations.Distributions` supplies these spaces and their embeddings.
 
 /-!
 ## A.1.5: Rigged Hilbert Spaces (Gelfand Triples)
@@ -182,8 +182,6 @@ framework for handling continuous spectra in quantum mechanics (e.g., position/m
 **Hypothesis**: Rigged Hilbert spaces resolve continuous spectrum issues in QM.
 -/
 
--- TODO (A.1.5): Formalize Gelfand triples
--- Structure: nuclear space Φ ↪ Hilbert space H ↪ dual space Φ'
--- The "bra" states ⟨x| live in Φ', not in H itself.
+-- `Foundations.Distributions` constructs the Schwartz–L²–tempered triple.
 
 end PhysicalUnifiedTheory.Foundations.LinearAlgebra

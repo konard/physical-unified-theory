@@ -1,3 +1,5 @@
+module
+
 /-
 # Fiber Bundles (A.2.5)
 
@@ -27,9 +29,11 @@ All fundamental forces can be described as connections on principal bundles
 over spacetime with appropriate structure groups (U(1), SU(2), SU(3)).
 -/
 
-import Mathlib.Topology.FiberBundle.Basic
-import Mathlib.Topology.VectorBundle.Basic
-import Mathlib.Algebra.Group.Basic
+public import Mathlib.Topology.FiberBundle.Basic
+public import Mathlib.Topology.VectorBundle.Basic
+public import Mathlib.Algebra.Group.Basic
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.Foundations.FiberBundles
 
@@ -53,14 +57,14 @@ The physics interpretation:
 -- TODO (A.2.5): Formalize principal bundles using Mathlib's FiberBundle framework
 -- Mathlib has VectorBundle and FiberBundle but principal bundles need more work.
 
-/-- A gauge field (connection on a principal bundle) is locally described by
+/- A gauge field (connection on a principal bundle) is locally described by
     a Lie-algebra-valued 1-form A_μ(x) (the gauge potential).
     For U(1): A_μ is the electromagnetic potential.
     For SU(2): A_μ is the weak gauge field.
     For SU(3): A_μ is the gluon field. -/
 -- TODO (A.2.5): Formalize as differential form valued in the Lie algebra
 
-/-- A gauge transformation changes the local trivialization.
+/- A gauge transformation changes the local trivialization.
     For a G-bundle: A_μ → g⁻¹A_μg + g⁻¹∂_μg where g: M → G is a local section.
     Physical observables must be gauge-invariant. -/
 -- TODO (A.2.5): Formalize gauge transformations
@@ -75,7 +79,7 @@ The Yang-Mills equations: D_μ F^μν = J^ν generalize Maxwell's equations.
 
 -- TODO (A.2.5): Formalize Yang-Mills equations after connections are implemented
 
-/-- The electromagnetic field tensor F_μν = ∂_μA_ν - ∂_νA_μ.
+/- The electromagnetic field tensor F_μν = ∂_μA_ν - ∂_νA_μ.
     This is the curvature of the U(1) gauge connection.
     The entries encode electric (F_0i) and magnetic (F_ij) fields. -/
 -- In components: F = [[0, -Ex, -Ey, -Ez],
@@ -83,7 +87,7 @@ The Yang-Mills equations: D_μ F^μν = J^ν generalize Maxwell's equations.
 --                     [Ey, Bz, 0, -Bx],
 --                     [Ez, -By, Bx, 0]]
 
-/-- Maxwell's equations in covariant form:
+/- Maxwell's equations in covariant form:
     ∂_μ F^μν = J^ν   (source equations)
     ∂_{[μ} F_{νρ]} = 0  (Bianchi identity, equivalent to Faraday's law + no monopoles) -/
 -- TODO (A.2.5): Formalize after differential forms are available

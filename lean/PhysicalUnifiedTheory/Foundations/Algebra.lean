@@ -1,3 +1,5 @@
+module
+
 /-
 # Algebra: Lie Groups and Representation Theory (A.4)
 
@@ -28,10 +30,14 @@ C*-algebras provide the correct mathematical framework for quantum mechanics
 (algebraic quantum theory, AQFT).
 -/
 
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.Subalgebra
-import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
-import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
+public import Mathlib.Algebra.Lie.Basic
+public import Mathlib.Algebra.Lie.Subalgebra
+public import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
+public import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Tactic.FinCases
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.Foundations.Algebra
 
@@ -53,7 +59,7 @@ Physical gauge groups:
 -- Mathlib has LieAlgebra formalized; smooth manifold structure of Lie groups
 -- requires combining Mathlib.Algebra.Lie and Mathlib.Geometry.Manifold
 
-/-- The SU(2) Lie algebra is spanned by the (rescaled) Pauli matrices.
+/- The SU(2) Lie algebra is spanned by the (rescaled) Pauli matrices.
     Basis: iσ₁/2, iσ₂/2, iσ₃/2 with commutation relations [Tₐ, T_b] = εₐ_bc Tc. -/
 -- The su(2) algebra has the commutation relations [Jx, Jy] = iJz (and cyclic)
 
@@ -66,11 +72,10 @@ def su2StructureConstants : Fin 3 → Fin 3 → Fin 3 → ℝ :=
     else if (a, b, c) = (2, 1, 0) ∨ (a, b, c) = (0, 2, 1) ∨ (a, b, c) = (1, 0, 2) then -1
     else 0
 
-/-- The Jacobi identity for su(2) structure constants (antisymmetry in last two indices). -/
+/-- The su(2) structure constants are antisymmetric in the last two indices. -/
 theorem su2_antisymmetric (a b c : Fin 3) :
     su2StructureConstants a b c = -su2StructureConstants a c b := by
-  simp [su2StructureConstants]
-  fin_cases a <;> fin_cases b <;> fin_cases c <;> simp
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> simp [su2StructureConstants]
 
 /-!
 ## A.4.2: Representation Theory
@@ -115,13 +120,13 @@ the double cover of the Lorentz group SO(1,3).
 -- The Clifford algebra Cl(ℝ^4, Q_Minkowski) has dimension 2^4 = 16
 -- Dirac spinors are 4-component complex vectors: ψ ∈ ℂ^4
 
-/-- The gamma matrices {γ^μ, γ^ν} = 2η^{μν}I satisfy the Clifford algebra relation.
+/- The gamma matrices {γ^μ, γ^ν} = 2η^{μν}I satisfy the Clifford algebra relation.
     They are 4×4 matrices in the Dirac representation. -/
 -- Standard Dirac representation:
 -- γ⁰ = [[I, 0], [0, -I]]
 -- γⁱ = [[0, σⁱ], [-σⁱ, 0]] for i = 1,2,3
 
-/-- The Dirac equation (iγ^μ∂_μ - m)ψ = 0 describes spin-1/2 particles.
+/- The Dirac equation (iγ^μ∂_μ - m)ψ = 0 describes spin-1/2 particles.
     It is relativistically covariant and automatically includes spin. -/
 -- TODO (A.4.3): Formalize using CliffordAlgebra from Mathlib
 

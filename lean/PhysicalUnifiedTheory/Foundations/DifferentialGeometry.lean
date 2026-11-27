@@ -1,3 +1,5 @@
+module
+
 /-
 # Differential Geometry (A.2)
 
@@ -14,7 +16,7 @@ and gauge theories. Smooth manifolds provide the arena for spacetime geometry.
 
 ## Dependencies
 
-- `Mathlib.Geometry.Manifold.SmoothManifoldWithCorners`
+- `Mathlib.Geometry.Manifold.ContMDiff.Basic`
 - `Mathlib.Geometry.Manifold.DerivationBundle`
 - `Mathlib.LinearAlgebra.TensorProduct.Basic`
 
@@ -28,10 +30,11 @@ and gauge theories. Smooth manifolds provide the arena for spacetime geometry.
 Fiber bundle theory provides a unified framework for gauge theories and GR.
 -/
 
-import Mathlib.Geometry.Manifold.SmoothManifoldWithCorners
-import Mathlib.Geometry.Manifold.ContMDiff.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Geometry.Manifold.ContMDiff.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+
+@[expose] public section
 
 namespace PhysicalUnifiedTheory.Foundations.DifferentialGeometry
 
@@ -42,7 +45,7 @@ A smooth (C∞) manifold is a topological space locally homeomorphic to ℝⁿ,
 with smooth transition maps between coordinate charts.
 -/
 
-/-- A 4-dimensional smooth manifold serves as the model for spacetime.
+/- A 4-dimensional smooth manifold serves as the model for spacetime.
     In GR, spacetime is a Lorentzian manifold of dimension 4. -/
 -- M is a smooth 4-manifold when:
 -- [TopologicalSpace M], [ChartedSpace (EuclideanSpace ℝ (Fin 4)) M],
@@ -55,7 +58,7 @@ def spacetimeDim : ℕ := 4
 abbrev ModelSpace (n : ℕ) := EuclideanSpace ℝ (Fin n)
 
 /-- The smooth structure model for an n-dimensional manifold without boundary. -/
-abbrev SmoothModel (n : ℕ) := modelWithCornersSelf ℝ (ModelSpace n)
+noncomputable abbrev SmoothModel (n : ℕ) := modelWithCornersSelf ℝ (ModelSpace n)
 
 /-!
 ## A.2.2: Tensor Fields
@@ -84,15 +87,13 @@ theorem minkowski_symmetric : minkowskiMetric = minkowskiMetric.transpose := by
     Zero: lightlike separation (massless particles)
     Positive: spacelike separation (causally disconnected events) -/
 noncomputable def spacetimeInterval (dx : Fin 4 → ℝ) : ℝ :=
-  Matrix.dotProduct (minkowskiMetric.mulVec dx) dx
+  dotProduct (minkowskiMetric.mulVec dx) dx
 
 /-- The spacetime interval for a purely timelike separation is negative. -/
 theorem timelike_interval_negative (dt : ℝ) (hdt : dt ≠ 0) :
     spacetimeInterval (fun i => if i = 0 then dt else 0) < 0 := by
-  simp [spacetimeInterval, minkowskiMetric, Matrix.mulVec, Matrix.dotProduct,
-        Matrix.diagonal]
-  simp [Fin.sum_univ_four]
-  nlinarith [sq_nonneg dt, sq_pos_of_ne_zero dt hdt]
+  simpa [spacetimeInterval, minkowskiMetric, Matrix.mulVec_diagonal, dotProduct,
+    Fin.sum_univ_four, pow_two] using neg_neg_of_pos (sq_pos_of_ne_zero hdt)
 
 /-- A Riemannian metric is a symmetric positive-definite (0,2)-tensor field.
     Lorentzian metrics are symmetric with signature (-,+,...,+). -/
@@ -123,7 +124,7 @@ connection on a Riemannian or pseudo-Riemannian manifold.
 -- 4. Torsion tensor T^α_{μν} = Γ^α_{μν} - Γ^α_{νμ}
 -- 5. Levi-Civita: torsion-free (T=0) and metric-compatible (∇g=0)
 
-/-- Christoffel symbols of the second kind (in coordinate basis).
+/- Christoffel symbols of the second kind (in coordinate basis).
     These encode the connection coefficients of the Levi-Civita connection. -/
 -- Γ^α_{μν} requires partial derivatives of the metric: stub for now
 -- TODO (A.2.3): Implement via smooth maps on manifolds
@@ -142,7 +143,7 @@ path-independent. It is the central object in Einstein's theory of gravity.
 -- Ricci scalar R = g^{μν} R_μν (further contraction)
 -- Einstein tensor G_μν = R_μν - (1/2)g_μν R (appears in Einstein field equations)
 
-/-- The Einstein field equations relate geometry to matter content:
+/- The Einstein field equations relate geometry to matter content:
     G_μν + Λg_μν = 8πG T_μν
     where G_μν is the Einstein tensor, Λ is the cosmological constant,
     and T_μν is the stress-energy tensor. -/
@@ -171,18 +172,13 @@ noncomputable def causalCharacter (v : Fin 4 → ℝ) : CausalCharacter :=
 
 /-- The zero vector is lightlike (degenerate case). -/
 theorem zero_is_lightlike : causalCharacter (fun _ => 0) = CausalCharacter.Lightlike := by
-  simp [causalCharacter, spacetimeInterval, minkowskiMetric, Matrix.mulVec,
-        Matrix.dotProduct, Matrix.diagonal]
+  simp [causalCharacter, spacetimeInterval, dotProduct]
 
 /-- The light cone condition: a vector is lightlike iff its spacetime interval vanishes. -/
 theorem lightlike_iff_zero_interval (v : Fin 4 → ℝ) :
     spacetimeInterval v = 0 ↔ causalCharacter v = CausalCharacter.Lightlike := by
-  simp [causalCharacter]
-  split_ifs with h1 h2
-  · exact ⟨fun h => absurd h (ne_of_lt h1), fun _ => by linarith⟩
-  · exact ⟨fun _ => rfl, fun _ => h2⟩
-  · push_neg at h1 h2
-    exact ⟨fun h => absurd h (ne_of_gt (lt_of_le_of_ne (le_of_not_lt h1) (Ne.symm h2))),
-           fun h => absurd h (by simp)⟩
+  by_cases h0 : spacetimeInterval v = 0
+  · simp [causalCharacter, h0]
+  · by_cases hlt : spacetimeInterval v < 0 <;> simp [causalCharacter, h0, hlt]
 
 end PhysicalUnifiedTheory.Foundations.DifferentialGeometry
