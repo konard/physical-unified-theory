@@ -42,6 +42,7 @@ public import PhysicalUnifiedTheory.Foundations.PDEs
 
 -- Higher tracks (depend on Track A)
 public import PhysicalUnifiedTheory.QuantumMechanics.Basic
+public import PhysicalUnifiedTheory.QuantumMechanics.Bell
 public import PhysicalUnifiedTheory.GeneralRelativity.Basic
 public import PhysicalUnifiedTheory.Unification.Basic
 
